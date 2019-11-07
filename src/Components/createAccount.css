@@ -1,0 +1,148 @@
+
+.maindiv1{
+    background-color: white;
+    /* text-align: center; */
+    padding: 110px;
+    width: 300px;
+    height: 250px;
+    margin: 430px;
+    margin-top: 30px;
+    border: 2px solid;
+    border-color: grey;
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+}
+
+#fnln{
+    margin-left: -85px; 
+     display: flex;
+    flex-direction: row; 
+    justify-content: space-around; 
+    /* height: auto;
+    width: 300px; */
+    
+    /* background-color: thistle; */
+}
+
+#fnlnerr{
+    margin-left: -85px; 
+    display: flex;
+   flex-direction: row; 
+   justify-content: space-around;    
+}
+
+#passconerr{
+    margin-left: -85px; 
+    display: flex;
+   flex-direction: row; 
+   justify-content: space-around;    
+}
+
+#passcon{
+    margin-left: -85px; 
+    display: flex;
+   flex-direction: row; 
+   justify-content: space-between; 
+}
+
+#lastrow{
+    margin-left: -85px; 
+    display: flex;
+    flex-direction: row;  
+   justify-content: space-between; 
+}
+
+#login1{
+    color: #1a73e8;
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 15px;
+}
+
+/* #loginField{
+height: 10px;
+} */
+
+/* #create{
+
+} */
+
+#email1{
+    display: flex;  
+    justify-content: flex-start;
+    margin-left: -85px;
+    /* width: 442px;
+    height: 20px; */
+    /* background-color: thistle; */
+}
+
+#emailText{
+    width: 358px;
+}
+
+
+
+#fundoo1{
+    font-size: xx-large;
+    margin-top: -95px;
+    /* margin-left: -280px; */
+    display: flex;
+    /* flex-direction: row; */
+    margin-left: -85px;
+    justify-content: flex-start;
+}
+
+#text1{
+    color: #202124;
+    font-family: 'Google Sans',arial,sans-serif;
+    font-size: 24px;
+        /* margin-left: -280px; */
+        display: flex;
+        /* flex-direction: row; */
+        margin-left: -85px;
+        justify-content: flex-start;
+
+}
+
+#text2{
+    color:gray;
+    font-family: 'Google Sans',arial,sans-serif;
+    font-size: 15px;
+        /* margin-left: -280px; */
+        display: flex;
+        /* flex-direction: row; */
+        margin-left: -85px;
+        justify-content: flex-start;
+
+}
+
+/* #firstName{
+    display: flex;
+    justify-content: flex-start;
+} */
+
+#flabel{
+    color:blue;
+}
+
+#ulabel{
+    color:red;
+}
+
+#nlabel{
+    color:#FFC300 
+}
+
+#dlabel{
+    color:blue;
+}
+
+#olabel{
+    color:green;
+}
+
+#o2label{
+    color:red;
+}

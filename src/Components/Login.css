@@ -1,0 +1,144 @@
+*{
+    /*box sizing border-box;*/
+    /* font-family: 'Roboto',sans-serif; */
+}
+.maindiv{
+    background-color:white;
+    text-align: center;
+    padding: 50px;
+    width: 300px;
+    height: 370px;
+    margin: 430px;
+    margin-top: 30px;
+    border: 2px solid;
+    border-color: grey;
+}
+
+#text{
+    /* font-family: 'Roboto',sans-serif; */
+    margin-top: 7px;
+    color: #5f6368;
+    font-size: 14px;
+}
+
+#fundoo{
+    font-size:  xx-large;
+    margin-top: -35px;
+    display: flex;
+    margin-left: 90px;
+}
+
+#flabel{
+    color:blue;
+}
+
+#ulabel{
+    color:red;
+}
+
+#nlabel{
+    color:#FFC300 ;
+}
+
+#dlabel{
+    color:blue;
+}
+
+#olabel{
+    color:green;
+}
+
+#o2label{
+    color:red;
+}
+
+#login{
+    font-style: initial;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.maindiv img{
+    width: 400px; height: 200px;
+    align-content: center;
+    background-repeat: no-repeat;
+}
+
+
+#email{
+    width: 250px; height: 20px;
+}
+
+#password{
+    width: 250px; height: 20px;
+}
+
+#loginButton{
+    height: 35px;
+    width: 80px;
+    margin-top: -50px;
+    margin-left: 190px;
+}
+
+#registerButton{
+    height: 35px;
+    width: 250px;
+}
+
+#registerText{
+    width: 300px; height: 30px;
+    font-size: xx-small;
+    /* font-variant-caps: all-small-caps; */
+    
+}
+
+#forgetPassword{
+    /* height: 30px; */
+    width: 145px;
+    margin-top: 0px;
+    text-align: center;
+    font-size: x-small;
+    background-color: rgb(155, 140, 206);
+    /* font-family: sans-serif; */
+    margin-right: -127px;
+}
+
+#forgotPass{
+    /* border-radius: 4px; */
+    color: #1a73e8;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    /* display: inline-block;
+    font-weight: 500;
+    letter-spacing: .25px;
+    background-color: transparent;
+     border: 0; 
+    cursor: pointer;
+    /* font-size: inherit;
+    outline: 0;
+    padding: 0;
+    text-align: left; */ 
+}
+
+#learnMore{
+    color: #1a73e8;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#createAccount{
+    color: #1a73e8;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.close{
+    padding: 10px
+}
+

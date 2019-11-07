@@ -1,0 +1,158 @@
+.maindiv4 {}
+
+#app {
+    /* background-color: indianred; */
+    position: "fixed";
+}
+
+#tool {
+    background-color:white;
+    display: flex;
+    justify-content: space-between;
+}
+
+#firstdiv{
+    display: flex;
+    flex-direction: row;
+}
+
+#seconddiv{
+    display: flex;
+    flex-direction: row;
+}
+
+.menuButton {
+    display: flex;
+    align-content: flex-start;
+    background-color: red;
+}
+
+#title {
+
+    color: black;
+    display: flex;
+
+
+}
+
+#search {
+    position: 'relative';
+    background-color: #f1f3f4;
+    display: flex;
+    align-items: center;
+    /* border: 2px solid; */
+    height: 35px;
+    justify-Content: 'center';
+    width: 50%;
+    border-radius: 12px 12px 12px 12px;
+    /* border: 2px solid;
+    
+    /* border-color: grey; */
+}
+
+.searchIcon {
+    width: 25px;
+    height: '100%';
+    position: 'absolute';
+    pointer-Events: 'none';
+    display: 'flex';
+    align-Items: 'center';
+    justify-Content: 'center';
+
+}
+
+.inputRoot {
+    color: 'inherit';
+    width: '100%';
+
+}
+
+/* .inputInput {
+
+    width: 100%
+} */
+
+.list {
+    width: 250,
+}
+
+.drawer {
+
+    width: drawerWidth;
+    flex-shrink: 0,
+
+}
+
+.drawerPaper {
+    width: drawerWidth;
+}
+
+#imageFlex1 {
+    height: 24px;
+}
+
+#title1 {
+    /* color: black;
+    display: flex; 
+    font-family: initial;
+    font-size: large; */
+    color: #5f6368;
+    cursor: default;
+    letter-spacing: .07272727em;
+    font-family: Roboto,Arial,sans-serif;
+    font-size: .6875rem;
+    font-weight: 500;
+    line-height: 1rem;
+    text-transform: uppercase;
+    padding: 15px 24px 10px;
+
+}
+
+#trash{
+    height: 24px;  
+}
+
+#profile{
+    height:30px;
+    width: 30px;
+}
+
+#profile1{
+    height:60px;
+    width: 60px;
+    display: flex;
+}
+
+.pop{
+    padding: 50px;
+    width: 200px;
+    height: 250px;
+    border-radius: 12px 12px 12px 12px;
+    border: 1px solid;
+    border-color: grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 7px;
+}
+
+#fnlnemail{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#email{
+    color: grey;
+    text-align: center;
+}
+
+#logoutButton{
+    background-color: white;
+    border: 1px solid;
+    
+    border-color: grey;
+}
+
+
