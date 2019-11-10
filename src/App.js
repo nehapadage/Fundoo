@@ -5,6 +5,7 @@ import createAccount from './Components/createAccount'
 import ForgetPassword from './Components/ForgetPassword'
 import Dashboard from './Components/Dashboard'
 import ResetPassword from './Components/ResetPassword'
+
 import './App.css';
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -26,6 +27,7 @@ class App extends Component {
              <Route path="/resetpassword" component={ResetPassword} />
             {/* <Route path="/dashboard" component={Dashboard} /> */}
             <PrivateRoute path='/dashboard' exact component={Dashboard} />
+           
           </Router>
       </div>
     );
