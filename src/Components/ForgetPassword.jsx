@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './ForgetPassword.css'
-import { forgetpassword } from '../services/userService'
+import userService from '../services/userService'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -64,7 +64,7 @@ class ForgetPassword extends Component{
 
         
         
-        forgetpassword(forgetData).then((res) => {
+        userService.forgetpassword(forgetData).then((res) => {
             console.log("respnse in forget password--> ", res)
             console.log("****respnse in forget password message--> ", res.data.message)
 

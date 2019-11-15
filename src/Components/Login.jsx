@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import './Login.css'
-import { login } from '../services/userService'
+import userService from '../services/userService'
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import Snackbar from '@material-ui/core/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const theme = createMuiTheme({
@@ -32,8 +33,8 @@ class Login extends Component {
             password: "",
             emailError: "",
             passwordError: "",
-            flag: false
-
+            flag: false,
+            progress: false,
         }
     }
 
@@ -56,10 +57,7 @@ class Login extends Component {
             passwordError: ""
         };
 
-        // if (!this.state.email.includes("@")) {
-        //     isError = true;
-        //     errors.emailError = "Requires valid email";
-        // }
+
 
         if (!this.validateEmail(this.state.email)) {
             isError = true;
@@ -85,57 +83,58 @@ class Login extends Component {
 
     handleloginSubmit = (event) => {
 
+
+
         event.preventDefault();
         this.validate()
         const err = this.validate();
 
-        var loginData = {};
-        loginData.email = this.state.email;
-        loginData.password = this.state.password
+        if (!err) {
+            var loginData = {};
+            loginData.email = this.state.email;
+            loginData.password = this.state.password
 
-        console.log("logindata--> ", JSON.stringify(loginData))
-
-
-
-        login(loginData).then((res) => {
-            console.log("respnse in login--> ", res)
-
-            console.log("****respnse in login token is--> ", res.data.id)
-            // console.log("data of login user--->" + res.data.data.FirstName);
+            console.log("logindata--> ", JSON.stringify(loginData))
 
 
-            if (res.data.id) {
-                
-                console.log("Flag-------------->",this.state.flag);
-                
-                // alert("Login Successful-----");
-                localStorage.setItem('LoginToken', res.data.id);
-                localStorage.setItem('firstName', res.data.firstName)
-                localStorage.setItem('lastName', res.data.lastName)
-                localStorage.setItem('email', res.data.email)
 
 
-                var path = '/dashboard'
-                this.props.history.push(path)
-            }
-            // else{
-            //     if(res.data.message === "Ohhh Your Password not matched ")
-            //     {
-            //         alert("Password is incorrect");
-            //     }
-            //     else{
-            //         alert("Email is not registerd")
-            //     }
-            // }
 
 
-            // this.clearField();
+            //     const timer = setInterval(this.state.progress, 20);
+            // return () => {
+            //   clearInterval(timer);
+            // };
+
+            userService.login(loginData).then((res) => {
+                console.log("respnse in login--> ", res)
+
+                console.log("****respnse in login token is--> ", res.data.id)
 
 
-        }).catch((err) => {
-            this.setState({ flag: true })
-            console.log("error in login--> ", err)
-        })
+                if (res.data.id) {
+
+                    console.log("Flag-------------->", this.state.flag);
+
+                    // alert("Login Successful-----");
+                    localStorage.setItem('LoginToken', res.data.id);
+                    localStorage.setItem('firstName', res.data.firstName)
+                    localStorage.setItem('lastName', res.data.lastName)
+                    localStorage.setItem('email', res.data.email)
+
+
+                    var path = '/dashboard'
+                    this.props.history.push(path)
+                }
+
+
+            }).catch((err) => {
+                this.setState({ flag: true })
+                console.log("error in login--> ", err)
+            })
+
+        }
+
 
         if (!err) {
             // clear form
@@ -146,6 +145,15 @@ class Login extends Component {
                 passwordError: ""
             });
         }
+
+        //for loading
+        this.setState({ progress: true })
+
+        this.timer = setTimeout(this.changeProgress, 700);
+    }
+
+    changeProgress = () => {
+        this.setState({ progress: false })
     }
 
     handleCreateAccountClick = () => {
@@ -161,18 +169,31 @@ class Login extends Component {
     }
 
     handleClose = () => {
-        console.log("Flag before",this.state.flag);
-        
+        console.log("Flag before", this.state.flag);
+
         this.setState({ flag: false })
 
-        console.log("Flag after",this.state.flag);
+        console.log("Flag after", this.state.flag);
     };
+
+    // componentDidMount() {
+    //     // function tick() {
+    //     //     // reset when reaching 100%
+    //     //     // (this.state.progress===100)?(this.setState({progress:0})):(this.setState({progress:this.state.progress + 1}))
+    //     // }
+
+    //     const timer = setInterval(20);
+    //     return () => {
+    //         clearInterval(timer);
+    //     };
+    // }
+
 
     render() {
         return (
             <MuiThemeProvider theme={theme}>
-                <div className="maindiv">
-                    {/* <form onSubmit={this.handlesubmit} ></form> */}
+            <div className="mainBody">
+                <div className="adminMainDiv">
                     <div id="fundoo">
                         <label id="flabel">F</label>
                         <label id="ulabel">u</label>
@@ -182,108 +203,107 @@ class Login extends Component {
                         <label id="o2label">o</label>
                     </div>
 
-                    <div id="login"> Login </div>
-                    <div>Use your Fundoo Account</div>
                     <div>
-                        <TextField
-                            id="email"
-                            label="Email Id"
-                            type="email"
-                            name="email"
-                            value={this.state.email}
-                            autoComplete="email"
-                            margin="normal"
-                            variant="outlined"
-                            onChange={this.handlechangeall}
-                            errorText={this.state.emailError}
 
-                        />
+                        <div id="login">Login </div>
+                        <div id="text">Use your Fundoo Account</div>
 
                     </div>
-                    <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.emailError}
-                    </div>
-                    <div>
-                        <TextField
-                            id="password"
-                            label="Password"
-                            type="password"
-                            name="password"
-                            value={this.state.password}
-                            autoComplete="current-password"
-                            margin="normal"
-                            variant="outlined"
-                            onChange={this.handlechangeall}
 
-                        />
-                    </div>
-                    <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.passwordError}
-                    </div>
-                    {/* <div>
+                    <div className="textfields">
+                        <div className="emailIdField">
+                            <TextField
+                                id="EmailPass"
+                                label="Email Id"
+                                type="email"
+                                name="email"
+                                value={this.state.email}
+                                autoComplete="email"
+                                margin="normal"
+                                variant="outlined"
+                                onChange={this.handlechangeall}
+                                errorText={this.state.emailError}
 
-                    <Button
-                        id="forgetPassword"
-                        variant="contained"
-                        onClick={this.handleforgetPasswordSubmit}
-                    >
-                        Forget Password?
-                    </Button>
+                            />
 
-                </div>
-                */}
-                    <div >
-                        <Button id="forgotPass"
-                            onClick={this.handleforgetPasswordSubmit}>Forgot Password?</Button>
-                        {/* <Link to="/forgotPage">forgot email?</Link>  */}
+                        </div>
+                        <div style={{ fontSize: 12, color: "red" }}>
+                            {this.state.emailError}
+                        </div>
 
-                    </div>
-                    <div id="text">Not your computer? Use Guest mode to sign in privately.</div>
-                    <div>
-                        <Button id="learnMore">Learn more</Button>
-                    </div>
-                    <div>
-                        <Button id="createAccount"
-                            onClick={this.handleCreateAccountClick}
-                        >Create account
-                        </Button>
+                        <div className="PasswordField">
+                            <TextField
+                                id="EmailPass"
+                                label="Password"
+                                type="password"
+                                name="password"
+                                value={this.state.password}
+                                autoComplete="current-password"
+                                margin="normal"
+                                variant="outlined"
+                                onChange={this.handlechangeall}
+
+                            />
+                        </div>
+
+
+                        <div style={{ fontSize: 12, color: "red" }}>
+                            {this.state.passwordError}
+                        </div>
+
                         <div>
-                            <Button
-                                id="loginButton"
-                                variant="contained"
-                                color="primary"
-                                onClick={this.handleloginSubmit}
+                            <Button id="forgotPass"
+                                onClick={this.handleforgetPasswordSubmit}>Forgot Password?</Button>
+                        </div>
+                        <div id="text">Not your computer? Use Guest mode to sign in privately.</div>
+                        <div>
+                            <Button id="learnMore">Learn more</Button>
+                        </div>
+                        <div>
+                            <Button id="createAccount"
+                                onClick={this.handleCreateAccountClick}
+                            >Create account
+                        </Button>
+                            <div>
+                                <Button
+                                    id="loginButton"
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={this.handleloginSubmit}
 
-                            >
-                                Login
+                                >
+                                    Login
                     </Button>
+                            </div>
+                            {this.state.progress ? <CircularProgress /> : null}
+
+                            <div>
+                                <Snackbar
+
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    open={this.state.flag}
+                                    autoHideDuration={6000}
+                                    onClose={this.handleClose}
+
+                                    message="Login Failed"
+
+
+                                />
+                            </div>
+
                         </div>
                     </div>
 
-                    
-                        <Snackbar
-
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'center',
-                            }}
-                            open={this.state.flag}
-                            autoHideDuration={6000}
-                            onClose={this.handleClose}
-                           
-                            message="Login Failed"
-                            
-
-                        />
-                        
 
 
                 </div>
+            </div>
             </MuiThemeProvider>
-
-        )
+        );
     }
-
 
 
 }

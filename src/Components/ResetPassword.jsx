@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './ForgetPassword.css'
-import { resetpassword } from '../services/userService'
+import userService from '../services/userService'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -64,7 +64,7 @@ class ResetPassword extends Component{
      
     
      
-     resetpassword(resetData,token).then((res) => {
+     userService.resetpassword(resetData,token).then((res) => {
          console.log("respnse in reset password--> ", res)
 
        

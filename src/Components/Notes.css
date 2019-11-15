@@ -1,0 +1,57 @@
+
+
+
+.style{
+  margin-top: 3%;
+  /* display: flex; we dont want all notes of same sizes */      
+  margin-left: 3%;
+}
+
+.style1{
+  /* margin-top: 3%; */
+  /* display: flex; we dont want all notes of same sizes */      
+  /* margin-left: 3%; */
+  z-index: 4110;
+transition-delay: initial;
+top: 21%;
+margin-top: 7%;
+position: fixed;
+}
+
+.createNoteStyle3 {
+  cursor: default;
+    margin-left: 2%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+  } 
+
+  /* .createcardStyle4{
+      /* margin-top: 5%; */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* flex-direction: column;
+    justify-content: space-between; 
+  }  */
+
+  .createNoteStyle2 {
+    margin-top: 5%;
+  margin-left: 5%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.displayButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  #descriptiondetail{
+    margin-left: 5%;
+   display: flex;
+   word-break: break-all
+  }

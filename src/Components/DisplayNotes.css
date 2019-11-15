@@ -1,0 +1,8 @@
+.cardsView{
+    width: 75%;
+    margin-left: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 2%;
+    margin-top: 2%;
+}

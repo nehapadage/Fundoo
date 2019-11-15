@@ -3,7 +3,7 @@ import './createAccount.css'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { createMuiTheme, MuiThemeProvider} from "@material-ui/core";
-import { register } from '../services/userService'
+import userService from '../services/userService'
 import Snackbar from '@material-ui/core/Snackbar';
 
 const theme = createMuiTheme({
@@ -141,13 +141,13 @@ class createAccount extends Component {
         registerData.lastName = this.state.lastName;
         registerData.email = this.state.email;
         registerData.password = this.state.password
-        registerData.service = 'basic'
+        registerData.service = 'advance'
 
         console.log("registerData--> ", JSON.stringify(registerData))
 
 
 
-        register(registerData).then((res) => {
+        userService.register(registerData).then((res) => {
             console.log("respnse in register--> ", res)
 
             if (res.data.data.success === true) {

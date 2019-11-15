@@ -1,0 +1,65 @@
+
+
+.createNoteStyle {
+  cursor: default;
+    margin-left: 4%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+  }
+
+ 
+
+  .createNoteStyle1 {
+      /* margin-top: 5%; */
+    /* margin-left: 5%; */
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+
+
+  #description {
+    margin-left: 5%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
+  
+    
+  }
+
+  .fieldstyle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .createcardStyle{
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .createcardStyle1{
+    margin-top: 3%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .displayButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  #button{
+    color:grey;
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+    font-size: .875rem;
+    font-weight: bold;
+  }

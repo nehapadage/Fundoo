@@ -22,7 +22,7 @@ class App extends Component {
       <div className="App">
         <Router>
             <Route path="/login" exact component={Login} />
-             <Route path="/createAccount" component={createAccount} />
+             <Route path="/register" component={createAccount} />
           <Route path="/forgetpassword" component={ForgetPassword} />
              <Route path="/resetpassword" component={ResetPassword} />
             {/* <Route path="/dashboard" component={Dashboard} /> */}
