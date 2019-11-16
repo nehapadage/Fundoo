@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './DisplayNotes.css'
 import Notes from './Notes'
 import userService from '../services/userService'
-
+import Masonry from 'react-masonry-component'
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import './TakeNote.css'
 import TextField from "@material-ui/core/TextField";
@@ -46,51 +46,63 @@ class DisplayNotes extends Component {
             title: null,
             description: null,
             originalData:[],
-            data:[]
+            data:[],
+            // Note:this.props.notes
         };
 
 
-    }
 
-
-    componentDidMount() {
-
-        this.getNotes();
 
     }
 
-    getNotes=()=>{
-        userService.getAllNotes(this.state.token).then(res => {
-            console.log("Response in Get All notes--->", res);
+    handle=()=>{
+        this.props.Refresh()
+    }
 
-            console.log("Only data--->",res.data.data.data);
 
-            // this.setState({ data : res.data.data.data })
-            this.setState({ originalData : res.data.data.data })
+    // componentDidMount() {
 
-            console.log("Original data is",this.state.originalData);
+    //     this.getNotes();
+
+    // }
+
+    // getNotes=()=>{
+
+    //     console.log("*******************",this.state.arcRes);
+        
+    //     userService.getAllNotes(this.state.token).then(res => {
+    //         console.log("Response in Get All notes--->", res);
+
+    //         console.log("Only data--->",res.data.data.data);
+
+    //         // this.setState({ data : res.data.data.data })
+    //         this.setState({ originalData : res.data.data.data })
+
+    //         console.log("Original data is",this.state.originalData);
             
-            var arr=[]
+    //         var arr=[]
 
-            arr=this.state.originalData.filter(key => 
+    //         arr=this.state.originalData.filter(key => 
 
-                // console.log("In Filter"); 
+    //             // console.log("In Filter"); 
                 
-                    ((key.isArchived ===false) && (key.isDeleted === false))
+    //                 ((key.isArchived ===false) && (key.isDeleted === false))
                     
-                );
+    //             );
 
-                console.log("Array is",arr);
+    //             console.log("Array is",arr);
 
-                this.setState({data:arr})
+    //             this.setState({data:arr})
+
+    //             console.log("Filtered Array is",this.state.data);
                 
 
-        })
-            .catch(err => {
-                console.log("Error in get all notes");
-            })
+    //     })
+    //         .catch(err => {
+    //             console.log("Error in get all notes");
+    //         })
 
-    }
+    // }
 
 
 
@@ -104,10 +116,13 @@ class DisplayNotes extends Component {
 
     render() {
 
-        var mapCards=this.state.data.map(item=>{
+        console.log("Before mapping",this.props.notes);
+        
+
+        var mapCards=this.props.notes.map(item=>{
             return (
 
-                <Notes note={item} Title={item.title} Description={item.description} NoteId={item.id} Refresh={this.getNotes}/>
+                <Notes note={item} Title={item.title} Description={item.description} NoteId={item.id} Color={item.color} Refresh={this.handle}/>
 
             );
             
@@ -115,9 +130,10 @@ class DisplayNotes extends Component {
 
 
         return (
-            <div className="cardsView">
+            <Masonry className="cardsView">
                 {mapCards}
-            </div>
+                {/* <Notes filteredData={this.state.data}/> */}
+            </Masonry>
         )
     }
 }

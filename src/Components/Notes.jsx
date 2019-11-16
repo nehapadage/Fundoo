@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import userService from '../services/userService'
 import './Notes.css'
-import EditNote from './EditNote'
+
 import Reminder from './Reminder'
 import Collaborator from './Collaborator'
 import Color from './Color'
@@ -27,7 +27,10 @@ const theme = createMuiTheme({
             },
             'elevation1': {
                 boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 0px 1px 2px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
-            }
+            },
+            // 'transition':{
+            //     'boxShadow': '280ms'
+            // }
         }
     }
 })
@@ -38,7 +41,14 @@ const theme1 = createMuiTheme({
             'root': {
                 width: '500px',
                 zIndex:4000
-            }
+            },
+            'rounded': {
+                borderRadius: '8px',
+            },
+            'elevation1': {
+                boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 0px 1px 2px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
+            },
+          
         }
     }
 })
@@ -55,6 +65,7 @@ class Notes extends Component {
             flag: false,
             title:this.props.Title,
             description:this.props.Description,
+            color:this.props.Color,
             noteId:this.props.NoteId
         };
 
@@ -64,17 +75,19 @@ class Notes extends Component {
 
 
     }
+    
 
     
     OpenDialog = () => {
         console.log("In dialog box");
-        this.setState({ flag:!this.state.flag })
+      
 
         
         var updateData={
             title:this.state.title,
             description:this.state.description,
-            noteId:this.state.noteId
+            noteId:this.state.noteId,
+            color:this.state.color
         }
 
         userService.update(updateData).then(res=>{
@@ -99,7 +112,11 @@ class Notes extends Component {
         this.props.Refresh()
     }
 
-    render() {
+    OpenEdit=()=>
+{
+    this.setState({ flag:!this.state.flag })
+}    
+render() {
 
 
         return (
@@ -110,7 +127,7 @@ class Notes extends Component {
                     {this.state.flag ?
                     <MuiThemeProvider theme={theme1}>
                          <div className="style1">
-                        <Card  >
+                        <Card  style={{backgroundColor:this.state.color}}>
                             {/* <div className="createcardStyle4"> */}
 
                             <div className="createNoteStyle3" >
@@ -153,10 +170,10 @@ class Notes extends Component {
                                 {/* <div > */}
                                 <Reminder />
                                 <Collaborator />
-                                <Color />
+                                <Color Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
                                 <Image />
-                                <Archive/>
-                                <More Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId}/>
+                                <Archive Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} Refresh={this.handleRefresh}/>
+                                <More Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} refresh={this.handleRefresh}/>
 
 
 
@@ -179,12 +196,12 @@ class Notes extends Component {
                         
                         :
                         <div className="style">
-                        <Card  >
+                        <Card style={{backgroundColor:this.state.color}} >
                             {/* <div className="createcardStyle4"> */}
                             <div className="createNoteStyle3">
 
                                 <div className="createNoteStyle2" >
-                                    <div onClick={this.OpenDialog}>
+                                    <div onClick={this.OpenEdit}>
                                         {this.props.Title}
                                     </div>
                                     <div>
@@ -192,7 +209,7 @@ class Notes extends Component {
                                     </div>
                                 </div>
 
-                                <div id="descriptiondetail" onClick={this.OpenDialog}>
+                                <div id="descriptiondetail" onClick={this.OpenEdit}>
                                     {this.props.Description}
                                 </div>
 
@@ -202,7 +219,7 @@ class Notes extends Component {
                                 {/* <div > */}
                                 <Reminder />
                                 <Collaborator />
-                                <Color />
+                                <Color Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
                                 <Image />
                                 <Archive Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} Refresh={this.handleRefresh}/>
                                 <More Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} refresh={this.handleRefresh}/>

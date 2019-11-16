@@ -11,6 +11,7 @@ import Archive from './Archive'
 import More from './More'
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const theme = createMuiTheme({
@@ -41,8 +42,10 @@ class TakeNote extends Component {
 
         this.state = {
             noteViewController: false,
-            title: null,
-            description: null,
+            title: "",
+            description: "",
+            noteId: "",
+            Color: "",
             token: localStorage.getItem('LoginToken')
         };
 
@@ -52,25 +55,36 @@ class TakeNote extends Component {
     handleNoteViewController = () => {
 
         this.setState({ noteViewController: !this.state.noteViewController });
-        if (this.state.title === null && this.state.description === null) {
+        if ((this.state.title === "" && this.state.description === "") || (this.state.title === "")) {
             console.log("title and description is empty");
         } else {
             let noteData = {
-                title: this.state.title,
-                description: this.state.description
+                "title": this.state.title,
+                "description": this.state.description,
+                "color":this.state.Color
             }
 
-            userService.createNote(noteData,this.state.token).then(res=>{
-                console.log("Response in creating notes--->",res);
+            userService.createNote(noteData, this.state.token).then(res => {
+                console.log("Response in creating notes--->", res);
+                console.log("NoteId is=", res.data.status.details.id);
+                // this.setState({ noteId: res.data.status.details.id })
+                // this.setState({ Color: res.data.status.details.color })
+
+                this.setState({ title:"" });
+                this.setState({ description:"" });
+                this.setState({ Color:"#ffffff" });
+
+                console.log("Changed color is",this.state.Color);
+                
+
                 this.props.refresh()
 
             })
-            .catch(err=>{
-                console.log("Error in creation of note");
-           })
+                .catch(err => {
+                    console.log("Error in creation of note");
+                })
 
-            this.setState({ title: null });
-            this.setState({ description: null });
+          
         }
     }
 
@@ -78,6 +92,48 @@ class TakeNote extends Component {
 
     handlechangeall = (event) => {
         this.setState({ [event.target.name]: event.target.value })
+    }
+
+    handleRefresh = (color) => {
+        console.log("Color is", color);
+this.setState({Color:color})
+    }
+
+    archive=()=>{
+
+        this.setState({ noteViewController: !this.state.noteViewController });
+        if ((this.state.title === "" && this.state.description === "") || (this.state.title === ""))
+        {
+            console.log("title and description is empty");
+        } else {
+            let noteData = {
+                "title": this.state.title,
+                "description": this.state.description,
+                "color":this.state.Color,
+                "isArchived":true
+            }
+
+            userService.createNote(noteData, this.state.token).then(res => {
+                console.log("Response in creating notes--->", res);
+                console.log("NoteId is=", res.data.status.details.id);
+                // this.setState({ noteId: res.data.status.details.id })
+                // this.setState({ Color: res.data.status.details.color })
+
+                this.setState({ title: "" });
+                this.setState({ description: "" });
+                this.setState({ Color: "#ffffff" });
+
+                this.props.refresh()
+
+            })
+                .catch(err => {
+                    console.log("Error in creation of note");
+                })
+
+            // this.setState({ title: null });
+            // this.setState({ description: null });
+        }
+
     }
 
 
@@ -88,7 +144,7 @@ class TakeNote extends Component {
             <div className="createcardStyle">
                 <MuiThemeProvider theme={theme}>
                     {this.state.noteViewController ?
-                        <Card >
+                        <Card style={{ backgroundColor: this.state.Color }}>
                             <div className="createNoteStyle">
                                 <div className="createNoteStyle1">
                                     <div>
@@ -119,21 +175,27 @@ class TakeNote extends Component {
                                         disableUnderline: true
                                     }}
                                 />
-                                </div>
-                                <div className="displayButton">
-                                    {/* <div > */}
-                                    <Reminder />
+
+                            </div>
+                            <div className="displayButton">
+                                {/* <div > */}
+                                <Reminder />
                                 <Collaborator />
-                                <Color />
+                                <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
                                 <Image />
-                                <Archive />
-                                <More />
-                                    {/* </div> */}
-                                    <div>
-                                        <Button onClick={this.handleNoteViewController}>close</Button>
-                                    </div>
+
+                                <IconButton onClick={this.archive}>
+                                    <img src={require('../Assets/archive.svg')} alt="Logo" />
+                                </IconButton>
+
+                                {/* <Archive Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} Refresh={this.handleRefresh}/> */}
+                                <More Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
+                                {/* </div> */}
+                                <div>
+                                    <Button onClick={this.handleNoteViewController}>close</Button>
                                 </div>
-                            
+                            </div>
+
                         </Card>
                         :
 

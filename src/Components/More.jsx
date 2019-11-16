@@ -15,7 +15,7 @@ const theme = createMuiTheme({
         'MuiPaper': {
             'root': {
                 width: '150px',
-                marginLeft:'150px'
+                marginLeft: '150px'
             },
             'rounded': {
                 borderRadius: '4px',
@@ -26,107 +26,108 @@ const theme = createMuiTheme({
         },
         'MuiButton': {
             'label': {
-            
-              textTransform: "none"
+
+                textTransform: "none"
             }
-          }
+        }
     }
 })
 class More extends Component {
 
     constructor(props) {
         super(props);
-        
+
 
         this.state = {
-            flag:false,
-            anchorEl:null,
-            noteId:this.props.NoteId
+            flag: false,
+            anchorEl: null,
+            noteId: this.props.NoteId
         };
 
     }
 
-    more=(event)=>{
+    more = (event) => {
         // return (
-            console.log("more",event)
-            console.log("Props are====>",this.props);
-           this.setState({flag:!this.state.flag})
-           this.setState({anchorEl:event.currentTarget})
-          
+        console.log("more", event)
+        console.log("Props are====>", this.props);
+        this.setState({ flag: !this.state.flag })
+        this.setState({ anchorEl: event.currentTarget })
+
         // );
-        
+
     }
 
-    
 
-    handleDeleteNote=()=>{
-        console.log("Props are   *************  ====>",this.state.noteId);
-        var deleteData={
-            'noteIdList':[this.state.noteId],
-            'isDeleted':true
+
+    handleDeleteNote = () => {
+        
+        console.log("Props are   *************  ====>", this.state.noteId);
+        var deleteData = {
+            'noteIdList': [this.state.noteId],
+            'isDeleted': true
         }
 
-        userService.TrashNote(deleteData).then(res=>{
-console.log("Response in deleting note",res);
-this.props.refresh();
+        userService.TrashNote(deleteData).then(res => {
+            console.log("Response in deleting note", res);
+            this.props.refresh();
 
         })
-        .catch(err=>{
-            console.log("Error in deleting note",err);
-            
-        })
-        
+            .catch(err => {
+                console.log("Error in deleting note", err);
+
+            })
+
     }
- 
+
     render() {
 
-       
-      
+
+
         return (        //{event=>this.more(event)}>
 
-       
-              <div>
-                   <IconButton onClick={this.more}>
-                   <MoreVertIcon />
+
+            <div>
+                <IconButton onClick={this.more}>
+                    <MoreVertIcon />
                 </IconButton>
-              
-        <Popper open={this.state.flag} anchorEl={this.state.anchorEl}>
-        <MuiThemeProvider theme={theme}>
 
-                          <Paper >
-                            <div style={{width:150}}>
-                             
-                                  <div>
+                <Popper open={this.state.flag} anchorEl={this.state.anchorEl}>
+                    <MuiThemeProvider theme={theme}>
+
+                        <Paper >
+                            <div style={{ width: 150 }}>
+
+                                <div>
                                     <Button onClick={this.handleDeleteNote}>
-                                    <Typography >Delete note</Typography>
+                                        <Typography >Delete note</Typography>
                                     </Button>
-                                  </div>
-                                  <div>
+                                </div>
+                                <div>
                                     <Button onClick={this.handleClick}>
-                                    <Typography >Change Labels</Typography>
+                                        <Typography >Change Labels</Typography>
                                     </Button>
-                                  </div>
-                             
-                              </div>
-        
-        
-                           
-                          </Paper>
-                      </MuiThemeProvider>
-                    
-                    </Popper>
-                   
-       
-    
+                                </div>
 
-              </div>
+                            </div>
 
 
-       
-               
 
-            
-            
+                        </Paper>
+                    </MuiThemeProvider>
+
+                </Popper>
+
+
+
+
+            </div>
+
+
+
+
+
+
+
         )
     }
 }

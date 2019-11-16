@@ -66,6 +66,8 @@ const theme1 = createMuiTheme({
 
 
 
+
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -79,11 +81,66 @@ class Dashboard extends Component {
       firstName: "",
       lastName: "",
       email: "",
+      originalData: [],
+      data: []
 
     }
 
     this.DisplayNotes = React.createRef()
   }
+
+  componentDidMount() {
+
+    this.setState({
+      firstName: localStorage.getItem('firstName'),
+      lastName: localStorage.getItem('lastName'),
+      email: localStorage.getItem('email'),
+      archiveResponse: ""
+    });
+
+    this.getNotes();
+
+  }
+
+  getNotes = () => {
+
+
+
+    userService.getAllNotes().then(res => {
+      console.log("Response in Get All notes--->", res);
+
+      console.log("Only data--->", res.data.data.data);
+
+      // this.setState({ data : res.data.data.data })
+      this.setState({ data: [] })
+      this.setState({ originalData: res.data.data.data })
+
+      console.log("Original data is", this.state.originalData);
+
+      var arr = []
+
+      arr = this.state.originalData.filter(key =>
+
+        // console.log("In Filter"); 
+
+        ((key.isArchived === false) && (key.isDeleted === false))
+
+      );
+
+      console.log("Array is", arr);
+
+      this.setState({ data: arr })
+
+      console.log("Filtered Array is", this.state.data);
+
+
+    })
+      .catch(err => {
+        console.log("Error in get all notes");
+      })
+
+  }
+
 
 
 
@@ -103,15 +160,6 @@ class Dashboard extends Component {
     }));
   };
 
-  componentDidMount() {
-
-    this.setState({
-      firstName: localStorage.getItem('firstName'),
-      lastName: localStorage.getItem('lastName'),
-      email: localStorage.getItem('email')
-    });
-
-  }
 
   handleLogOutSubmit = () => {
 
@@ -123,17 +171,41 @@ class Dashboard extends Component {
   }
 
   handleRefresh = () => {
-    this.DisplayNotes.current.getNotes()
+    this.getNotes()
+  }
+
+
+  getTrashNotes = () => {
+    userService.getTrashedNotes().then(res => {
+      console.log("Responce in Getting Trash notes", res.data.data.data);
+      this.setState({ data: res.data.data.data })
+
+      console.log("Responce in Getting Trash notes ***********", this.state.data);
+
+
+
+    })
+      .catch(err => {
+        console.log("Error in Getting Archive notes", err);
+
+      })
+
   }
 
   getArchive = () => {
     userService.getArchivedNote().then(res => {
-      console.log("Responce in Getting Archive notes", res);
+      console.log("Responce in Getting Archive notes", res.data.data.data);
+      this.setState({ data: res.data.data.data })
 
-      return (
-      <div>
-        <DisplayNotes />
-        </div>);
+      console.log("Responce in Getting Archive notes ***********", this.state.data);
+
+
+
+      // return (
+      // // <div>
+      //   <DisplayNotes/>
+      //   // </div>
+      //   );
 
       // this.props.Refresh();
 
@@ -287,7 +359,7 @@ class Dashboard extends Component {
                 paper: "drawerPaper"
               }}
             >
-              <DrawerList archive={this.getArchive} />
+              <DrawerList archive={this.getArchive} notes={this.getNotes} trash={this.getTrashNotes} />
 
               {/* <List>
             {['Notes', 'Remainders'].map((text, index) => (
@@ -317,7 +389,7 @@ class Dashboard extends Component {
             </div>
 
             {/* <div id="display"> */}
-            <DisplayNotes ref={this.DisplayNotes} />
+            <DisplayNotes notes={this.state.data} ref={this.DisplayNotes} Refresh={this.getNotes} />
             {/* </div> */}
 
 

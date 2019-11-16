@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ArchiveNotes from '../Components/ArchiveNotes'
+
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -24,13 +24,28 @@ class DrawerList extends Component {
    
   }
 
+  notes=()=>{
+    console.log("In getting notes");
+    
+    // return( <ArchiveNotes/>);
+    this.props.notes();
+   
+  }
+
+  trash=()=>{
+    console.log("In getting trash notes");
+    
+    // return( <ArchiveNotes/>);
+    this.props.trash();
+  }
+
   render() {
 
 
     return (
       <div>
         <List component="nav">
-          <ListItem button >
+          <ListItem button onClick={this.notes}>
             <ListItemIcon>
               <img src={require('../Assets/notes.svg')} id="imageFlex" />
               {/* <InboxIcon /> */}
@@ -71,7 +86,7 @@ class DrawerList extends Component {
             <ListItemText primary="Archive" />
           </ListItem>
 
-          <ListItem button>
+          <ListItem button onClick={this.trash}>
             <ListItemIcon>
               <img src={require('../Assets/trash.svg')} alt="Logo" id="trash" />
               {/* <InboxIcon /> */}

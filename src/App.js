@@ -27,6 +27,7 @@ class App extends Component {
              <Route path="/resetpassword" component={ResetPassword} />
             {/* <Route path="/dashboard" component={Dashboard} /> */}
             <PrivateRoute path='/dashboard' exact component={Dashboard} />
+            {/* <Route path='/dashboard' exact component={Dashboard} /> */}
            
           </Router>
       </div>
