@@ -19,7 +19,7 @@ class Archive extends Component {
 
     archive=()=>{
 
-        console.log(" ptops ",this.props.noteData);
+        console.log(" props ",this.props.noteData);
       const  data={
         //   "title":this.props.Title,
         //   "description":this.props.Description,
@@ -47,9 +47,7 @@ class Archive extends Component {
                 <IconButton onClick={this.archive}>
                     <img src={require('../Assets/archive.svg')} alt="Logo" />
                 </IconButton>
-                <div>
-
-                </div>
+                
             </div>
 
 

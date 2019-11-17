@@ -162,6 +162,19 @@ class user {
         return colorNotes;
     }
 
+    reminder(Reminder){
+        console.log("Reminder note data in services--> ", Reminder)
+        console.log("Token in color", token);
+
+        var reminder = axios.post('http://fundoonotes.incubation.bridgelabz.com/api/notes/addUpdateReminderNotes', Reminder, {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return reminder;
+    }
+
 
 
 }

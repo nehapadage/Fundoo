@@ -161,7 +161,7 @@ class Color extends Component {
                     //     vertical: 'top',
                     //     horizontal: 'left',
                     // }}
-                    style={{ width: '150px', height: '350px', textAlign: "center" }}
+                    style={{ width: '150px', height: '350px', textAlign: "center" ,zIndex:"4001"}}
                 >
                     <div className="colorDirection">
                         {colorsPallete.map((text, index) => (

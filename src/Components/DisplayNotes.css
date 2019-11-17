@@ -6,3 +6,23 @@
     padding-bottom: 2%;
     margin-top: 2%;
 }
+
+/* min-width:800px */
+ @media only screen and (max-width: 1295px) { 
+
+    .cardsView{
+        margin-left: 27%;
+    }
+}
+/* @media only screen and (max-width: 320px) {
+
+    .cardsView{
+        margin-left: 8%;
+    }
+} */
+@media only screen and (width: 360px) {
+
+    .cardsView{
+        margin-left: 10%;
+    }
+}

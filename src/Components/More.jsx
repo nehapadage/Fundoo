@@ -99,12 +99,12 @@ class More extends Component {
 
                                 <div>
                                     <Button onClick={this.handleDeleteNote}>
-                                        <Typography >Delete note</Typography>
+                                        <div>Delete note</div>
                                     </Button>
                                 </div>
                                 <div>
                                     <Button onClick={this.handleClick}>
-                                        <Typography >Change Labels</Typography>
+                                        <div >Change Labels</div>
                                     </Button>
                                 </div>
 

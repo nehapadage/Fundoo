@@ -11,12 +11,12 @@
   /* margin-top: 3%; */
   /* display: flex; we dont want all notes of same sizes */      
   /* margin-left: 3%; */
-  z-index: 4110;
+  z-index: 4001;
 transition-delay: initial;
 top: 21%;
 margin-left: 10%;
 margin-top: 7%;
-position: fixed;
+/* position: fixed; */
 }
 
 .createNoteStyle3 {

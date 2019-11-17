@@ -168,7 +168,7 @@ render() {
 
                             <div className="displayButton">
                                 {/* <div > */}
-                                <Reminder />
+                                <Reminder Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                 <Collaborator />
                                 <Color Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
                                 <Image />
@@ -217,7 +217,7 @@ render() {
 
                             <div className="displayButton">
                                 {/* <div > */}
-                                <Reminder />
+                                <Reminder Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                 <Collaborator />
                                 <Color Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
                                 <Image />
