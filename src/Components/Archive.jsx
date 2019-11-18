@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import userService from '../services/userService'
 import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
 
 class Archive extends Component {
 
@@ -10,7 +11,7 @@ class Archive extends Component {
         // console.log("Props are====>",this.props);
 
         this.state = {
-
+            flag:false
         };
 
         
@@ -31,6 +32,7 @@ class Archive extends Component {
 
         userService.archiveNote(data).then(res=>{
             console.log("Responce in Archive notes",res);
+            this.setState({flag:true})
 
             this.props.Refresh();
             
@@ -47,6 +49,20 @@ class Archive extends Component {
                 <IconButton onClick={this.archive}>
                     <img src={require('../Assets/archive.svg')} alt="Logo" />
                 </IconButton>
+                <Snackbar
+
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    open={this.state.flag}
+                                    autoHideDuration={6000}
+                                    onClose={this.handleClose}
+
+                                    message="Archived successfully"
+
+
+                                />
                 
             </div>
 

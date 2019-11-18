@@ -69,10 +69,12 @@
 
 #title {
 
-    color: black;
+    /* color: black;
     display: flex;
-
-
+ */
+ font-size: xx-large;
+ /* background-color: greenyellow; */
+ margin-top: -6%;
 }
 
 #search {

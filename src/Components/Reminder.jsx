@@ -41,6 +41,14 @@ class Reminder extends Component {
         };
     }
 
+    // componentDidMount(){
+    //     // if(this.props.chipRemind === true){
+            
+    //     // }
+        
+        
+    // }
+
     handleClick = event => {
         this.setState({
             anchorEl: event.currentTarget, open: true
@@ -119,13 +127,15 @@ class Reminder extends Component {
 
         if (this.props.NoteId) {
             let noteReminderUpdate = {
-                "noteId": this.props.NoteId,
+                "noteIdList": [this.props.NoteId],
                 "reminder": [reminderDate],
             
             }
             userService.reminder(noteReminderUpdate).then((res) => {
                 console.log("Response in reminder",res);
-                // this.props.refresh()
+                // console.log("Only data in reminder",res.config.data);
+
+                this.props.REFRESH()
             }).catch((err) => {
                 console.log(err);
             })
@@ -141,6 +151,7 @@ class Reminder extends Component {
 
 
     render() {
+        // console.log("chip clicked",this.props.chipRemind);
         return (
             <div>
                 <IconButton onClick={this.handleClick}>

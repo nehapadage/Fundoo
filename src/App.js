@@ -23,7 +23,7 @@ class App extends Component {
         <Router>
             <Route path="/login" exact component={Login} />
              <Route path="/register" component={createAccount} />
-          <Route path="/forgetpassword" component={ForgetPassword} />
+             <Route path="/forgetpassword" component={ForgetPassword} />
              <Route path="/resetpassword" component={ResetPassword} />
             {/* <Route path="/dashboard" component={Dashboard} /> */}
             <PrivateRoute path='/dashboard' exact component={Dashboard} />

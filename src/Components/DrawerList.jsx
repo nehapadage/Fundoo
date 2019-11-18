@@ -45,7 +45,7 @@ class DrawerList extends Component {
     return (
       <div>
         <List component="nav">
-          <ListItem button onClick={this.notes}>
+          <ListItem button onClick={this.notes} style={{backgroundColor:"#feefc3", borderRadius:"0 25px 25px 0"}}>
             <ListItemIcon>
               <img src={require('../Assets/notes.svg')} id="imageFlex" />
               {/* <InboxIcon /> */}

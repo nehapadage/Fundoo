@@ -235,7 +235,7 @@ class Dashboard extends Component {
                   </div>
 
                   <div>
-                    <img src={require('../Assets/keep.png')} alt="Logo" id="imageFlex" />
+                    <img src={require('../Assets/keep.png')} alt="Logo" id="imageFlex" style={{"width": "44px","height": "40px"}}/>
                   </div>
 
                   <div>

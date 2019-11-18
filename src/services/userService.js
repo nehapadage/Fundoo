@@ -175,6 +175,16 @@ class user {
         return reminder;
     }
 
+    getLabels(){
+        var label = axios.get('http://fundoonotes.incubation.bridgelabz.com/api/noteLabels/getNoteLabelList',  {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return label; 
+    }
+
 
 
 }

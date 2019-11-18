@@ -4,7 +4,7 @@
     /* text-align: center; */
     padding: 110px;
     width: 300px;
-    height: 250px;
+    height: 270px;
     margin: 430px;
     margin-top: 30px;
     border: 2px solid;
@@ -146,3 +146,28 @@ height: 10px;
 #o2label{
     color:red;
 }
+
+#basic_adv_button{
+     display:flex;
+    flex-direction: row;
+     width: 100%; 
+     justify-content: space-between;
+     margin-left: -28%;
+}  
+
+#bas{
+    color: #1a73e8;
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 15px; 
+}
+
+#adv{
+    color: #1a73e8;
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 15px; 
+}
+

@@ -36,7 +36,9 @@ class createAccount extends Component {
             confirmPasswordError: "",
             redirect: false,
             flag: false,
-            flag1:false
+            flag1:false,
+            flagButton:"",
+            flagButtonError:""
         }
     }
 
@@ -80,7 +82,7 @@ class createAccount extends Component {
          emailError : "",
          passwordError : "",
          confirmPasswordError: "",
-
+            flagButtonError:""
         };
 
     
@@ -116,6 +118,10 @@ class createAccount extends Component {
             
             errors.confirmPasswordError = "Password length should greater than 6 and less than 12";
           }
+
+          if(this.state.flagButton===""){
+              errors.flagButtonError="Please select basic or advance"
+          }
     
           this.setState({
             ...this.state,
@@ -134,14 +140,14 @@ class createAccount extends Component {
        this.validate()
      const err = this.validate();
 
-    //   if(this.state.password===this.state.confirmPassword)
-    //   {
+      if(!err)
+      {
         var registerData = {};
         registerData.firstName = this.state.firstName;
         registerData.lastName = this.state.lastName;
         registerData.email = this.state.email;
-        registerData.password = this.state.password
-        registerData.service = 'advance'
+        registerData.password = this.state.password;
+        registerData.service = this.state.flagButton
 
         console.log("registerData--> ", JSON.stringify(registerData))
 
@@ -165,7 +171,7 @@ class createAccount extends Component {
         })
 
 
-    //   }
+      }
       
 
     
@@ -186,6 +192,8 @@ class createAccount extends Component {
               passwordError: "",
               confirmPassword: "",
               confirmPasswordError: "",
+              flag:"",
+              flagButton:""
             });
         }
         
@@ -210,6 +218,18 @@ class createAccount extends Component {
 
         console.log("Flag1 before",this.state.flag1);
     };
+
+    handleBasic=async()=>{
+
+ await this.setState({flagButton:"basic"})
+console.log("Button clicked=",this.state.flagButton);
+
+    }
+
+    handleAdvance= async()=>{
+        await this.setState({flagButton:"advance"})
+        console.log("Button clicked=",this.state.flagButton);
+    }
 
     render() {
         return (
@@ -285,7 +305,7 @@ class createAccount extends Component {
                             errorText={this.state.emailError}
                         />
                     </div>
-                    <div style={{ fontSize: 12, color: "red" }}>
+                    <div style={{ fontSize: 12, color: "red", marginLeft: "-36%"}}>
             {this.state.emailError}
           </div>
                     <div id="text2">You can use letters and numbers</div>
@@ -329,6 +349,21 @@ class createAccount extends Component {
                         {this.state.confirmPasswordError}
                     </div>
                     </div>
+                    <div id="basic_adv_button">
+                    
+                    
+                    <Button id="bas"
+                            onClick={this.handleBasic}
+                        >Basic
+                        </Button>
+                        <Button id="adv"
+                            onClick={this.handleAdvance}
+                        >Advance
+                        </Button>
+                    </div>
+                    <div style={{ fontSize: 12, color: "red",marginLeft: "-36%" }}>
+            {this.state.flagButtonError}
+          </div>
                     <div id="lastrow">
                     
                         <Button id="login1"
