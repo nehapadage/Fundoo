@@ -217,6 +217,7 @@ class Dashboard extends Component {
   }
 
   render() {
+    let movement=this.state.open ? "movementOn" : "movementOff"
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -384,6 +385,8 @@ class Dashboard extends Component {
           </div>
 
           <div className="mainBody-for-notes">
+
+            <div id={movement}>
             <div>
               <TakeNote refresh={this.handleRefresh} />
             </div>
@@ -391,6 +394,8 @@ class Dashboard extends Component {
             {/* <div id="display"> */}
             <DisplayNotes notes={this.state.data} ref={this.DisplayNotes} Refresh={this.getNotes} />
             {/* </div> */}
+            </div>
+            
 
 
           </div>

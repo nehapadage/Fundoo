@@ -26,7 +26,7 @@ class App extends Component {
              <Route path="/forgetpassword" component={ForgetPassword} />
              <Route path="/resetpassword" component={ResetPassword} />
             {/* <Route path="/dashboard" component={Dashboard} /> */}
-            <PrivateRoute path='/dashboard' exact component={Dashboard} />
+            <PrivateRoute path='/dashboard/notes' exact component={Dashboard} />
             {/* <Route path='/dashboard' exact component={Dashboard} /> */}
            
           </Router>

@@ -7,6 +7,20 @@
     margin-top: 2%;
 }
 
+
+#movementOff {
+    display: flex;
+    flex-direction: column;
+    transition: margin-left .13s cubic-bezier(0, 0, 0.1, 1) 0ms;
+    }
+  
+    #movementOn {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8%;
+    transition: margin-left .13s cubic-bezier(0, 0, 0.1, 1) 0ms;
+    }
+
 /* min-width:800px */
  @media only screen and (max-width: 1295px) { 
 

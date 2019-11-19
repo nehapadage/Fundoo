@@ -123,7 +123,7 @@ class Login extends Component {
                     localStorage.setItem('email', res.data.email)
 
 
-                    var path = '/dashboard'
+                    var path = '/dashboard/notes'
                     this.props.history.push(path)
                 }
 
