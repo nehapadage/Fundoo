@@ -10,6 +10,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
 import Popover from '@material-ui/core/Popover';
+import TextField from "@material-ui/core/TextField";
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import SearchIcon from '@material-ui/icons/Search';
@@ -63,8 +64,11 @@ class More extends Component {
             anchorEl: null,
             open: false,
             noteId: this.props.NoteId,
+            label:"",
             labelArray: [],
-            deleteSnack: false
+            deleteSnack: false,
+            demo:false,
+            demo1:false
         };
 
     }
@@ -130,14 +134,48 @@ class More extends Component {
         this.setState({ anchorEl: null, open: false , flag:false});
     }
 
+    handleCheck=name=>event=>{
+        this.setState({ ...this.state, [name]: event.target.checked });
+    }
+
+    handlechangeall = (event) => {
+        this.setState({ [event.target.name]: event.target.value })
+    }
+
     render() {
 
         var label = this.state.labelArray.map(item => {
             return (
                 // <Checkbox checked={this.state.checkedA} onChange={this.handleChange('checkedA')} value="checkedA" />+
-                item.label
+
+                <MenuItem>
+                <div>
+                {/* {item.id} */}
+                <Checkbox
+                checked={this.state.demo}
+                onChange={this.handleCheck('demo')}
+                value=""
+                color="primary"
+                inputProps={{
+                  'aria-label': 'secondary checkbox',
+                }}
+              />
+             
+              {item.label}
+                </div>
+                
+                </MenuItem>
+                
             )
         })
+
+        // return(
+        //     <div>
+        //         {label}
+        //     </div>
+        // )
+
+       
 
 
 
@@ -225,11 +263,22 @@ class More extends Component {
 
                                     <MenuItem>
                                         <div className="reminderStyle">
-                                            <div id="text">Enter label name</div> <div id="text1"><SearchIcon /></div>
+                                            {/* <div id="text">Enter label name</div>  */}
+                                            <TextField 
+                                                placeholder='Enter label name'
+                                                // margin="normal"
+                                                name="label"
+                                                value={this.state.label}
+                                                onChange={this.handlechangeall}
+                                                InputProps={{
+                                                    disableUnderline: true
+                                                }}
+                                            />
+                                            <div id="text1"><SearchIcon /></div>
                                         </div>
                                     </MenuItem>
 
-                                    <MenuItem>
+                                    <MenuItem id="label">
                                         {label}
                                     </MenuItem>
 

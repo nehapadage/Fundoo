@@ -16,7 +16,7 @@ import TextField from "@material-ui/core/TextField";
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-const theme = createMuiTheme({
+const theme2 = createMuiTheme({
     overrides: {
         'MuiPaper': {
             'root': {
@@ -133,7 +133,7 @@ class Notes extends Component {
         return (
 
 
-            <MuiThemeProvider theme={theme}>
+            <MuiThemeProvider theme={theme2}>
 
                 {this.state.flag ?
                     <MuiThemeProvider theme={theme1}>

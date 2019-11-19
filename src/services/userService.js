@@ -185,6 +185,16 @@ class user {
         return label; 
     }
 
+    getReminderedNotes(){
+        var remindered = axios.get('http://fundoonotes.incubation.bridgelabz.com/api/notes/getReminderNotesList',  {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return remindered;  
+    }
+
 
 
 }

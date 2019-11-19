@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import './DrawerList.css'
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,48 +11,67 @@ class DrawerList extends Component {
 
   constructor(props) {
     super(props);
-    console.log("In getting archive====>");
+    
+    this.state={
+      notes:false,
+      archive:false,
+      trash:false,
+      remind:false
+    }
 
   }
 
 
-  archive = () => {
+  archive = async () => {
     console.log("In getting archive");
-    
+    this.setState({notes:false,archive:true,trash:false,remind:false})
     // return( <ArchiveNotes/>);
-    this.props.archive();
+    await this.props.archive();
    
   }
 
-  notes=()=>{
+  notes= async ()=>{
     console.log("In getting notes");
     
-    // return( <ArchiveNotes/>);
-    this.props.notes();
+    this.setState({notes:true,archive:false,trash:false,remind:false})
+    
+    await this.props.notes();
+   
    
   }
 
-  trash=()=>{
+  trash= async ()=>{
     console.log("In getting trash notes");
+    this.setState({notes:false,archive:false,trash:true,remind:false})
+    await this.props.trash();
+  }
+
+  remind=async()=>{
+    console.log("In getting remind notes");
+     this.setState({notes:false,archive:false,trash:false,remind:true})
     
-    // return( <ArchiveNotes/>);
-    this.props.trash();
+     await  this.props.remind();
   }
 
   render() {
-
+     
+    var style=this.state.notes ? "notes" : null;
+   var style1=this.state.archive ? "notes" : null;
+    var style2=this.state.trash ? "notes" : null;
+   var  style3=this.state.remind ? "notes" : null;
+   
 
     return (
       <div>
         <List component="nav">
-          <ListItem button onClick={this.notes} style={{backgroundColor:"#feefc3", borderRadius:"0 25px 25px 0"}}>
+          <ListItem button id={style} onClick={this.notes} >
             <ListItemIcon>
               <img src={require('../Assets/notes.svg')} id="imageFlex" />
               {/* <InboxIcon /> */}
             </ListItemIcon>
             <ListItemText primary="Notes" />
           </ListItem>
-          <ListItem button>
+          <ListItem button id={style3} onClick={this.remind}>
             <ListItemIcon>
               <img src={require('../Assets/remind.svg')} alt="Logo" id="imageFlex1" />
               {/* <DraftsIcon /> */}
@@ -78,7 +97,7 @@ class DrawerList extends Component {
 
         <List component="nav">
 
-          <ListItem button onClick={this.archive}>
+          <ListItem button id={style1} onClick={this.archive}>
             <ListItemIcon>
               <img src={require('../Assets/archive.svg')} alt="Logo" id="trash" />
               {/* <InboxIcon /> */}
@@ -86,7 +105,7 @@ class DrawerList extends Component {
             <ListItemText primary="Archive" />
           </ListItem>
 
-          <ListItem button onClick={this.trash}>
+          <ListItem button id={style2} onClick={this.trash}>
             <ListItemIcon>
               <img src={require('../Assets/trash.svg')} alt="Logo" id="trash" />
               {/* <InboxIcon /> */}

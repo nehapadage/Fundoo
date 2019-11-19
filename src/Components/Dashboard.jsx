@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Dashboard.css'
+import ChildNote from '../Components/ChildNote'
 import userService from '../services/userService'
 import DrawerList from '../Components/DrawerList'
 import TakeNote from '../Components/TakeNote'
@@ -41,6 +42,11 @@ const theme = createMuiTheme({
       label: {
         color: "grey",
         textTransform: "lowercase"
+      }
+    },
+    MuiPaper: {
+      root: {
+        marginTop: "0px !important"
       }
     }
   }
@@ -98,48 +104,65 @@ class Dashboard extends Component {
       archiveResponse: ""
     });
 
-    this.getNotes();
+    // this.getNotes();
 
   }
+
+  // getNotes = () => {
+
+
+
+  //   userService.getAllNotes().then(res => {
+  //     console.log("Response in Get All notes--->", res);
+
+  //     console.log("Only data--->", res.data.data.data);
+
+  //     // this.setState({ data : res.data.data.data })
+  //     this.setState({ data: [] })
+  //     this.setState({ originalData: res.data.data.data })
+
+  //     console.log("Original data is", this.state.originalData);
+
+  //     var arr = []
+
+  //     arr = this.state.originalData.filter(key =>
+
+  //       // console.log("In Filter"); 
+
+  //       ((key.isArchived === false) && (key.isDeleted === false))
+
+  //     );
+
+  //     console.log("Array is", arr);
+
+  //     this.setState({ data: arr })
+
+  //     console.log("Filtered Array is", this.state.data);
+
+
+  //   })
+  //     .catch(err => {
+  //       console.log("Error in get all notes");
+  //     })
+
+  // }
 
   getNotes = () => {
-
-
-
-    userService.getAllNotes().then(res => {
-      console.log("Response in Get All notes--->", res);
-
-      console.log("Only data--->", res.data.data.data);
-
-      // this.setState({ data : res.data.data.data })
-      this.setState({ data: [] })
-      this.setState({ originalData: res.data.data.data })
-
-      console.log("Original data is", this.state.originalData);
-
-      var arr = []
-
-      arr = this.state.originalData.filter(key =>
-
-        // console.log("In Filter"); 
-
-        ((key.isArchived === false) && (key.isDeleted === false))
-
-      );
-
-      console.log("Array is", arr);
-
-      this.setState({ data: arr })
-
-      console.log("Filtered Array is", this.state.data);
-
-
-    })
-      .catch(err => {
-        console.log("Error in get all notes");
-      })
-
+    this.props.history.push('/dashboard/notes')
   }
+
+  getArchive = () => {
+    this.props.history.push('/dashboard/archiveNotes')
+  }
+
+  getTrashNotes = () => {
+    this.props.history.push('/dashboard/trashNotes')
+  }
+
+  getRemind=()=>{
+    this.props.history.push('/dashboard/remindNotes')
+  }
+
 
 
 
@@ -170,54 +193,20 @@ class Dashboard extends Component {
     this.props.history.push(path)
   }
 
-  handleRefresh = () => {
-    this.getNotes()
-  }
-
-
-  getTrashNotes = () => {
-    userService.getTrashedNotes().then(res => {
-      console.log("Responce in Getting Trash notes", res.data.data.data);
-      this.setState({ data: res.data.data.data })
-
-      console.log("Responce in Getting Trash notes ***********", this.state.data);
+  // handleRefresh = () => {
+  //   this.getNotes()
+  // }
 
 
 
-    })
-      .catch(err => {
-        console.log("Error in Getting Archive notes", err);
 
-      })
-
-  }
-
-  getArchive = () => {
-    userService.getArchivedNote().then(res => {
-      console.log("Responce in Getting Archive notes", res.data.data.data);
-      this.setState({ data: res.data.data.data })
-
-      console.log("Responce in Getting Archive notes ***********", this.state.data);
-
-
-
-      // return (
-      // // <div>
-      //   <DisplayNotes/>
-      //   // </div>
-      //   );
-
-      // this.props.Refresh();
-
-    })
-      .catch(err => {
-        console.log("Error in Getting Archive notes", err);
-
-      })
-  }
 
   render() {
-    let movement=this.state.open ? "movementOn" : "movementOff"
+
+    console.log("In dashboard");
+
+
+    // let movement = this.state.open ? "movementOn" : "movementOff"
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -236,7 +225,7 @@ class Dashboard extends Component {
                   </div>
 
                   <div>
-                    <img src={require('../Assets/keep.png')} alt="Logo" id="imageFlex" style={{"width": "44px","height": "40px"}}/>
+                    <img src={require('../Assets/keep.png')} alt="Logo" id="imageFlex" style={{ "width": "44px", "height": "40px" }} />
                   </div>
 
                   <div>
@@ -360,7 +349,7 @@ class Dashboard extends Component {
                 paper: "drawerPaper"
               }}
             >
-              <DrawerList archive={this.getArchive} notes={this.getNotes} trash={this.getTrashNotes} />
+              <DrawerList archive={this.getArchive} notes={this.getNotes} trash={this.getTrashNotes} remind={this.getRemind}/>
 
               {/* <List>
             {['Notes', 'Remainders'].map((text, index) => (
@@ -384,21 +373,15 @@ class Dashboard extends Component {
 
           </div>
 
-          <div className="mainBody-for-notes">
+          {/* <div className="mainBody-for-notes">
 
             <div id={movement}>
-            <div>
-              <TakeNote refresh={this.handleRefresh} />
-            </div>
-
-            {/* <div id="display"> */}
-            <DisplayNotes notes={this.state.data} ref={this.DisplayNotes} Refresh={this.getNotes} />
-            {/* </div> */}
+            <ChildNote refresh={this.handleRefresh} notes={this.state.data}/>
             </div>
             
 
 
-          </div>
+          </div> */}
         </div>
       </MuiThemeProvider>
     )

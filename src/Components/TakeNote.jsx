@@ -18,9 +18,9 @@ const theme = createMuiTheme({
     overrides: {
         'MuiPaper': {
             'root': {
-                width: '550px',
-                minHeight: "25px",
-                marginTop: "-50px"
+                width: "54%",
+                minHeight: "25px"
+                // marginTop: "-50px"
             },
             'rounded': {
                 borderRadius: '8px',
@@ -61,7 +61,7 @@ class TakeNote extends Component {
             let noteData = {
                 "title": this.state.title,
                 "description": this.state.description,
-                "color":this.state.Color
+                "color": this.state.Color
             }
 
             userService.createNote(noteData, this.state.token).then(res => {
@@ -70,12 +70,12 @@ class TakeNote extends Component {
                 // this.setState({ noteId: res.data.status.details.id })
                 // this.setState({ Color: res.data.status.details.color })
 
-                this.setState({ title:"" });
-                this.setState({ description:"" });
-                this.setState({ Color:"#ffffff" });
+                this.setState({ title: "" });
+                this.setState({ description: "" });
+                this.setState({ Color: "#ffffff" });
 
-                console.log("Changed color is",this.state.Color);
-                
+                console.log("Changed color is", this.state.Color);
+
 
                 this.props.refresh()
 
@@ -84,7 +84,7 @@ class TakeNote extends Component {
                     console.log("Error in creation of note");
                 })
 
-          
+
         }
     }
 
@@ -96,21 +96,20 @@ class TakeNote extends Component {
 
     handleRefresh = (color) => {
         console.log("Color is", color);
-this.setState({Color:color})
+        this.setState({ Color: color })
     }
 
-    archive=()=>{
+    archive = () => {
 
         this.setState({ noteViewController: !this.state.noteViewController });
-        if ((this.state.title === "" && this.state.description === "") || (this.state.title === ""))
-        {
+        if ((this.state.title === "" && this.state.description === "") || (this.state.title === "")) {
             console.log("title and description is empty");
         } else {
             let noteData = {
                 "title": this.state.title,
                 "description": this.state.description,
-                "color":this.state.Color,
-                "isArchived":true
+                "color": this.state.Color,
+                "isArchived": true
             }
 
             userService.createNote(noteData, this.state.token).then(res => {
@@ -141,90 +140,92 @@ this.setState({Color:color})
 
 
         return (
+        // <MuiThemeProvider theme={theme}>
+
             <div className="createcardStyle">
-                <MuiThemeProvider theme={theme}>
-                    {this.state.noteViewController ?
-                        <Card style={{ backgroundColor: this.state.Color }}>
-                            <div className="createNoteStyle">
-                                <div className="createNoteStyle1">
-                                    <div>
-                                        <TextField
-                                            placeholder='Title'
-                                            margin="normal"
-                                            name="title"
-                                            value={this.state.title}
-                                            onChange={this.handlechangeall}
-                                            InputProps={{
-                                                disableUnderline: true
-                                            }}
-                                        />
-                                    </div>
-                                    <div>
-                                        <Button><img src={require("../Assets/pin.svg")} alt="" /></Button>
-                                    </div>
-                                </div>
-
-                                <TextField
-                                    placeholder='Take a note'
-                                    margin="normal"
-                                    multiline={true}
-                                    name="description"
-                                    value={this.state.description}
-                                    onChange={this.handlechangeall}
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                />
-
-                            </div>
-                            <div className="displayButton">
-                                {/* <div > */}
-                                <Reminder />
-                                <Collaborator />
-                                <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
-                                <Image />
-
-                                <IconButton onClick={this.archive}>
-                                    <img src={require('../Assets/archive.svg')} alt="Logo" />
-                                </IconButton>
-
-                                {/* <Archive Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} Refresh={this.handleRefresh}/> */}
-                                <More Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
-                                {/* </div> */}
+                {this.state.noteViewController ?
+                    <div id="card" style={{ backgroundColor: this.state.Color }}>
+                        <div className="createNoteStyle">
+                            <div className="createNoteStyle1">
                                 <div>
-                                    <Button onClick={this.handleNoteViewController}>close</Button>
-                                </div>
-                            </div>
-
-                        </Card>
-                        :
-
-                        <Card >
-                            <div className="fieldstyle">
-                                <div className="createNoteStyle">
                                     <TextField
-                                        onClick={this.handleNoteViewController}
-                                        placeholder='Take a note..'
-                                        value=''
+                                        placeholder='Title'
                                         margin="normal"
+                                        name="title"
+                                        value={this.state.title}
+                                        onChange={this.handlechangeall}
                                         InputProps={{
                                             disableUnderline: true
                                         }}
                                     />
                                 </div>
-
                                 <div>
-                                    <Button><img src={require("../Assets/list.svg")} alt="" /></Button>
-                                    <Button><img src={require("../Assets/paint.svg")} alt="" /></Button>
-                                    <Button><img src={require("../Assets/image.svg")} alt="" /></Button>
+                                    <Button><img src={require("../Assets/pin.svg")} alt="" /></Button>
                                 </div>
                             </div>
-                        </Card>
+
+                            <TextField
+                                placeholder='Take a note'
+                                margin="normal"
+                                multiline={true}
+                                name="description"
+                                value={this.state.description}
+                                onChange={this.handlechangeall}
+                                InputProps={{
+                                    disableUnderline: true
+                                }}
+                            />
+
+                        </div>
+                        <div className="displayButton">
+                            {/* <div > */}
+                            <Reminder />
+                            <Collaborator />
+                            <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
+                            <Image />
+
+                            <IconButton onClick={this.archive}>
+                                <img src={require('../Assets/archive.svg')} alt="Logo" />
+                            </IconButton>
+
+                            {/* <Archive Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} Refresh={this.handleRefresh}/> */}
+                            <More Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
+                            {/* </div> */}
+                            <div>
+                                <Button onClick={this.handleNoteViewController}>close</Button>
+                            </div>
+                        </div>
+
+                    </div>
+                    :
+
+                    <div id="card" >
+                        <div className="fieldstyle">
+                            <div className="createNoteStyle">
+                                <TextField
+                                    onClick={this.handleNoteViewController}
+                                    placeholder='Take a note..'
+                                    value=''
+                                    margin="normal"
+                                    InputProps={{
+                                        disableUnderline: true
+                                    }}
+                                />
+                            </div>
+
+                            <div>
+                                <Button><img src={require("../Assets/list.svg")} alt="" /></Button>
+                                <Button><img src={require("../Assets/paint.svg")} alt="" /></Button>
+                                <Button><img src={require("../Assets/image.svg")} alt="" /></Button>
+                            </div>
+                        </div>
+                    </div>
 
 
-                    }
-                </MuiThemeProvider>
+                }
             </div>
+        // </MuiThemeProvider>
+
         )
     }
 }

@@ -40,7 +40,7 @@
   }
 
   .createcardStyle{
-    margin-top: 10%;
+    margin-top: 3%;
     display: flex;
     justify-content: center;
   }
@@ -62,4 +62,13 @@
     font-family: 'Google Sans',Roboto,Arial,sans-serif;
     font-size: .875rem;
     font-weight: bold;
+  }
+
+  #card{
+    width:550px;
+    background-color: white;
+    border: solid 2px;
+    border-color: grey;
+    border-radius: 8px;
+  
   }
