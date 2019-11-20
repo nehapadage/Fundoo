@@ -163,6 +163,10 @@ class Dashboard extends Component {
     this.props.history.push('/dashboard/remindNotes')
   }
 
+  getLabels=()=>{
+    this.props.history.push('/dashboard/labelNotes')
+  }
+
 
 
 
@@ -349,7 +353,7 @@ class Dashboard extends Component {
                 paper: "drawerPaper"
               }}
             >
-              <DrawerList archive={this.getArchive} notes={this.getNotes} trash={this.getTrashNotes} remind={this.getRemind}/>
+              <DrawerList labels={this.getLabels} archive={this.getArchive} notes={this.getNotes} trash={this.getTrashNotes} remind={this.getRemind}/>
 
               {/* <List>
             {['Notes', 'Remainders'].map((text, index) => (

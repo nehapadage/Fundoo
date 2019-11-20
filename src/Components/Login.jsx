@@ -121,7 +121,9 @@ class Login extends Component {
                     localStorage.setItem('firstName', res.data.firstName)
                     localStorage.setItem('lastName', res.data.lastName)
                     localStorage.setItem('email', res.data.email)
-
+                   localStorage.setItem('userId', res.data.userId)
+                   
+                    
 
                     var path = '/dashboard/notes'
                     this.props.history.push(path)

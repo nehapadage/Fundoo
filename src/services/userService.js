@@ -195,6 +195,28 @@ class user {
         return remindered;  
     }
 
+    addLabelOnNote(noteData){
+        console.log("addLabelOnNote in service",noteData);
+        
+        var addLabelOnNotes = axios.post('http://fundoonotes.incubation.bridgelabz.com/api/noteLabels', noteData, {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return addLabelOnNotes;  
+    }
+
+    deleteLabelFromNote(requestObject){
+        var deleteLabelFromNotes = axios.delete('http://fundoonotes.incubation.bridgelabz.com/api/noteLabels/{id}/deleteNoteLabel',requestObject,  {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return deleteLabelFromNotes;  
+    }
+
 
 
 }

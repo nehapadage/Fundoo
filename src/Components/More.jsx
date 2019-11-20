@@ -23,7 +23,7 @@ const theme = createMuiTheme({
             'root': {
                 width: '150px',
                 marginLeft: '2%',
-              
+
                 marginTop: '7%'
             },
             'rounded': {
@@ -64,11 +64,13 @@ class More extends Component {
             anchorEl: null,
             open: false,
             noteId: this.props.NoteId,
-            label:"",
+            label: "",
             labelArray: [],
+            noteLabels: [],
             deleteSnack: false,
-            demo:false,
-            demo1:false
+            addLabel:""
+            // demo: false,
+            // demo1: false
         };
 
     }
@@ -117,7 +119,7 @@ class More extends Component {
 
 
         userService.getLabels().then(res => {
-            console.log("Responce in add label", res);
+            console.log("Responce in get labels", res);
 
             console.log("Only data", res.data.data.details);
 
@@ -131,10 +133,10 @@ class More extends Component {
     }
 
     handleClose = () => {
-        this.setState({ anchorEl: null, open: false , flag:false});
+        this.setState({ anchorEl: null, open: false, flag: false });
     }
 
-    handleCheck=name=>event=>{
+    handleCheck = name => event => {
         this.setState({ ...this.state, [name]: event.target.checked });
     }
 
@@ -142,32 +144,67 @@ class More extends Component {
         this.setState({ [event.target.name]: event.target.value })
     }
 
+    checkedEvent = (event,labelArray) => {
+        if (event.target.checked) {
+            this.setState({ open: false });
+            let noteData = {
+                "noteIdList": [this.state.noteId],
+                "labelId": labelArray.id
+            }
+            userService.addLabelOnNote(noteData).then((data) => {
+                console.log("Responce in add Label On Note",data);
+                // this.props.refresh()
+            }).catch((err) => {
+                console.log(err);
+
+            })
+
+        } else {
+            for (let i = 0; i < this.state.noteLabels.length; i++) {
+
+                if (this.state.noteLabels[i].id === this.state.labelArray.id) {
+                    this.state.noteLabels.splice(i, 1)
+                }
+            }
+            this.setState({ noteLabels: this.state.noteLabels });
+            let requestObject = {
+                noteIdList: this.state.noteId,
+                labelId: this.state.labelArray.id
+            }
+            userService.deleteLabelFromNote(requestObject).then((data) => {
+                console.log("label deleted", data);
+                // this.props.refresh()
+            })
+        }
+
+    }
+
     render() {
 
-        var label = this.state.labelArray.map(item => {
-            return (
-                // <Checkbox checked={this.state.checkedA} onChange={this.handleChange('checkedA')} value="checkedA" />+
+        // var label = this.state.labelArray.map(item => {
+        //     return (
+        //         // <Checkbox checked={this.state.checkedA} onChange={this.handleChange('checkedA')} value="checkedA" />+
 
-                <MenuItem>
-                <div>
-                {/* {item.id} */}
-                <Checkbox
-                checked={this.state.demo}
-                onChange={this.handleCheck('demo')}
-                value=""
-                color="primary"
-                inputProps={{
-                  'aria-label': 'secondary checkbox',
-                }}
-              />
-             
-              {item.label}
-                </div>
-                
-                </MenuItem>
-                
-            )
-        })
+        //         <MenuItem>
+        //         <div>
+        //         {/* {item.id} */}
+        //         <Checkbox
+        //         checked={this.state.demo}
+        //         onChange={this.handleCheck('demo')}
+        //         value=""
+        //         color="primary"
+        //         inputProps={{
+        //           'aria-label': 'secondary checkbox',
+        //         }}
+        //       />
+
+        //       {item.label}
+        //         </div>
+
+        //         </MenuItem>
+
+        //     )
+        // })
 
         // return(
         //     <div>
@@ -175,7 +212,7 @@ class More extends Component {
         //     </div>
         // )
 
-       
+
 
 
 
@@ -212,7 +249,7 @@ class More extends Component {
 
                 </Popper> */}
                 <MuiThemeProvider theme={theme}>
-                <Popover
+                    <Popover
                         open={this.state.flag}
                         anchorEl={this.state.anchorEl}
                         onClose={this.handleClose}
@@ -226,7 +263,11 @@ class More extends Component {
                         }}
                         style={{ width: '50%' }}
                     >
-                       <div>
+                        <MenuList>
+                            <MenuItem onClick={this.handleDeleteNote}>Delete note</MenuItem>
+                            <MenuItem onClick={this.handleAddLabels}>Add label</MenuItem>
+                        </MenuList>
+                        {/* <div>
                                     <Button onClick={this.handleDeleteNote}>
                                         <div>Delete note</div>
                                     </Button>
@@ -235,9 +276,9 @@ class More extends Component {
                                     <Button onClick={this.handleAddLabels}>
                                         <div >Add Labels</div>
                                     </Button>
-                                </div>
+                                </div> */}
                     </Popover>
-                    </MuiThemeProvider>
+                </MuiThemeProvider>
 
                 <div>
                     <MuiThemeProvider theme={theme1}>
@@ -255,16 +296,16 @@ class More extends Component {
                             }}
                             style={{ width: '50%' }}
                         >
-                            <div>
+                            {/* <div>
                                 <div className="reminderTextStyle">
                                     <label>Label note:</label>
                                 </div>
                                 <MenuList>
 
                                     <MenuItem>
-                                        <div className="reminderStyle">
-                                            {/* <div id="text">Enter label name</div>  */}
-                                            <TextField 
+                                        <div className="reminderStyle"> 
+                             <div id="text">Enter label name</div>  
+                             <TextField 
                                                 placeholder='Enter label name'
                                                 // margin="normal"
                                                 name="label"
@@ -279,12 +320,42 @@ class More extends Component {
                                     </MenuItem>
 
                                     <MenuItem id="label">
-                                        {label}
-                                    </MenuItem>
+                                        {/* {label} 
+                                    </MenuItem> */}
+
+                                    
+
+                            <MenuList>
+                            <div className="reminderTextStyle">
+                                    <label>Label note:</label>
+                                </div>
+                                <div className="reminderStyle">
+                                    <TextField 
+                                                placeholder='Enter label name'
+                                                // margin="normal"
+                                                name="label"
+                                                value={this.state.addLabel}
+                                                onChange={this.handlechangeall}
+                                                InputProps={{
+                                                    disableUnderline: true
+                                                }}
+                                            />
+                                            <div id="text1"><SearchIcon /></div>
+                                        </div>                                
+                                        {this.state.labelArray.map((labelObject, index) => (
+                                    <div className="labelPopover" key={index}>
+                                        <Checkbox
+                                            checked={this.state.noteLabels.find((choice) => choice.id === labelObject.id)}
+                                            onClick={(event) => this.checkedEvent(event, labelObject)}
+                                        />
+                                        <label className="labelNameStyle" >{labelObject.label}</label>
+                                    </div>
+                                ))}
+                            </MenuList>
 
 
-                                </MenuList>
-                            </div>
+
+
                         </Popover>
                     </MuiThemeProvider>
                     <Snackbar

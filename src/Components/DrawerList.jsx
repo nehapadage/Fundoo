@@ -16,7 +16,9 @@ class DrawerList extends Component {
       notes:false,
       archive:false,
       trash:false,
-      remind:false
+      remind:false,
+      label:false,
+      
     }
 
   }
@@ -24,7 +26,7 @@ class DrawerList extends Component {
 
   archive = async () => {
     console.log("In getting archive");
-    this.setState({notes:false,archive:true,trash:false,remind:false})
+    this.setState({notes:false,archive:true,trash:false,remind:false,label:false})
     // return( <ArchiveNotes/>);
     await this.props.archive();
    
@@ -33,7 +35,7 @@ class DrawerList extends Component {
   notes= async ()=>{
     console.log("In getting notes");
     
-    this.setState({notes:true,archive:false,trash:false,remind:false})
+    this.setState({notes:true,archive:false,trash:false,remind:false,label:false})
     
     await this.props.notes();
    
@@ -42,15 +44,22 @@ class DrawerList extends Component {
 
   trash= async ()=>{
     console.log("In getting trash notes");
-    this.setState({notes:false,archive:false,trash:true,remind:false})
+    this.setState({notes:false,archive:false,trash:true,remind:false,label:false})
     await this.props.trash();
   }
 
   remind=async()=>{
     console.log("In getting remind notes");
-     this.setState({notes:false,archive:false,trash:false,remind:true})
+     this.setState({notes:false,archive:false,trash:false,remind:true,label:false})
     
      await  this.props.remind();
+  }
+
+  editLabels=()=>{
+    console.log("In getting editLabels notes");
+    this.setState({notes:false,archive:false,trash:false,remind:false,label:true})
+    
+      this.props.labels();
   }
 
   render() {
@@ -59,6 +68,7 @@ class DrawerList extends Component {
    var style1=this.state.archive ? "notes" : null;
     var style2=this.state.trash ? "notes" : null;
    var  style3=this.state.remind ? "notes" : null;
+   var  style4=this.state.label ? "notes" : null;
    
 
     return (
@@ -84,7 +94,7 @@ class DrawerList extends Component {
 
         <Typography id="title1" variant="h6" color="inherit" noWrap>Labels</Typography>
 
-        <ListItem button>
+        <ListItem button id={style4} onClick={this.editLabels}>
           <ListItemIcon>
             <img src={require('../Assets/edit.svg')} alt="Logo" id="trash" />
             {/* <InboxIcon /> */}

@@ -9,6 +9,7 @@ import ChildNote from './Components/ChildNote'
 import ChildArchive from './Components/ChildArchive'
 import ChildTrash from './Components/ChildTrash'
 import ChildRemind from './Components/ChildRemind'
+import ChildLabel from './Components/ChildLabel'
 import './App.css';
 
 
@@ -35,6 +36,7 @@ class App extends Component {
             <Route path='/dashboard/archiveNotes' component={ChildArchive} />
             <Route path='/dashboard/trashNotes' component={ChildTrash} />
             <Route path='/dashboard/remindNotes' component={ChildRemind} />
+            <Route path='/dashboard/labelNotes' component={ChildLabel} />
             {/* <Route path='/dashboard' exact component={Dashboard} /> */}
            
           </Router>
