@@ -216,6 +216,19 @@ class user {
 
         return deleteLabelFromNotes;  
     }
+     
+    updateLabelOnNote(noteData){
+        console.log("update Label On Note",noteData);
+        
+        var updateLabelOnNotes = axios.post('http://fundoonotes.incubation.bridgelabz.com/api/noteLabels/{id}/updateNoteLabel',noteData,  {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return updateLabelOnNotes;     
+    }
+
 
 
 

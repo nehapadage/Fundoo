@@ -17,6 +17,8 @@ import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import Divider from '@material-ui/core/Divider';
 import EditIcon from '@material-ui/icons/Edit';
+import TextField from "@material-ui/core/TextField";
+import DeleteIcon from '@material-ui/icons/Delete';
 import './ChildLabel.css'
 class ChildLabel extends Component {
 
@@ -27,19 +29,23 @@ class ChildLabel extends Component {
         this.state = {
             originalLabels: [],
             data: [],
-            open:false,
-            addLabel:"",
-            update:false
+            open: false,
+            addLabel: "",
+            addLabels: "",
+            update: false,
+            currentLabel: null
         };
 
     }
 
-    handlechangeall = (event) => {
-        this.setState({ [event.target.name]: event.target.value })
+    handlechangeall = async (event) => {
+        console.log("calling", event.target);
+
+        await this.setState({ [event.target.name]: event.target.value })
     }
 
     componentDidMount() {
-        this.setState({open:!this.state.open})
+        this.setState({ open: !this.state.open })
         this.getLabel();
     }
 
@@ -93,57 +99,69 @@ class ChildLabel extends Component {
     //     // onClose(selectedValue);
     //   };
 
-      handleListItemClick = value => {
+    handleListItemClick = value => {
         // onClose(value);
-      };
+    };
 
-      handleDone=()=>{
-        this.setState({open:!this.state.open})
-      }
+    handleDone = () => {
+        console.log("avxvxfg");
 
-      addLabel=()=>{
+        this.setState({ open: !this.state.open })
+
+    }
+
+    addLabel = () => {
         let noteData = {
             // "noteIdList": [this.state.originalLabels.id],
-           "label":this.state.addLabel,
-           "userId":localStorage.getItem('userId'),
-           "isDeleted":false
+            "label": this.state.addLabel,
+            "userId": localStorage.getItem('userId'),
+            "isDeleted": false
         }
         userService.addLabelOnNote(noteData).then((data) => {
-            console.log("Responce in add Label On Note in child label",data);
+            console.log("Responce in add Label On Note in child label", data);
             this.getLabel();
-            this.setState({addLabel:""})
+            this.setState({ addLabel: "" })
             // this.props.refresh()
         }).catch((err) => {
             console.log(err);
 
         })
-      }
+    }
 
-      updateLabel=()=>{
+    updateLabel = () => {
         let noteData = {
             // "noteIdList": [this.state.originalLabels.id],
-           "label":this.state.addLabel,
-           "userId":localStorage.getItem('userId'),
-           "isDeleted":false
+            "label": this.state.addLabels,
+            "userId": localStorage.getItem('userId'),
+            "isDeleted": false
         }
-        userService.addLabelOnNote(noteData).then((data) => {
-            console.log("Responce in add Label On Note in child label",data);
-            this.getLabel();
-            this.setState({addLabel:""})
+        userService.updateLabelOnNote(noteData).then((data) => {
+            console.log("Responce in update Label On Note in child label", data);
+        
+           
+            // this.setState({ addLabel: "" })
             // this.props.refresh()
         }).catch((err) => {
             console.log(err);
 
         })
-      }
+        this.getLabel();
 
-      update=()=>{
-          this.setState({update:!this.state.update})
-      }
+        this.setState({ currentLabel: null })
+
+    }
+
+    update = () => {
+        this.setState({ update: !this.state.update })
+    }
+
+    changeOnlyOneLabel = (labelId) => {
+        this.setState({ currentLabel: labelId })
+    }
 
     render() {
-        console.log("In Child Note");
-        console.log("Props in child note", this.props.notes);
+        console.log("In Child Label Note");
+
 
         return (
             <div id="notek">
@@ -155,43 +173,97 @@ class ChildLabel extends Component {
                 {/* <div >  */}
                 {/* <DisplayNotes notes={this.state.data} ref={this.DisplayNotes} Refresh={this.getNotes} /> */}
                 {/* </div>  */}
-                <Dialog onClose={this.handleDone} aria-labelledby="simple-dialog-title" open={this.state.open}>
-      <DialogTitle id="simple-dialog-title">Edit Labels</DialogTitle>
-      <div className="input">
-          <CloseIcon/>
-      <Input 
-        placeholder="Create new label"
-        // className={classes.input}
-        name="addLabel"
-        value={this.state.addLabel}
-        onChange={this.handlechangeall}
-        inputProps={{
-          'aria-label': 'description',
-        }}
-      />
-      <CheckIcon onClick={this.addLabel}/>  
-      </div>
-      
-      <List>
-      {/* {this.state.update ? } */}
-             {this.state.originalLabels.map(labeled => (
-             <div className="input">
-          <ListItem button onClick={() => this.handleListItemClick(labeled)} key={labeled}>
-          <img src={require('../Assets/label.svg')} alt="Logo" id="imageFlex1" />
-            <ListItemText primary={labeled.label} style={{marginLeft:"15%"}} onClick={this.update}/>
-            <EditIcon onClick={this.updateLabel}/>
-          </ListItem>
-          </div>
-        ))}
-       
-    <Divider />
+                <Dialog aria-labelledby="simple-dialog-title" open={this.state.open}>
+                    <DialogTitle id="simple-dialog-title">Edit Labels</DialogTitle>
+                    <div className="input">
+                        <CloseIcon />
+                        <Input
+                            placeholder="Create new label"
+                            // className={classes.input}
+                            name="addLabel"
+                            value={this.state.addLabel}
+                            onChange={this.handlechangeall}
+                            inputProps={{
+                                'aria-label': 'description',
+                            }}
+                        />
+                        <CheckIcon onClick={this.addLabel} />
+                    </div>
 
-        <ListItem autoFocus button onClick={() => this.handleDone}>
-         
-          <ListItemText primary="Done" />
-        </ListItem>
-      </List>
-    </Dialog>
+                    {/* {this.state.update ?
+                        <List>
+
+                            {this.state.originalLabels.map(labeled => (
+                                <div className="input">
+                                    <ListItem button onClick={() => this.handleListItemClick(labeled)} key={labeled}>
+                                        <img src={require('../Assets/label.svg')} alt="Logo" id="imageFlex1" />
+                                        <ListItemText primary={labeled.label} style={{ marginLeft: "15%" }} />
+                                        <CheckIcon onClick={this.updateLabel} />
+                                    </ListItem>
+                                </div>
+                            ))}
+
+                            <Divider />
+
+                            <ListItem autoFocus button onClick={() => this.handleDone}>
+
+                                <ListItemText primary="Done" />
+                            </ListItem>
+                        </List>
+
+                        : */}
+
+                    <List>
+
+                        {this.state.originalLabels.map((labeled, index) => (
+
+                            // this.setState({addLabels:labeled.label})
+
+                            <div className="input" key={index}>
+                                <ListItem button onClick={() => this.handleListItemClick(labeled)}>
+                                {/* <img src={require('../Assets/trash.svg')} alt="Logo" id="imageFlex1" /> */}
+                        {this.state.currentLabel === labeled.id ? <DeleteIcon fontSize="small"/> : <img src={require('../Assets/label.svg')} alt="Logo" id="imageFlex1" /> }
+
+
+
+
+                                <div  className="input1">
+
+                               
+                                    <TextField
+                                    // style={{ marginLeft: "15%" }}
+                                        // placeholder="Create new label"
+                                       
+                                        name="addLabels"
+                                        InputProps={{
+                                            disableUnderline: true
+                                        }}
+                                        defaultValue={labeled.label}
+                                        onChange={this.handlechangeall}
+
+                                        onClick={() => this.changeOnlyOneLabel(labeled.id)}
+                                    />
+                                     </div>
+                                    {this.state.currentLabel === labeled.id ? <CheckIcon onClick={this.updateLabel} /> : <EditIcon onClick={ ()=>this.changeOnlyOneLabel(labeled.id)} />}
+                                    {/*                         
+                    <ListItemText primary={labeled.label} style={{ marginLeft: "15%" }} onClick={this.update} />}
+                                        {this.state.update ? <CheckIcon onClick={this.updateLabel} /> : <EditIcon onClick={this.update} />} */}
+                                </ListItem>
+                            </div>
+                        ))}
+
+
+                        <Divider />
+
+                        <ListItem autoFocus button onClick={this.handleDone}>
+
+                            <ListItemText primary="Done" />
+                        </ListItem>
+                    </List>
+
+
+
+                </Dialog>
             </div>
 
 
