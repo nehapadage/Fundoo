@@ -28,11 +28,11 @@ class ChildLabel extends Component {
 
         this.state = {
             originalLabels: [],
-            data: [],
+            // data: [],
             open: false,
             addLabel: "",
             addLabels: "",
-            update: false,
+            // update: false,
             currentLabel: null
         };
 
@@ -57,11 +57,11 @@ class ChildLabel extends Component {
             console.log("Response in Get All LABELS--->", res);
 
             console.log("Only data", res.data.data.details);
-
+this.setState({ originalLabels: [] })
             this.setState({ originalLabels: res.data.data.details })
 
             // this.setState({ data : res.data.data.data })
-            this.setState({ data: [] })
+            
             // this.setState({ originalData: res.data.data.data })
 
             console.log("Original data labels is", this.state.originalLabels);
@@ -107,6 +107,7 @@ class ChildLabel extends Component {
         console.log("avxvxfg");
 
         this.setState({ open: !this.state.open })
+        this.props.history.push('/dashboard/notes')
 
     }
 
@@ -117,7 +118,7 @@ class ChildLabel extends Component {
             "userId": localStorage.getItem('userId'),
             "isDeleted": false
         }
-        userService.addLabelOnNote(noteData).then((data) => {
+        userService.addLabel(noteData).then((data) => {
             console.log("Responce in add Label On Note in child label", data);
             this.getLabel();
             this.setState({ addLabel: "" })
@@ -128,42 +129,75 @@ class ChildLabel extends Component {
         })
     }
 
-    updateLabel = () => {
+    updateLabel = (label) => {
+        console.log("label in update",label);
+        
         let noteData = {
             // "noteIdList": [this.state.originalLabels.id],
             "label": this.state.addLabels,
             "userId": localStorage.getItem('userId'),
-            "isDeleted": false
+            "isDeleted": false,
+            "id": label.id
         }
-        userService.updateLabelOnNote(noteData).then((data) => {
+        userService.updateLabel(noteData).then((data) => {
             console.log("Responce in update Label On Note in child label", data);
         
-           
+            this.getLabel();
             // this.setState({ addLabel: "" })
             // this.props.refresh()
         }).catch((err) => {
             console.log(err);
 
         })
-        this.getLabel();
+
+      
 
         this.setState({ currentLabel: null })
 
     }
 
-    update = () => {
-        this.setState({ update: !this.state.update })
+    deleteLabel= (label)=>{
+        console.log("label in update",label);
+        
+        let noteData = {
+            // // "noteIdList": [this.state.originalLabels.id],
+            // "label": this.state.addLabels,
+            // "userId": localStorage.getItem('userId'),
+            // "isDeleted": false,
+            "id": label.id
+        }
+        userService.deleteLabel(noteData).then((data) => {
+            console.log("Responce in delete Label On Note in child label", data);
+        
+            this.getLabel();
+
+            // this.setState({ addLabel: "" })
+            // this.props.refresh()
+        }).catch((err) => {
+            console.log(err);
+
+        })
+      
+        this.setState({ currentLabel: null })
     }
+
+    // update = () => {
+    //     this.setState({ update: !this.state.update })
+    // }
 
     changeOnlyOneLabel = (labelId) => {
         this.setState({ currentLabel: labelId })
     }
 
+    close=()=>{
+        this.setState({addLabel:""})
+    }
+
     render() {
         console.log("In Child Label Note");
 
-
         return (
+
             <div id="notek">
                 {/* <div> */}
                 {/* <TakeNote refresh={this.getNotes} /> */}
@@ -173,10 +207,10 @@ class ChildLabel extends Component {
                 {/* <div >  */}
                 {/* <DisplayNotes notes={this.state.data} ref={this.DisplayNotes} Refresh={this.getNotes} /> */}
                 {/* </div>  */}
-                <Dialog aria-labelledby="simple-dialog-title" open={this.state.open}>
+                <Dialog aria-labelledby="simple-dialog-title" open={this.state.open} className="dialog">
                     <DialogTitle id="simple-dialog-title">Edit Labels</DialogTitle>
                     <div className="input">
-                        <CloseIcon />
+                        <CloseIcon onClick={this.close}/>
                         <Input
                             placeholder="Create new label"
                             // className={classes.input}
@@ -222,7 +256,7 @@ class ChildLabel extends Component {
                             <div className="input" key={index}>
                                 <ListItem button onClick={() => this.handleListItemClick(labeled)}>
                                 {/* <img src={require('../Assets/trash.svg')} alt="Logo" id="imageFlex1" /> */}
-                        {this.state.currentLabel === labeled.id ? <DeleteIcon fontSize="small"/> : <img src={require('../Assets/label.svg')} alt="Logo" id="imageFlex1" /> }
+                        {this.state.currentLabel === labeled.id ? <DeleteIcon onClick={()=>this.deleteLabel(labeled)} fontSize="small"/> : <img src={require('../Assets/label.svg')} alt="Logo" id="imageFlex1" /> }
 
 
 
@@ -244,7 +278,7 @@ class ChildLabel extends Component {
                                         onClick={() => this.changeOnlyOneLabel(labeled.id)}
                                     />
                                      </div>
-                                    {this.state.currentLabel === labeled.id ? <CheckIcon onClick={this.updateLabel} /> : <EditIcon onClick={ ()=>this.changeOnlyOneLabel(labeled.id)} />}
+                                    {this.state.currentLabel === labeled.id ? <CheckIcon onClick={()=>this.updateLabel(labeled)} /> : <EditIcon onClick={ ()=>this.changeOnlyOneLabel(labeled.id)} />}
                                     {/*                         
                     <ListItemText primary={labeled.label} style={{ marginLeft: "15%" }} onClick={this.update} />}
                                         {this.state.update ? <CheckIcon onClick={this.updateLabel} /> : <EditIcon onClick={this.update} />} */}

@@ -7,3 +7,10 @@
 .input1{
    margin-left: 10%;
 }
+
+.dialog{
+    /* margin-top: 5%; */
+    margin: auto auto;
+    height:70vh;
+    overflow-y:scroll
+}

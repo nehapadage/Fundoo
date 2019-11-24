@@ -68,7 +68,9 @@ class Notes extends Component {
             color: this.props.Color,
             reminder: this.props.Reminder,
             noteId: this.props.NoteId,
-            chipRemind:false
+            chipRemind: false,
+            wholeData: this.props.note,
+            Event:""
         };
 
         // this.displayNotes=React.createRef()
@@ -119,11 +121,62 @@ class Notes extends Component {
         this.setState({ flag: !this.state.flag })
     }
 
-    handleReminderClick = () => {
-     this.setState({chipRemind:true})   
+    handleReminderClick =async(event) => {
+        console.log("In handle Reminder Click");
+        console.log("Event is",event.currentTarget);
+
+
+         this.setState({ chipRemind: !this.state.chipRemind})
+         await this.setState({Event:event.target})
+
+        console.log("status of reminder chip", this.state.chipRemind);
+        console.log("status of event", this.state.Event);
+        
+
     }
 
     handleReminderDelete = () => {
+        console.log("In Reminder delete");
+
+        var Data = {
+            "noteIdList": [this.state.noteId]
+        }
+        userService.removeReminder(Data).then(res => {
+
+            console.log("Responce in deleting reminder notes", res);
+
+            this.props.Refresh()
+
+        })
+            .catch(err => {
+                console.log("Error in updating notes");
+
+            })
+
+
+
+    }
+
+    handleLabel = () => {
+        console.log("In handle label");
+
+    }
+
+    handleLabelDelete = (id) => {
+        console.log("In label delete");
+
+        let requestObject = {
+            "noteId": [this.state.noteId],
+            "id": id
+        }
+        userService.deleteLabelFromNotes(requestObject).then((data) => {
+            console.log("label deleted", data);
+            this.props.Refresh()
+
+        }).catch((err) => {
+            console.log(err);
+
+        })
 
     }
 
@@ -174,17 +227,48 @@ class Notes extends Component {
                                         />
                                         {/* {this.props.Description} */}
                                     </div>
+                                    {this.state.reminder.length > 0 && <div id="reminder">
+                                    {/* {this.props.Reminder} */}
+
+                                    {/* <img src={require("../Assets/watch.svg")} alt="" />{this.state.reminder.toString().slice (4,10)+" "+this.state.reminder.toString().slice (16,21)} */}
+                                  
+                                    <Chip
+                                        icon={<img src={require("../Assets/watch.svg")} alt="" />}
+                                        label={this.state.reminder.toString().slice(4, 10) + " " + this.state.reminder.toString().slice(16, 21)}
+                                        onClick={(event)=>this.handleReminderClick(event)}
+                                        // onClick={<Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />}
+                                        // onClick={<Reminder/>}
+                                        onDelete={this.handleReminderDelete}
+                                    />
+                                   
+                                </div>}
+                                <div id="label1">
+                                    {this.state.wholeData.noteLabels.map(item => (
+
+                                        <Chip
+                                            label={item.label}
+                                            onClick={this.handleLabel}
+
+                                            onDelete={() => this.handleLabelDelete(item.id)}
+                                        />
+                                    ))}
+                                </div>
+
+                                    
+
+
 
                                 </div>
-                                                                        {/* chipRemind={this.state.chipRemind} */}
-                                <div className="displayButton">   
+                                {/* chipRemind={this.state.chipRemind} */}
+                                <div className="displayButton">
                                     {/* <div > */}
-                                    <Reminder Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId}  REFRESH={this.handleRefresh} />
+
+                                    <Reminder chipRemind={this.state} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                     <Collaborator />
                                     <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                     <Image />
                                     <Archive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
-                                    <More Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
+                                    <More note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
 
 
 
@@ -227,27 +311,59 @@ class Notes extends Component {
                                     {/* {this.props.Reminder} */}
 
                                     {/* <img src={require("../Assets/watch.svg")} alt="" />{this.state.reminder.toString().slice (4,10)+" "+this.state.reminder.toString().slice (16,21)} */}
-
+                                  
                                     <Chip
                                         icon={<img src={require("../Assets/watch.svg")} alt="" />}
                                         label={this.state.reminder.toString().slice(4, 10) + " " + this.state.reminder.toString().slice(16, 21)}
-                                        onClick={this.handleReminderClick}
+                                        onClick={(event)=>this.handleReminderClick(event)}
+                                        // onClick={<Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />}
                                         // onClick={<Reminder/>}
                                         onDelete={this.handleReminderDelete}
                                     />
+                                   
                                 </div>}
+
+                                {/* {this.state.wholeData.noteLabels.map(item=>
+                                     (item.length > 0 && <div id="reminder">
+                                     {/* {this.props.Reminder} */}
+
+                                {/* <img src={require("../Assets/watch.svg")} alt="" />{this.state.reminder.toString().slice (4,10)+" "+this.state.reminder.toString().slice (16,21)} */}
+                                {/*  
+                                     <Chip
+                                         // icon={<img src={require("../Assets/watch.svg")} alt="" />}
+                                         label={item.label}
+                                         // onClick={this.handleReminderClick}
+                                         // onClick={<Reminder/>}
+                                         // onDelete={this.handleReminderDelete}
+                                     />
+                                 </div>)
+                                // )} */}
+                                <div id="label">
+                                    {this.state.wholeData.noteLabels.map(item => (
+
+                                        <Chip
+                                            label={item.label}
+                                            onClick={this.handleLabel}
+
+                                            onDelete={() => this.handleLabelDelete(item.id)}
+                                        />
+                                    ))}
+                                </div>
+
+
+
 
 
                             </div>
 
                             <div className="displayButton">
                                 {/* <div > */}
-                                <Reminder Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
+                                <Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                 <Collaborator />
                                 <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                 <Image />
                                 <Archive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
-                                <More Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
+                                <More note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
 
 
 

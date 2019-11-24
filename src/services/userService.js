@@ -195,7 +195,7 @@ class user {
         return remindered;  
     }
 
-    addLabelOnNote(noteData){
+    addLabel(noteData){
         console.log("addLabelOnNote in service",noteData);
         
         var addLabelOnNotes = axios.post('http://fundoonotes.incubation.bridgelabz.com/api/noteLabels', noteData, {
@@ -206,9 +206,11 @@ class user {
 
         return addLabelOnNotes;  
     }
+                                                        //  POST /notes/{noteId}/addLabelToNotes/{lableId}/add
+    
 
-    deleteLabelFromNote(requestObject){
-        var deleteLabelFromNotes = axios.delete('http://fundoonotes.incubation.bridgelabz.com/api/noteLabels/{id}/deleteNoteLabel',requestObject,  {
+    deleteLabel(id){
+        var deleteLabelFromNotes = axios.delete('http://fundoonotes.incubation.bridgelabz.com/api/noteLabels/'+id.id+'/deleteNoteLabel',id,  {
             headers: {
                 authorization: token
             }
@@ -217,10 +219,10 @@ class user {
         return deleteLabelFromNotes;  
     }
      
-    updateLabelOnNote(noteData){
+    updateLabel(noteData){
         console.log("update Label On Note",noteData);
         
-        var updateLabelOnNotes = axios.post('http://fundoonotes.incubation.bridgelabz.com/api/noteLabels/{id}/updateNoteLabel',noteData,  {
+        var updateLabelOnNotes = axios.post('http://fundoonotes.incubation.bridgelabz.com/api/noteLabels/'+noteData.id+'/updateNoteLabel',noteData,  {
             headers: {
                 authorization: token
             }
@@ -230,8 +232,74 @@ class user {
     }
 
 
+    getNotesByLabel(label){
+        console.log("get Notes By Label in userservice",label); 
+        
+        var getNotesByLabels = axios.post('http://fundoonotes.incubation.bridgelabz.com/api/notes/getNotesListByLabel/'+label,label, {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return getNotesByLabels;     
+    }
+
+    addLabelOnNote(noteData){
+        console.log("addLabelOnNote in service",noteData);
+        
+        var addLabelOnNotes = axios.post('http://fundoonotes.incubation.bridgelabz.com/api/notes/'+noteData.noteId+'/addLabelToNotes/'+noteData.id+'/add', noteData, {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return addLabelOnNotes;  
+    }
+
+    deleteLabelFromNotes(noteData){
+        console.log("addLabelOnNote in service",noteData);
+        
+        var label = axios.post('http://fundoonotes.incubation.bridgelabz.com/api/notes/'+noteData.noteId+'/addLabelToNotes/'+noteData.id+'/remove', noteData, {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return label;  
+    }
+
+    removeReminder(Data){
+        console.log("addLabelOnNote in service",Data);
+        
+        var label = axios.post('http://fundoonotes.incubation.bridgelabz.com/api/notes/removeReminderNotes', Data, {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return label;    
+    }
+
+    setProfile(data){
+        console.log("In set profile in userService",data);
+        var profile = axios.post('http://fundoonotes.incubation.bridgelabz.com/api/user/uploadProfileImage', data, {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return profile;   
+    }
 
 
-}
+
+    
+
+ }
+
+
+
+
+
 
 module.exports = new user();

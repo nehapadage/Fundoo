@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ImageUploader from 'react-images-upload';
+import Cropper from 'react-cropper';
 import './Dashboard.css'
 import ChildNote from '../Components/ChildNote'
 import userService from '../services/userService'
@@ -13,6 +15,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
 
 import { createMuiTheme, MuiThemeProvider, Button } from "@material-ui/core";
 import Popper from '@material-ui/core/Popper';
@@ -29,7 +33,9 @@ const theme = createMuiTheme({
     MuiDrawer: {
       paper: {
         top: "65px",
-        width: "250px"
+        width: "250px",
+        height: "90vh",
+        overflowY: "scroll"
       }
 
     },
@@ -88,11 +94,25 @@ class Dashboard extends Component {
       lastName: "",
       email: "",
       originalData: [],
-      data: []
+      data: [],
+      searchText: "",
+      imageFlag: false,
+      pictures: [],
+      dialog: false,
+      imageName: '',
+      Event: '',
+      event:'',
+      List:false
 
     }
 
+    // this.onDrop = this.onDrop.bind(this);
+
     this.DisplayNotes = React.createRef()
+  }
+
+  handlechangeall = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
   }
 
   componentDidMount() {
@@ -159,12 +179,18 @@ class Dashboard extends Component {
     this.props.history.push('/dashboard/trashNotes')
   }
 
-  getRemind=()=>{
+  getRemind = () => {
     this.props.history.push('/dashboard/remindNotes')
   }
 
-  getLabels=()=>{
+  getLabels = () => {
     this.props.history.push('/dashboard/labelNotes')
+  }
+
+  getOneLabel = (labelName) => {
+    console.log("Label name in dashboard", labelName);
+
+    this.props.history.push('/dashboard/label/' + labelName)
   }
 
 
@@ -177,9 +203,11 @@ class Dashboard extends Component {
 
   changeGrid = () => {
     this.setState({ grid: !this.state.grid })
+    this.setState({List:!this.state.List})
+    localStorage.setItem('List',this.state.List)
   }
 
-  handleClick = event => {
+  handleProfileClick = event => {
     const { currentTarget } = event;
     this.setState(state => ({
       anchorEl: currentTarget,
@@ -202,6 +230,95 @@ class Dashboard extends Component {
   // }
 
 
+  handleChangeProfile = () => {
+    this.setState({ imageFlag: !this.state.imageFlag })
+  }
+
+  //   onDrop=(event)=> {
+  //     console.log("Event in ondrop",event);
+
+  //     console.log("Picture before ondrop ",this.state.pictures);
+
+  //     // this.setState({
+  //     //     pictures: this.state.pictures.concat(picture),
+  //     // });
+
+  //     // console.log("Picture after ondrop ",this.state.pictures);
+  // }
+
+  change = async (event) => {
+    console.log("Event in ondrop", event[0]);
+
+    // this.setState({event:event[0].name})
+    // console.log("Picture before ondrop ", this.state.pictures);
+    var reader = new FileReader();
+
+    reader.readAsDataURL(event[0]); // read file as data url
+
+    reader.onload = (event) => { // called once readAsDataURL is completed
+      console.log('event on load',event);
+      
+      const url = event.target.result;
+      this.setState({ Event: url })
+
+    }
+
+    console.log("Final event", this.state.Event);
+
+
+    // await this.setState({
+    //   pictures: this.state.pictures.concat(picture),
+    // });
+
+    // let x = this.state.pictures.concat(File)
+    // console.log("Picture after ondrop ", this.state.pictures);
+    // console.log("Picture after ondrop name ", x[0].name);
+    // this.setState({ imageName: x[0].name })
+
+    await this.setState({ dialog: !this.state.dialog })
+
+    // console.log("Dialog status", this.state.dialog);
+
+
+  }
+
+  crop = () => {
+    console.log("In crop");
+    console.log(this.refs.cropper.getCroppedCanvas().toDataURL());
+
+  }
+
+  setProfile=()=>{
+
+    // var data={
+    //   "status":this.state.Event,
+    //   "type":"formData"
+    // }
+
+    userService.setProfile(this.state.Event).then((res) => {
+      console.log("respnse in setting profile--> ", res)
+
+      // if (res.data.data.success === true) {
+      //     this.setState({ flag1: true })
+      //     // alert(`Registration Successful-----`);
+      //     this.setRedirect();
+      // }
+      // else {
+      //     alert(`Email Already Exists-----`);
+          
+      // }
+  }).catch((err) => {
+      // this.setState({ flag: true })
+      console.log("error in registration--> ", err)
+  })
+
+
+}
+
+
+
+  
+
 
 
 
@@ -209,6 +326,7 @@ class Dashboard extends Component {
 
     console.log("In dashboard");
 
+    var image = 'http://fundoonotes.incubation.bridgelabz.com' + localStorage.getItem('imageUrl');
 
     // let movement = this.state.open ? "movementOn" : "movementOff"
 
@@ -250,11 +368,14 @@ class Dashboard extends Component {
                     <SearchIcon />
                   </div>
                   <InputBase
+                    name="searchText"
+                    value={this.state.searchText}
                     placeholder="Search…"
                     classes={{
                       root: "inputRoot",
                       input: "inputInput",
                     }}
+                    onChange={this.handlechangeall}
                   />
                 </div>
 
@@ -289,13 +410,35 @@ class Dashboard extends Component {
 
 
                 <div>
-                  <IconButton onClick={this.handleClick}>
+                  <IconButton onClick={this.handleProfileClick}>
                     <img src={require('../Assets/profile.png')} alt="Logo" id="profile" />
                   </IconButton>
                 </div>
               </Toolbar>
 
             </AppBar>
+
+            <Dialog aria-labelledby="simple-dialog-title" open={this.state.dialog} className="dialog1" style={{ width: "1200px" }}>
+
+              <DialogTitle id="simple-dialog-title">Select profile photo</DialogTitle>
+              <div>
+                To crop this image, drag the region below and then click "Set as profile photo"
+                    </div>
+              {/* <Cropper
+                // ref={cropper}
+                src={this.state.Event}
+
+                style={{ height: 400, width: '100%' }}
+                // Cropper.js options
+                aspectRatio={16 / 9}
+                guides={false}
+                crop={(event) => this.crop(event)} /> */}
+                <img src={this.state.Event} alt="img"/>
+              {/* <img src={this.state.imageName} alt="Logo" /> */}
+              {/* <img src={image}/> */}
+              <Button onClick={this.setProfile}>Set as profile photo</Button>
+              <button>cancel</button>
+            </Dialog>
 
 
 
@@ -307,8 +450,21 @@ class Dashboard extends Component {
                       <div id="fnlnemail">
                         <MuiThemeProvider theme={theme1}>
                           <div>
-                            <IconButton onClick={this.handleClick}>
-                              <img src={require('../Assets/profile.png')} alt="Logo" id="profile1" />
+                            <IconButton >
+                              {this.state.imageFlag ?
+                                <ImageUploader
+                                  // className="imgupload"
+                                  withIcon={true}
+                                  buttonText='Choose images'
+                                  onChange={(event) => this.change(event)}
+                                  imgExtension={['.jpeg', '.jpg', '.png', '.gif']}
+                                  maxFileSize={5242880}
+                                />
+                                // <input type="file"  alt="img"  onChange={(event) => this.change(event)}/>
+                                : null}
+                              <img src={require('../Assets/profile.png')} alt="Logo" id="profile1" onClick={this.handleChangeProfile} />
+
+                              {/* <img src={require('../Assets/profile.png')} alt="Logo" id="profile1" /> */}
                             </IconButton>
                           </div>
                         </MuiThemeProvider>
@@ -353,7 +509,7 @@ class Dashboard extends Component {
                 paper: "drawerPaper"
               }}
             >
-              <DrawerList labels={this.getLabels} archive={this.getArchive} notes={this.getNotes} trash={this.getTrashNotes} remind={this.getRemind}/>
+              <DrawerList oneLabel={this.getOneLabel} labels={this.getLabels} archive={this.getArchive} notes={this.getNotes} trash={this.getTrashNotes} remind={this.getRemind} />
 
               {/* <List>
             {['Notes', 'Remainders'].map((text, index) => (

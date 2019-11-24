@@ -39,17 +39,43 @@ class Reminder extends Component {
             userReminderDate: "",
             userReminderTime: ""
         };
-    }
+        console.log(" propsin constructor", this.props);
 
-    // componentDidMount(){
-    //     // if(this.props.chipRemind === true){
+    }
+    // componentDidUpdate() {
+    //     console.log(" props ", this.props);
+
+    // }
+
+    // componentWillReceiveProps = () => {
+    //     console.log("In componentWillReceiveProps of reminder");
+    //     console.log("props in reminder are", this.props.event);
+
+    //     if (this.props.chipRemind === false) {
             
-    //     // }
-        
-        
+    //          this.handleClick(!this.props);
+    //     }
+
+
     // }
 
     handleClick = event => {
+        console.log("Handle click called");
+        console.log("Current target b4", event.currentTarget);
+        console.log("State of anchorEl",this.state.anchorEl);
+        console.log("props in reminder are  ********************88", this.props.event);
+        
+
+
+        // this.state={anchorEl: null,
+        //     open: false,
+        //     openChildMenu: false,
+        //     noteLabels: [],
+        //     userReminderDate: "",
+        //     userReminderTime: ""}
+
+        console.log("Current target after", event);
+
         this.setState({
             anchorEl: event.currentTarget, open: true
         });
@@ -107,7 +133,7 @@ class Reminder extends Component {
 
         } /** for reminder setting for next week with time 8 AM */
         else if (requestValue === 3) {
-         
+
             var date = new Date();
             date.setDate(today.getDate() + 8);
             date.setHours(8);
@@ -129,10 +155,10 @@ class Reminder extends Component {
             let noteReminderUpdate = {
                 "noteIdList": [this.props.NoteId],
                 "reminder": [reminderDate],
-            
+
             }
             userService.reminder(noteReminderUpdate).then((res) => {
-                console.log("Response in reminder",res);
+                console.log("Response in reminder", res);
                 // console.log("Only data in reminder",res.config.data);
 
                 this.props.REFRESH()
@@ -151,6 +177,10 @@ class Reminder extends Component {
 
 
     render() {
+        // console.log("props are",this.props);
+        // if(this.props.chipRemind){
+        //     this.handleClick();
+        // }
         // console.log("chip clicked",this.props.chipRemind);
         return (
             <div>
@@ -241,7 +271,7 @@ class Reminder extends Component {
                                             label="Date"
                                             type="date"
                                             value={this.state.userReminderDate}
-                                    onChange={this.handleDate}
+                                            onChange={this.handleDate}
                                             defaultValue="2019-11-18"
                                             className="textField"
                                             InputLabelProps={{

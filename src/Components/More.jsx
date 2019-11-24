@@ -68,7 +68,9 @@ class More extends Component {
             labelArray: [],
             noteLabels: [],
             deleteSnack: false,
-            addLabel:""
+            addLabel: "",
+            check: "",
+            noteLabelArray: []
             // demo: false,
             // demo1: false
         };
@@ -79,12 +81,22 @@ class More extends Component {
         // return (
         console.log("more", event)
         console.log("Props are====>", this.props);
+        console.log("NewProps", this.props.note.noteLabels);
+        this.setState({ noteLabelArray: this.props.note.noteLabels })
         this.setState({ flag: !this.state.flag })
         this.setState({ anchorEl: event.currentTarget })
 
         // );
 
     }
+
+    componentWillReceiveProps(newProps) {
+
+
+
+    }
+
+
 
 
 
@@ -125,6 +137,8 @@ class More extends Component {
 
             this.setState({ labelArray: res.data.data.details })
 
+            // this.props.refresh();
+
         })
             .catch(err => {
                 console.log("Error in add label");
@@ -134,6 +148,7 @@ class More extends Component {
 
     handleClose = () => {
         this.setState({ anchorEl: null, open: false, flag: false });
+        // this.props.refresh();
     }
 
     handleCheck = name => event => {
@@ -144,38 +159,92 @@ class More extends Component {
         this.setState({ [event.target.name]: event.target.value })
     }
 
-    checkedEvent = (event,labelArray) => {
-        if (event.target.checked) {
-            this.setState({ open: false });
+    checkedEvent = (event, labelArray) => {
+        console.log('i am here');
+
+        if (event.target.checked === true) {
+            console.log("Already checked");
             let noteData = {
-                "noteIdList": [this.state.noteId],
-                "labelId": labelArray.id
+                "noteId": [this.state.noteId],
+                "id": labelArray.id,
+                // "label":labelArray.label,
+                // "userId": localStorage.getItem('userId'),
+                // "isDeleted": false,
             }
             userService.addLabelOnNote(noteData).then((data) => {
-                console.log("Responce in add Label On Note",data);
-                // this.props.refresh()
+                console.log("*****************Responce in add Label On Note*************", data);
+                this.props.refresh()
             }).catch((err) => {
                 console.log(err);
 
             })
 
-        } else {
-            for (let i = 0; i < this.state.noteLabels.length; i++) {
+        }
+        else if (event.target.checked === false) {
+            console.log("Unchecked");
+            // deleteLabelFromNotes(noteData){
 
-                if (this.state.noteLabels[i].id === this.state.labelArray.id) {
-                    this.state.noteLabels.splice(i, 1)
+            for (let i = 0; i < this.state.noteLabelArray.length; i++) {
+
+                if (this.state.noteLabelArray[i].id === labelArray.id) {
+                    this.state.noteLabelArray.splice(i, 1)
                 }
             }
-            this.setState({ noteLabels: this.state.noteLabels });
+            this.setState({ noteLabelArray: this.state.noteLabelArray});
+            
             let requestObject = {
-                noteIdList: this.state.noteId,
-                labelId: this.state.labelArray.id
+                "noteId": [this.state.noteId],
+                "id": labelArray.id,
             }
-            userService.deleteLabelFromNote(requestObject).then((data) => {
+            userService.deleteLabelFromNotes(requestObject).then((data) => {
                 console.log("label deleted", data);
-                // this.props.refresh()
+                this.props.refresh()
+                console.log("Refresh called in delete");
+                
+            }).catch((err) => {
+                console.log(err);
+
             })
+
+
+
         }
+        //     console.log("In checked event");
+        //  this.setState({check:labelArray.id})    
+        //     if (event.target.checked) {
+        //         // this.setState({ open: false });
+        //         let noteData = {
+        //             "noteId": [this.state.noteId],
+        //             "id": labelArray.id,
+        //             // "label":labelArray.label,
+        //             // "userId": localStorage.getItem('userId'),
+        //         // "isDeleted": false,
+        //         }
+        //         userService.addLabelOnNote(noteData).then((data) => {
+        //             console.log("*****************Responce in add Label On Note*************",data);
+        //             // this.props.refresh()
+        //         }).catch((err) => {
+        //             console.log(err);
+
+        //         })
+
+        //     } else {
+        //         for (let i = 0; i < this.state.noteLabels.length; i++) {
+
+        //             if (this.state.noteLabels[i].id === this.state.labelArray.id) {
+        //                 this.state.noteLabels.splice(i, 1)
+        //             }
+        //         }
+        //         this.setState({ noteLabels: this.state.noteLabels });
+        //         let requestObject = {
+        //             noteIdList: this.state.noteId,
+        //             labelId: this.state.labelArray.id
+        //         }
+        //         userService.deleteLabelFromNote(requestObject).then((data) => {
+        //             console.log("label deleted", data);
+        //             // this.props.refresh()
+        //         })
+        //     }
 
     }
 
@@ -323,29 +392,30 @@ class More extends Component {
                                         {/* {label} 
                                     </MenuItem> */}
 
-                                    
+
 
                             <MenuList>
-                            <div className="reminderTextStyle">
+                                <div className="reminderTextStyle">
                                     <label>Label note:</label>
                                 </div>
                                 <div className="reminderStyle">
-                                    <TextField 
-                                                placeholder='Enter label name'
-                                                // margin="normal"
-                                                name="label"
-                                                value={this.state.addLabel}
-                                                onChange={this.handlechangeall}
-                                                InputProps={{
-                                                    disableUnderline: true
-                                                }}
-                                            />
-                                            <div id="text1"><SearchIcon /></div>
-                                        </div>                                
-                                        {this.state.labelArray.map((labelObject, index) => (
+                                    <TextField
+                                        placeholder='Enter label name'
+                                        // margin="normal"
+                                        name="label"
+                                        value={this.state.addLabel}
+                                        onChange={this.handlechangeall}
+                                        InputProps={{
+                                            disableUnderline: true
+                                        }}
+                                    />
+                                    <div id="text1"><SearchIcon /></div>
+                                </div>
+                                {this.state.labelArray.map((labelObject, index) => (
                                     <div className="labelPopover" key={index}>
                                         <Checkbox
-                                            checked={this.state.noteLabels.find((choice) => choice.id === labelObject.id)}
+                                            checked={this.state.noteLabelArray.find((choice) => choice.id === labelObject.id)}
+                                            // checked={this.state.check===labelObject.id}
                                             onClick={(event) => this.checkedEvent(event, labelObject)}
                                         />
                                         <label className="labelNameStyle" >{labelObject.label}</label>

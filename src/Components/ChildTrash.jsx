@@ -51,7 +51,7 @@ class ChildTrash extends Component {
         return (
             <div id="notek">
                 {/* <div> */}
-                <TakeNote refresh={this.getNotes} />
+                {/* <TakeNote refresh={this.getNotes} /> */}
                 {/* </div> */}
 
                 {/* id="display" */}

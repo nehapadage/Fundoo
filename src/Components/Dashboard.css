@@ -101,7 +101,7 @@
     display: 'flex';
     align-Items: 'center';
     justify-Content: 'center';
-
+    cursor: pointer;
 }
 
 .inputRoot {
@@ -122,12 +122,13 @@
 .drawer {
 
     width: drawerWidth;
-    flex-shrink: 0,
-
+    flex-shrink: 0;
+     
 }
 
 .drawerPaper {
     width: drawerWidth;
+   
 }
 
 #imageFlex1 {
@@ -139,6 +140,7 @@
     display: flex; 
     font-family: initial;
     font-size: large; */
+    width: 47px;
     color: #5f6368;
     cursor: default;
     letter-spacing: .07272727em;
@@ -221,6 +223,14 @@
     /* outline: none; */
     white-space: pre-wrap;
     word-wrap: break-word;
+}
+
+.imgupload{
+    display: none;
+}
+
+.dialog1{
+    /* width: 500px; */
 }
 
 

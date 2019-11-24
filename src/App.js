@@ -10,6 +10,7 @@ import ChildArchive from './Components/ChildArchive'
 import ChildTrash from './Components/ChildTrash'
 import ChildRemind from './Components/ChildRemind'
 import ChildLabel from './Components/ChildLabel'
+import Label from './Components/Label'
 import './App.css';
 
 
@@ -37,6 +38,7 @@ class App extends Component {
             <Route path='/dashboard/trashNotes' component={ChildTrash} />
             <Route path='/dashboard/remindNotes' component={ChildRemind} />
             <Route path='/dashboard/labelNotes' component={ChildLabel} />
+            <Route path='/dashboard/label/:username' component={Label} />
             {/* <Route path='/dashboard' exact component={Dashboard} /> */}
            
           </Router>
