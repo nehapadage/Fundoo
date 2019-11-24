@@ -102,9 +102,11 @@ class Dashboard extends Component {
       imageName: '',
       Event: '',
       event:'',
-      List:false
+     
 
     }
+
+   
 
     // this.onDrop = this.onDrop.bind(this);
 
@@ -201,10 +203,17 @@ class Dashboard extends Component {
     this.setState({ open: !this.state.open })
   }
 
-  changeGrid = () => {
+  changeGrid =() => {
     this.setState({ grid: !this.state.grid })
-    this.setState({List:!this.state.List})
-    localStorage.setItem('List',this.state.List)
+
+    localStorage.setItem('Grid',this.state.grid)
+
+    // this.setState({List:!this.state.List})
+
+    //  localStorage.setItem('List',!(localStorage.getItem('List')))
+
+    this.props.history.push('/dashboard/notes')
+    
   }
 
   handleProfileClick = event => {

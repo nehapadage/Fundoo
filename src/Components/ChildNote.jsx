@@ -67,7 +67,7 @@ class ChildNote extends Component {
 
     render() {
         console.log("In Child Note");
-        console.log("Props in child note", this.props.notes);
+        // console.log("Props in child note", this.props.notes);
 
         return (
             <div id="notek">
