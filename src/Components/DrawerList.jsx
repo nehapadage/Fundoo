@@ -20,7 +20,7 @@ class DrawerList extends Component {
       remind: false,
       label: false,
       labels:false,
-      originalLabels: [],
+      originalLabels:this.props.Labels,
       currentLabel: null
     }
 
@@ -28,49 +28,49 @@ class DrawerList extends Component {
 
   componentDidMount() {
     this.setState({ notes: true, archive: false, trash: false, remind: false, label: false })
-    this.getLabel();
+    // this.getLabel();
   }
 
-  getLabel = () => {
+  // getLabel = () => {
 
 
 
-    userService.getLabels().then(res => {
-      console.log("Response in Get All LABELS--->", res);
+  //   userService.getLabels().then(res => {
+  //     console.log("Response in Get All LABELS--->", res);
 
-      console.log("Only data", res.data.data.details);
-      this.setState({ originalLabels: [] })
-      this.setState({ originalLabels: res.data.data.details })
+  //     console.log("Only data", res.data.data.details);
+  //     this.setState({ originalLabels: [] })
+  //     this.setState({ originalLabels: res.data.data.details })
 
-      // this.setState({ data : res.data.data.data })
+  //     // this.setState({ data : res.data.data.data })
 
-      // this.setState({ originalData: res.data.data.data })
+  //     // this.setState({ originalData: res.data.data.data })
 
-      console.log("Original labels in drawer list", this.state.originalLabels);
+  //     console.log("Original labels in drawer list", this.state.originalLabels);
 
-      // var arr = []
+  //     // var arr = []
 
-      // arr = this.state.originalLabels.map(key =>
+  //     // arr = this.state.originalLabels.map(key =>
 
-      //     // console.log("In Filter"); 
+  //     //     // console.log("In Filter"); 
 
-      //    key.label
+  //     //    key.label
 
-      // );
+  //     // );
 
-      // console.log("Array is", arr);
+  //     // console.log("Array is", arr);
 
-      // this.setState({ data: arr })
+  //     // this.setState({ data: arr })
 
-      // console.log("mapped label Array is", this.state.data);
+  //     // console.log("mapped label Array is", this.state.data);
 
 
-    })
-      .catch(err => {
-        console.log("Error in get all notes");
-      })
+  //   })
+  //     .catch(err => {
+  //       console.log("Error in get all notes");
+  //     })
 
-  }
+  // }
 
 
   archive = async () => {
@@ -121,6 +121,10 @@ class DrawerList extends Component {
 
   render() {
 
+    console.log("In render of drawer list",this.state.originalLabels);
+    console.log("In render of drawer list**********",this.props.Labels);
+    
+
     var style = this.state.notes ? "notes" : null;
     var style1 = this.state.archive ? "notes" : null;
     var style2 = this.state.trash ? "notes" : null;
@@ -156,7 +160,7 @@ class DrawerList extends Component {
         <Typography id="title1" variant="h6" color="inherit" noWrap>Labels</Typography>
 
 
-        {this.state.originalLabels.map((labeled, index) => (
+        {this.props.Labels.map((labeled, index) => (
 
           // this.setState({addLabels:labeled.label})
 

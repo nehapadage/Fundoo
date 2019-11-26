@@ -22,6 +22,7 @@ import { createMuiTheme, MuiThemeProvider, Button } from "@material-ui/core";
 import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
+import { file } from '@babel/types';
 
 
 
@@ -54,11 +55,17 @@ const theme = createMuiTheme({
       root: {
         marginTop: "0px !important"
       }
+    },
+    MuiInputBase:{
+      root:{
+        width: "100%"
+      }
     }
   }
 
 });
 
+ 
 
 
 const theme1 = createMuiTheme({
@@ -74,6 +81,10 @@ const theme1 = createMuiTheme({
   },
 
 });
+
+
+
+
 
 
 
@@ -102,6 +113,8 @@ class Dashboard extends Component {
       imageName: '',
       Event: '',
       event:'',
+      propic:"",
+      originalLabels:[]
      
 
     }
@@ -127,6 +140,48 @@ class Dashboard extends Component {
     });
 
     // this.getNotes();
+    this.getLabel();
+
+  }
+
+  getLabel = () => {
+
+
+
+    userService.getLabels().then(res => {
+      console.log("Response in Get All LABELS in dashboard--->", res);
+
+      console.log("Only data", res.data.data.details);
+      // this.setState({ originalLabels: [] })
+      this.setState({ originalLabels: res.data.data.details })
+
+      // this.setState({ data : res.data.data.data })
+
+      // this.setState({ originalData: res.data.data.data })
+
+      console.log("Original labels in drawer list", this.state.originalLabels);
+
+      // var arr = []
+
+      // arr = this.state.originalLabels.map(key =>
+
+      //     // console.log("In Filter"); 
+
+      //    key.label
+
+      // );
+
+      // console.log("Array is", arr);
+
+      // this.setState({ data: arr })
+
+      // console.log("mapped label Array is", this.state.data);
+
+
+    })
+      .catch(err => {
+        console.log("Error in get all notes");
+      })
 
   }
 
@@ -200,7 +255,10 @@ class Dashboard extends Component {
 
 
   toggleDrawer = () => {
-    this.setState({ open: !this.state.open })
+    this.setState({open: !this.state.open })
+    console.log("State of drawer",this.state.open);
+    
+    localStorage.setItem('Drawer',this.state.open)
   }
 
   changeGrid =() => {
@@ -256,7 +314,14 @@ class Dashboard extends Component {
   // }
 
   change = async (event) => {
+    var fil = document.getElementById("myFile");
+   console.log("File",fil);
+   
+    console.log(" select file event ",event);
+    
     console.log("Event in ondrop", event[0]);
+
+    this.setState({event:event[0]})
 
     // this.setState({event:event[0].name})
     // console.log("Picture before ondrop ", this.state.pictures);
@@ -269,10 +334,18 @@ class Dashboard extends Component {
       
       const url = event.target.result;
       this.setState({ Event: url })
+      console.log("Final event", this.state.Event);
 
+      this.setState({imageFlag:!this.state.imageFlag})
+      this.setState({pop:!this.state.pop})
+
+     
     }
 
-    console.log("Final event", this.state.Event);
+   
+   
+
+    
 
 
     // await this.setState({
@@ -297,15 +370,41 @@ class Dashboard extends Component {
 
   }
 
-  setProfile=()=>{
+  setProfile=async()=>{
 
     // var data={
     //   "status":this.state.Event,
     //   "type":"formData"
     // }
 
-    userService.setProfile(this.state.Event).then((res) => {
+      // this.b64toBlob(this.state.Event)
+      // console.log("B64 conversion",this.b64toBlob(this.state.Event));
+      
+
+    console.log("Final event in set profile", this.state.Event);
+
+    var pic = new FormData();
+    console.log("formdata before append",pic);
+
+    
+    
+    await pic.append('file',this.state.event);
+
+    // pic.append('file', pic)
+    console.log(" appended ",pic.append('file',this.state.event));
+
+   await this.setState({propic:pic})
+
+    console.log("Propic",this.state.propic);
+    
+    
+
+    userService.setProfile(this.state.propic).then((res) => {
       console.log("respnse in setting profile--> ", res)
+
+      localStorage.setItem('imageUrl',res.data.status.imageUrl)
+
+      this.setState({dialog:!this.state.dialog})
 
       // if (res.data.data.success === true) {
       //     this.setState({ flag1: true })
@@ -324,6 +423,35 @@ class Dashboard extends Component {
 
 }
 
+cancel=()=>{
+  this.setState({dialog:!this.state.dialog})
+ 
+}
+
+// b64toBlob(b64Data, contentType, sliceSize) {
+//   contentType = contentType || '';
+//   sliceSize = sliceSize || 512;
+
+//   var byteCharacters = atob(b64Data);
+//   var byteArrays = [];
+
+//   for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+//       var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+//       var byteNumbers = new Array(slice.length);
+//       for (var i = 0; i < slice.length; i++) {
+//           byteNumbers[i] = slice.charCodeAt(i);
+//       }
+
+//       var byteArray = new Uint8Array(byteNumbers);
+
+//       byteArrays.push(byteArray);
+//   }
+
+// var blob = new Blob(byteArrays, {type: contentType});
+// return blob;
+// }
+
 
 
   
@@ -335,7 +463,7 @@ class Dashboard extends Component {
 
     console.log("In dashboard");
 
-    var image = 'http://fundoonotes.incubation.bridgelabz.com' + localStorage.getItem('imageUrl');
+    var image = 'http://fundoonotes.incubation.bridgelabz.com/' + localStorage.getItem('imageUrl');
 
     // let movement = this.state.open ? "movementOn" : "movementOff"
 
@@ -420,19 +548,21 @@ class Dashboard extends Component {
 
                 <div>
                   <IconButton onClick={this.handleProfileClick}>
-                    <img src={require('../Assets/profile.png')} alt="Logo" id="profile" />
+                    <img src={image} alt="Logo" id="profile" />
                   </IconButton>
                 </div>
               </Toolbar>
 
             </AppBar>
 
-            <Dialog aria-labelledby="simple-dialog-title" open={this.state.dialog} className="dialog1" style={{ width: "1200px" }}>
-
-              <DialogTitle id="simple-dialog-title">Select profile photo</DialogTitle>
-              <div>
+            <Dialog aria-labelledby="simple-dialog-title" open={this.state.dialog} className="dialog1">
+            <div id="simple-dialog-title" style={{width:'50%', height:'50%'}}>
+              <div id="title">
+              <DialogTitle>Selected profile photo</DialogTitle>
+              </div>
+              {/* <div>
                 To crop this image, drag the region below and then click "Set as profile photo"
-                    </div>
+                    </div> */}
               {/* <Cropper
                 // ref={cropper}
                 src={this.state.Event}
@@ -442,11 +572,20 @@ class Dashboard extends Component {
                 aspectRatio={16 / 9}
                 guides={false}
                 crop={(event) => this.crop(event)} /> */}
+                <div id="image" style={{width:'100%', height:'100%'}} >
                 <img src={this.state.Event} alt="img"/>
+                </div>
               {/* <img src={this.state.imageName} alt="Logo" /> */}
               {/* <img src={image}/> */}
+              <div id="buttons">
+                <div id="set">
               <Button onClick={this.setProfile}>Set as profile photo</Button>
-              <button>cancel</button>
+              </div>
+              <div>
+              <button onClick={this.cancel}>cancel</button>
+              </div>
+              </div>
+              </div>
             </Dialog>
 
 
@@ -466,18 +605,20 @@ class Dashboard extends Component {
                                   withIcon={true}
                                   buttonText='Choose images'
                                   onChange={(event) => this.change(event)}
+                                  id="myFile"
                                   imgExtension={['.jpeg', '.jpg', '.png', '.gif']}
                                   maxFileSize={5242880}
+                                  
                                 />
                                 // <input type="file"  alt="img"  onChange={(event) => this.change(event)}/>
-                                : null}
-                              <img src={require('../Assets/profile.png')} alt="Logo" id="profile1" onClick={this.handleChangeProfile} />
+                                : <img src={image} alt="Logo" id="profile1" onClick={this.handleChangeProfile} />}
+                              
 
                               {/* <img src={require('../Assets/profile.png')} alt="Logo" id="profile1" /> */}
                             </IconButton>
                           </div>
                         </MuiThemeProvider>
-
+                          {/* <input type="file" onClick={(event) => this.change(event)}></input> */}
 
                         <div>
                           {this.state.firstName + " " + this.state.lastName}
@@ -518,7 +659,7 @@ class Dashboard extends Component {
                 paper: "drawerPaper"
               }}
             >
-              <DrawerList oneLabel={this.getOneLabel} labels={this.getLabels} archive={this.getArchive} notes={this.getNotes} trash={this.getTrashNotes} remind={this.getRemind} />
+              <DrawerList Labels={this.state.originalLabels} oneLabel={this.getOneLabel} labels={this.getLabels} archive={this.getArchive} notes={this.getNotes} trash={this.getTrashNotes} remind={this.getRemind} />
 
               {/* <List>
             {['Notes', 'Remainders'].map((text, index) => (

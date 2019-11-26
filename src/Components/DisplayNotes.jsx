@@ -130,6 +130,8 @@ class DisplayNotes extends Component {
 
 
         return (
+
+            
             <Masonry className="cardsView">
                 {mapCards}
                 {/* <Notes filteredData={this.state.data}/> */}

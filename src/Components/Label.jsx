@@ -12,20 +12,30 @@ class Label extends Component {
 
         this.state = {
             originalData: [],
-            data: []
+            data: [],
+            username:""
         };
 
     }
 
-    componentDidMount() {
-        this.getNotesByLabel();
-    }
+    // componentDidMount() {
+    //     this.getNotesByLabel();
+    // }
+
+    componentDidUpdate = async (prevProps)=> {
+        // only update chart if the data has changed
+        if (prevProps !== this.props) {
+         await   this.setState({username:this.props.match.params.username}) ;
+         this.getNotesByLabel();
+        }
+       
+      }
 
     getNotesByLabel = () => {
 
-        var label=this.props.match.params.username;
+       
 
-        userService.getNotesByLabel(label).then(res => {
+        userService.getNotesByLabel(this.state.username).then(res => {
             console.log("Response in get Notes By Label--->", res);
 
             console.log("Only data--->", res.data.data.data);

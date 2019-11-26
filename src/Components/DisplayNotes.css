@@ -1,11 +1,12 @@
 .cardsView{
     width: 75%;
-    margin-left: 23%;
+    margin-left: 18%;
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 2%;
     margin-top: 2%;
 }
+
 
 
 #movementOff {

@@ -73,7 +73,7 @@
     /* color: black;
     display: flex;
  */
- font-size: xx-large;
+ font-size: x-large;
  /* background-color: greenyellow; */
  margin-top: -6%;
 }
@@ -229,8 +229,28 @@
     display: none;
 }
 
-.dialog1{
-    /* width: 500px; */
+
+
+#simple-dialog-title{
+    display: flex;
+    flex-direction: column ;
+}
+
+#title{
+    display: flex;
+    flex-direction:row ;
+    margin-top: 2%;
+}
+
+#buttons{
+    display: flex;
+    flex-direction:column ;
+}
+
+#set{
+    display: flex;
+    flex-direction:row ;
+    width:250px
 }
 
 

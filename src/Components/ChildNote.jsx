@@ -32,7 +32,7 @@ class ChildNote extends Component {
 
             // this.setState({ data : res.data.data.data })
             this.setState({ data: [] })
-            this.setState({ originalData: res.data.data.data })
+            this.setState({ originalData: res.data.data.data.reverse()})
 
             console.log("Original data is", this.state.originalData);
 

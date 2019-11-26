@@ -109,6 +109,18 @@ class user {
 
     }
 
+    unArchiveNote(data){
+        console.log("unarchive note data in services--> ", data)
+        console.log("Token in unarchive", token);
+
+
+        return axios.post('http://fundoonotes.incubation.bridgelabz.com/api/notes/archiveNotes', data, {
+            headers: {
+                authorization: token
+            }
+        }); 
+    }
+
 
 
     TrashNote(Data) {
@@ -289,6 +301,17 @@ class user {
         });
 
         return profile;   
+    }
+
+    DeleteForever(data){
+        console.log("In delete forever in userService",data);
+        var delet= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/notes/deleteForeverNotes', data, {
+            headers: {
+                authorization: token
+            }
+        });
+
+        return delet;   
     }
 
 
