@@ -198,7 +198,7 @@ this.setState({ originalLabels: [] })
 
         return (
 
-            <div id="notek">
+            <div className="notek">
                 {/* <div> */}
                 {/* <TakeNote refresh={this.getNotes} /> */}
                 {/* </div> */}

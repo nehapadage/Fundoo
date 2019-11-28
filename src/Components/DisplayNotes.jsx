@@ -6,6 +6,7 @@ import Masonry from 'react-masonry-component'
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import './TakeNote.css'
 import TextField from "@material-ui/core/TextField";
+import { connect } from 'react-redux'
 
 
 
@@ -45,8 +46,8 @@ class DisplayNotes extends Component {
             token: localStorage.getItem('LoginToken'),
             title: null,
             description: null,
-            originalData:[],
-            data:[],
+            originalData: [],
+            data: [],
             // Note:this.props.notes
         };
 
@@ -55,7 +56,7 @@ class DisplayNotes extends Component {
 
     }
 
-    handle=()=>{
+    handle = () => {
         this.props.Refresh()
     }
 
@@ -69,7 +70,7 @@ class DisplayNotes extends Component {
     // getNotes=()=>{
 
     //     console.log("*******************",this.state.arcRes);
-        
+
     //     userService.getAllNotes(this.state.token).then(res => {
     //         console.log("Response in Get All notes--->", res);
 
@@ -79,15 +80,15 @@ class DisplayNotes extends Component {
     //         this.setState({ originalData : res.data.data.data })
 
     //         console.log("Original data is",this.state.originalData);
-            
+
     //         var arr=[]
 
     //         arr=this.state.originalData.filter(key => 
 
     //             // console.log("In Filter"); 
-                
+
     //                 ((key.isArchived ===false) && (key.isDeleted === false))
-                    
+
     //             );
 
     //             console.log("Array is",arr);
@@ -95,7 +96,7 @@ class DisplayNotes extends Component {
     //             this.setState({data:arr})
 
     //             console.log("Filtered Array is",this.state.data);
-                
+
 
     //     })
     //         .catch(err => {
@@ -116,27 +117,55 @@ class DisplayNotes extends Component {
 
     render() {
 
-        console.log("Before mapping",this.props.notes);
-        
+        console.log("Drawer Status in display notes", this.props.drawerValue);
+        console.log("Grid Status in display notes", this.props.gridValue);
 
-        var mapCards=this.props.notes.map(item=>{
+
+        let movement = this.props.drawerValue === true ? "movementOff" : "movementOn"
+
+
+        console.log("Before mapping", this.props.notes);
+
+
+
+        var mapCards = this.props.notes.map(item => {
             return (
 
-                <Notes note={item} Title={item.title} Description={item.description} NoteId={item.id} Color={item.color} Reminder={item.reminder} Refresh={this.handle}/>
+                <Notes note={item} Title={item.title} Description={item.description} NoteId={item.id} Color={item.color} Reminder={item.reminder} Refresh={this.handle} />
 
             );
-            
+
         })
 
 
         return (
-
+            <div> 
             
-            <Masonry className="cardsView">
-                {mapCards}
-                {/* <Notes filteredData={this.state.data}/> */}
-            </Masonry>
+                {this.props.gridValue ?
+                <div className={movement}>
+                <Masonry className="cardsView">
+                    {mapCards}
+                    {/* <Notes filteredData={this.state.data}/> */}
+                </Masonry>
+                </div>
+                :
+                <div className="cardsView1">
+                    {mapCards}
+                    {/* <Notes filteredData={this.state.data}/> */}
+                </div>
+    }
+            </div>
         )
     }
 }
-export default DisplayNotes
+
+const mapStateToProps = (state) => {
+    console.log("In map state to props drawer value in display notes", state);
+
+    return {
+        drawerValue: state.drawerData,
+        gridValue:state.gridData
+
+    }
+};
+export default connect(mapStateToProps)(DisplayNotes)

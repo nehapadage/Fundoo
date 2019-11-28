@@ -2,9 +2,9 @@
 
 
 .style{
-  margin-top: 3%;
+  margin:1.5%
   /* display: flex; we dont want all notes of same sizes */      
-  margin-left: 3%;
+  /* margin-left: 3%; */
 }
 
 .style1{

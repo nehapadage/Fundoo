@@ -23,6 +23,10 @@ import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
 import { file } from '@babel/types';
+import {search} from '../Actions/Action'
+import {drawer} from '../Actions/Action'
+import {view} from '../Actions/Action'
+import {connect} from 'react-redux'
 
 
 
@@ -36,7 +40,7 @@ const theme = createMuiTheme({
         top: "65px",
         width: "250px",
         height: "90vh",
-        overflowY: "scroll"
+        overflowY: "auto"
       }
 
     },
@@ -126,8 +130,14 @@ class Dashboard extends Component {
     this.DisplayNotes = React.createRef()
   }
 
+  searching=()=>{
+    this.props.history.push('/dashboard/search')
+  }
+
   handlechangeall = (event) => {
     this.setState({ [event.target.name]: event.target.value })
+    this.props.search(event.target.value)
+    
   }
 
   componentDidMount() {
@@ -255,22 +265,31 @@ class Dashboard extends Component {
 
 
   toggleDrawer = () => {
-    this.setState({open: !this.state.open })
-    console.log("State of drawer",this.state.open);
+    this.setState({open: !this.state.open }) // first false ---> true
+    console.log("State of drawer in dashboard",this.state.open);
+    this.props.drawer(this.state.open)
+
+    // const data = {
+      
+    // }
+    // this.props.dispatch({
+    //   type:'ADD_POST',
+    //   data});
     
-    localStorage.setItem('Drawer',this.state.open)
+    // localStorage.setItem('Drawer',this.state.open)
   }
 
   changeGrid =() => {
     this.setState({ grid: !this.state.grid })
+    this.props.view(this.state.grid)
 
-    localStorage.setItem('Grid',this.state.grid)
+    // localStorage.setItem('Grid',this.state.grid)
 
     // this.setState({List:!this.state.List})
 
     //  localStorage.setItem('List',!(localStorage.getItem('List')))
 
-    this.props.history.push('/dashboard/notes')
+    // this.props.history.push('/dashboard/notes')
     
   }
 
@@ -454,6 +473,8 @@ cancel=()=>{
 
 
 
+
+
   
 
 
@@ -513,6 +534,7 @@ cancel=()=>{
                       input: "inputInput",
                     }}
                     onChange={this.handlechangeall}
+                    onClick={this.searching}
                   />
                 </div>
 
@@ -700,4 +722,21 @@ cancel=()=>{
 
 }
 
-export default Dashboard
+const mapStateToProps = (state) => {
+  console.log("In map state to props",state);
+  
+  return{
+    drawerValue:state
+    
+  }
+};
+
+const mapDispatchToProps =
+  {
+search,
+ view,
+drawer
+    
+  }
+
+export default connect(mapStateToProps,mapDispatchToProps) (Dashboard)

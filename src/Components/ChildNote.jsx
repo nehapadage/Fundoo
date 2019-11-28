@@ -3,6 +3,7 @@ import TakeNote from '../Components/TakeNote'
 import userService from '../services/userService'
 import DisplayNotes from './DisplayNotes'
 import IconButton from '@material-ui/core/IconButton';
+import './ChildLabel.css'
 
 class ChildNote extends Component {
 
@@ -70,7 +71,7 @@ class ChildNote extends Component {
         // console.log("Props in child note", this.props.notes);
 
         return (
-            <div id="notek">
+            <div className="notek">
                 {/* <div> */}
                 <TakeNote refresh={this.getNotes} />
                 {/* </div> */}

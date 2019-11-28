@@ -11,7 +11,10 @@ import ChildTrash from './Components/ChildTrash'
 import ChildRemind from './Components/ChildRemind'
 import ChildLabel from './Components/ChildLabel'
 import Label from './Components/Label'
+import {Provider} from 'react-redux'
 import './App.css';
+import  store  from './Store/Store';
+import SearchNote from './Components/SearchNote'
 
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -28,7 +31,7 @@ class App extends Component {
       <div className="App">
 
 
-
+      <Provider store={store}>
 
         <Router>
             <Route path="/login" exact component={Login} />
@@ -43,13 +46,21 @@ class App extends Component {
             <Route path='/dashboard/remindNotes' component={ChildRemind} />
             <Route path='/dashboard/labelNotes' component={ChildLabel} />
             <Route path='/dashboard/label/:username' component={Label} />
+            <Route path='/dashboard/search' component={SearchNote} />
             {/* <Route path='/dashboard' exact component={Dashboard} /> */}
            
           </Router>
+          
+          </Provider>
+
+         
       </div>
     );
   }
+  
  
 }
+
+
 
 export default App;

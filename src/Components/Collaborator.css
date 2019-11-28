@@ -1,0 +1,32 @@
+.dialogBoxSize{
+    width: 275px;
+    height: 370px;
+    padding: 10px;
+
+}
+#pic{
+    display: flex;
+    flex-direction: row;
+}
+#fnlnemail{
+    display: flex;
+    flex-direction: column;
+    margin-top: 4%;
+}
+
+#fnln{
+    font-weight: 700;
+    font-size: 13px;
+    font-family: 'Roboto',arial,sans-serif;
+    margin-left: -17%;
+}
+
+#mail{
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 13px;
+    font-family: 'Roboto',arial,sans-serif;
+}
+#person{
+    display: flex;
+    flex-direction: row;
+}

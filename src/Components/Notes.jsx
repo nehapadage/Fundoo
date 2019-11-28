@@ -18,6 +18,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import UnArchive from '../Components/UnArchive'
 import Restore from '../Components/Restore'
 import DeleteForever from '../Components/DeleteForever'
+import {connect} from 'react-redux'
 
 const theme2 = createMuiTheme({
     overrides: {
@@ -85,6 +86,15 @@ const theme = createMuiTheme({
         }
     }
 })
+
+const mapStateToProps = (state) => {
+    console.log("In map state to props in notes",state);
+    
+    return{
+      viewStatus:state.gridData
+  
+    }
+  };
 
 
 
@@ -218,13 +228,16 @@ class Notes extends Component {
     render() {
 
 
-        console.log("In notes");
-        console.log("grid status", typeof (localStorage.getItem('Grid')));
-        console.log("state", this.state.Grid);
+        // console.log("In notes");
+        // console.log("grid status", typeof (localStorage.getItem('Grid')));
+        // console.log("state", this.state.Grid);
+
+        // console.log("View Status",this.props.viewStatus);
+        
 
 
 
-
+        var GridList= this.props.viewStatus===true ? theme2 : theme3 
 
 
         return (
@@ -310,13 +323,13 @@ class Notes extends Component {
                                     {(this.state.wholeData.isArchived === false && this.state.wholeData.isDeleted === false) ?
                                             < div style={{ display: "flex" }}>
                                                 <Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
-                                                <Collaborator />
+                                                <Collaborator NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
                                                 <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                                 <Image />
                                                 <Archive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
                                                 <More note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
                                             </div>
-                                            : console.log(" archived & deleted")
+                                            : null
                                         }
                                         {this.state.wholeData.isArchived === true ?
                                             < div style={{ display: "flex" }}>
@@ -328,7 +341,7 @@ class Notes extends Component {
                                                 <UnArchive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
                                                 <More note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
                                             </div>
-                                            : console.log("Not archived")
+                                            : null
                                         }
 
                                         {this.state.wholeData.isDeleted === true ?
@@ -336,7 +349,7 @@ class Notes extends Component {
                                                 <DeleteForever note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
                                                 <Restore Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
                                             </div>
-                                            : console.log("Not deleted")
+                                            : null
                                         }
 
 
@@ -362,8 +375,8 @@ class Notes extends Component {
 
 
                     <div className="style">
-                        {localStorage.getItem('Grid') === "true" ?
-                            <MuiThemeProvider theme={theme2}>
+                   
+                            <MuiThemeProvider theme={GridList}>
                                 <Card style={{ backgroundColor: this.state.color }} >
                                     {/* <div className="createcardStyle4"> */}
                                     <div className="createNoteStyle3">
@@ -440,7 +453,7 @@ class Notes extends Component {
                                                 <Archive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
                                                 <More note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
                                             </div>
-                                            : console.log(" archived & deleted")
+                                            : null
                                         }
                                         {this.state.wholeData.isArchived === true ?
                                             < div style={{ display: "flex" }}>
@@ -452,7 +465,7 @@ class Notes extends Component {
                                                 <UnArchive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
                                                 <More note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
                                             </div>
-                                            : console.log("Not archived")
+                                            : null
                                         }
 
                                         {this.state.wholeData.isDeleted === true ?
@@ -460,7 +473,7 @@ class Notes extends Component {
                                                 <DeleteForever note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
                                                 <Restore Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
                                             </div>
-                                            : console.log("Not deleted")
+                                            : null
                                         }
 
 
@@ -480,123 +493,7 @@ class Notes extends Component {
                                     {/* </div> */}
                                 </Card>
                             </MuiThemeProvider>
-                            :
-                            <MuiThemeProvider theme={theme3}>
-                                <Card style={{ backgroundColor: this.state.color }} >
-                                    {/* <div className="createcardStyle4"> */}
-                                    <div className="createNoteStyle3">
-
-                                        <div className="createNoteStyle2" >
-                                            <div onClick={this.OpenEdit}>
-                                                {this.props.Title}
-                                            </div>
-                                            <div>
-                                                <Button><img src={require("../Assets/pin.svg")} alt="" /></Button>
-                                            </div>
-                                        </div>
-
-                                        <div id="descriptiondetail" onClick={this.OpenEdit}>
-                                            {this.props.Description}
-                                        </div>
-                                        {this.state.reminder.length > 0 && <div id="reminder">
-                                            {/* {this.props.Reminder} */}
-
-                                            {/* <img src={require("../Assets/watch.svg")} alt="" />{this.state.reminder.toString().slice (4,10)+" "+this.state.reminder.toString().slice (16,21)} */}
-
-                                            <Chip
-                                                icon={<img src={require("../Assets/watch.svg")} alt="" />}
-                                                label={this.state.reminder.toString().slice(4, 10) + " " + this.state.reminder.toString().slice(16, 21)}
-                                                onClick={(event) => this.handleReminderClick(event)}
-                                                // onClick={<Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />}
-                                                // onClick={<Reminder/>}
-                                                onDelete={this.handleReminderDelete}
-                                            />
-
-                                        </div>}
-
-                                        {/* {this.state.wholeData.noteLabels.map(item=>
-                                  (item.length > 0 && <div id="reminder">
-                                  {/* {this.props.Reminder} */}
-
-                                        {/* <img src={require("../Assets/watch.svg")} alt="" />{this.state.reminder.toString().slice (4,10)+" "+this.state.reminder.toString().slice (16,21)} */}
-                                        {/*  
-                                  <Chip
-                                      // icon={<img src={require("../Assets/watch.svg")} alt="" />}
-                                      label={item.label}
-                                      // onClick={this.handleReminderClick}
-                                      // onClick={<Reminder/>}
-                                      // onDelete={this.handleReminderDelete}
-                                  />
-                              </div>)
-                             // )} */}
-                                        <div id="label">
-                                            {this.state.wholeData.noteLabels.map(item => (
-
-                                                <Chip
-                                                    label={item.label}
-                                                    onClick={this.handleLabel}
-
-                                                    onDelete={() => this.handleLabelDelete(item.id)}
-                                                />
-                                            ))}
-                                        </div>
-
-
-
-
-
-                                    </div>
-
-                                    <div className="displayButton">
-                                        {/* <div > */}
-                                        {(this.state.wholeData.isArchived === false && this.state.wholeData.isDeleted === false) ?
-                                            < div style={{ display: "flex" }}>
-                                                <Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
-                                                <Collaborator />
-                                                <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
-                                                <Image />
-                                                <Archive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
-                                                <More note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
-                                            </div>
-                                            : console.log(" archived & deleted")
-                                        }
-                                        {this.state.wholeData.isArchived === true ?
-                                            < div style={{ display: "flex" }}>
-
-                                                <Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
-                                                <Collaborator />
-                                                <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
-                                                <Image />
-                                                <UnArchive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
-                                                <More note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
-                                            </div>
-                                            : console.log("Not archived")
-                                        }
-
-                                        {this.state.wholeData.isDeleted === true ?
-                                            < div style={{ display: "flex" }}>
-                                                <DeleteForever note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
-                                                <Restore Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
-                                            </div>
-                                            : console.log("Not deleted")
-                                        }
-
-
-                                        {/* <Button><img src={require("../Assets/remind.svg")} alt="" /></Button> */}
-                                        {/* <Button><img src={require("../Assets/collaborator.svg")} alt="" /></Button>
-                             <Button><img src={require("../Assets/color.svg")} alt="" /></Button>
-                             <Button><img src={require("../Assets/image.svg")} alt="" /></Button>
-                             <Button><img src={require("../Assets/archive.svg")} alt="" /></Button>
-                             <Button><MoreVertIcon /></Button> */}
-                                        {/* </div> */}
-                                        {/* <div className="displayButton">
-                             <Button id="button" onClick={this.props.getNotes} >Close</Button>
-                         </div> */}
-                                    </div>
-                                    {/* </div> */}
-                                </Card>
-                            </MuiThemeProvider>
-                        }
+                           
 
                     </div>
                 }
@@ -614,4 +511,7 @@ class Notes extends Component {
         )
     }
 }
-export default Notes
+
+
+
+export default connect(mapStateToProps) (Notes)
