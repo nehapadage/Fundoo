@@ -146,6 +146,8 @@ class Reminder extends Component {
         } /** for reminder setting for user selected date and time*/
         else {
             let concatDate = this.state.userReminderDate + " " + this.state.userReminderTime;
+            console.log("Concated date",concatDate);
+            
             let newDate = new Date(concatDate)
             reminderDate = newDate.toString();
             console.log("new date", reminderDate);

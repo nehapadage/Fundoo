@@ -1,9 +1,9 @@
-.dialogBoxSize{
-    width: 275px;
-    height: 370px;
+/* .dialogBoxSize{
+    width: 500px;
+    height: 300px;
     padding: 10px;
 
-}
+} */
 #pic{
     display: flex;
     flex-direction: row;
@@ -11,22 +11,44 @@
 #fnlnemail{
     display: flex;
     flex-direction: column;
-    margin-top: 4%;
+    margin-top: 2%;
+}
+
+#fnln1{
+    width:200px;
+    font-weight: 700;
+    font-size: 13px;
+    font-family: 'Roboto',arial,sans-serif;
 }
 
 #fnln{
     font-weight: 700;
     font-size: 13px;
     font-family: 'Roboto',arial,sans-serif;
-    margin-left: -17%;
+    /* margin-left: -17%; */
 }
 
 #mail{
     color: rgba(0, 0, 0, 0.54);
     font-size: 13px;
     font-family: 'Roboto',arial,sans-serif;
+    width:200px
 }
 #person{
     display: flex;
     flex-direction: row;
+}
+#save{
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-end;
+    align-items: center;
+    padding: 12px;
+    /* margin-top: 90px; */
+    background: #EDEDED;
+}
+#removeColab{
+    margin-top: 2%;
+    margin-left: 45%;
 }

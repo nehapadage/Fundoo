@@ -18,6 +18,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import UnArchive from '../Components/UnArchive'
 import Restore from '../Components/Restore'
 import DeleteForever from '../Components/DeleteForever'
+import Tooltip from '@material-ui/core/Tooltip';
+import PersonIcon from '@material-ui/icons/Person';
 import {connect} from 'react-redux'
 
 const theme2 = createMuiTheme({
@@ -335,7 +337,7 @@ class Notes extends Component {
                                             < div style={{ display: "flex" }}>
 
                                                 <Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
-                                                <Collaborator />
+                                                <Collaborator NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
                                                 <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                                 <Image />
                                                 <UnArchive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
@@ -436,6 +438,17 @@ class Notes extends Component {
                                             ))}
                                         </div>
 
+                                        <div id="label">
+                                            {this.state.wholeData.collaborators.map(item=>(
+                                                <Tooltip title={item.email} placement="center">
+                                                <IconButton size="small">
+                                                <PersonIcon size="small"/>
+                                                     {/* <img src={require('../Assets/profile.png')} alt="Logo" id="profile" /> */}
+                                                </IconButton>
+                                                </Tooltip>
+                                            ))}
+                                        </div>
+
 
 
 
@@ -446,23 +459,23 @@ class Notes extends Component {
                                         {/* <div > */}
                                         {(this.state.wholeData.isArchived === false && this.state.wholeData.isDeleted === false) ?
                                             < div style={{ display: "flex" }}>
-                                                <Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
-                                                <Collaborator />
-                                                <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
+                                                <Reminder note={this.props.note} event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
+                                                <Collaborator note={this.props.note} NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
+                                                <Color note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                                 <Image />
-                                                <Archive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
-                                                <More note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
+                                                <Archive note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
+                                                <More  note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
                                             </div>
                                             : null
                                         }
                                         {this.state.wholeData.isArchived === true ?
                                             < div style={{ display: "flex" }}>
 
-                                                <Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
-                                                <Collaborator />
-                                                <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
+                                                <Reminder note={this.props.note} event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
+                                                <Collaborator note={this.props.note} NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
+                                                <Color note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                                 <Image />
-                                                <UnArchive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
+                                                <UnArchive note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
                                                 <More note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
                                             </div>
                                             : null

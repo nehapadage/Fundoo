@@ -314,6 +314,43 @@ class user {
         return delet;   
     }
 
+    getUserList(data){
+        console.log("In getUserList in service",data);
+        var list= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/user/searchUserList',data,{
+            headers: {
+                authorization: token
+            }
+        });
+
+        return list;   
+
+        
+    }
+
+    addCollaborator(data){
+        console.log("In add collaborator in service",data);
+        var add= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/notes/'+data.id+'/AddcollaboratorsNotes',data,{
+            headers: {
+                authorization: token
+            }
+        });
+
+        return add;   
+
+        
+    }
+ 
+    removeCollaborator(data){
+        console.log("In remove collaborator in service",data);
+        var remove= axios.delete('http://fundoonotes.incubation.bridgelabz.com/api/notes/'+data.id+'/removeCollaboratorsNotes/'+data.collaboratorUserId,{
+            headers: {
+                authorization: token
+            }
+        });
+
+        return remove;
+    }
+
 
 
     
