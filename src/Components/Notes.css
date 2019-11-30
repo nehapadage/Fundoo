@@ -77,3 +77,16 @@ margin-top: 7%;
     flex-direction: row;
     /* width: 40%; */
   }
+
+
+  #label2{
+    /* display: flex;
+    flex-direction: row;
+    justify-content:20px;
+    width:100px; */
+    flex-flow: row wrap;
+    box-sizing: border-box;
+    display: flex;
+    /* margin: 5%; */
+    /* width: 40%; */
+  }

@@ -313,7 +313,16 @@ class Notes extends Component {
                                         ))}
                                     </div>
 
-
+                                    <div id="label1">
+                                            {this.state.wholeData.collaborators.map(item=>(
+                                                <Tooltip title={item.email} placement="center">
+                                                <IconButton size="small" style={{backgroundColor:"#a0c3ff",margin:"1%"}}>
+                                                <PersonIcon size="small" color="primary"/>
+                                                     {/* <img src={require('../Assets/smallcolab.jpg')} alt="Logo" id="profile" /> */}
+                                                </IconButton>
+                                                </Tooltip>
+                                            ))}
+                                        </div>
 
 
 
@@ -325,7 +334,7 @@ class Notes extends Component {
                                     {(this.state.wholeData.isArchived === false && this.state.wholeData.isDeleted === false) ?
                                             < div style={{ display: "flex" }}>
                                                 <Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
-                                                <Collaborator NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
+                                                <Collaborator note={this.props.note} NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
                                                 <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                                 <Image />
                                                 <Archive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
@@ -337,7 +346,7 @@ class Notes extends Component {
                                             < div style={{ display: "flex" }}>
 
                                                 <Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
-                                                <Collaborator NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
+                                                <Collaborator note={this.props.note} NoteId={this.state.noteId} REFRESH={this.handleRefresh}/>
                                                 <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                                 <Image />
                                                 <UnArchive Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
@@ -438,18 +447,18 @@ class Notes extends Component {
                                             ))}
                                         </div>
 
-                                        <div id="label">
+                                        <div id="label2">
                                             {this.state.wholeData.collaborators.map(item=>(
                                                 <Tooltip title={item.email} placement="center">
-                                                <IconButton size="small">
-                                                <PersonIcon size="small"/>
-                                                     {/* <img src={require('../Assets/profile.png')} alt="Logo" id="profile" /> */}
+                                                <IconButton size="small" style={{backgroundColor:"#a0c3ff",margin:"1%"}}>
+                                                <PersonIcon size="small" color="primary"/>
+                                                     {/* <img src={require('../Assets/smallcolab.jpg')} alt="Logo" id="profile" /> */}
                                                 </IconButton>
                                                 </Tooltip>
                                             ))}
                                         </div>
 
-
+                                        {/* #a0c3ff */}
 
 
 
@@ -464,7 +473,9 @@ class Notes extends Component {
                                                 <Color note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />
                                                 <Image />
                                                 <Archive note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} Refresh={this.handleRefresh} />
-                                                <More  note={this.props.note} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
+                                                <More  note={this.props.note} Title={this.state.title} props = {this.props}
+                                                Description={this.state.description} NoteId={this.state.noteId}
+                                                 refresh={this.handleRefresh} />
                                             </div>
                                             : null
                                         }

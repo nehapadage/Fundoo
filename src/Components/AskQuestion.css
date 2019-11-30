@@ -1,0 +1,51 @@
+.askQue{
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    
+    width: 70%;
+    border:2px solid #D7D5D5;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+    transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
+    display: block;
+    position: relative;
+    padding: 16px;
+    border-radius: 4px;
+    background: #fff;
+    color: rgba(0,0,0,.87);
+    margin:auto;
+    margin-top: 5%;
+
+}
+
+#title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#titles{
+   
+    font-weight: bold;
+    display: flex;
+    font-size: 1.5em;
+  margin-top: 2%;
+}
+
+#save1{
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-end;
+    align-items: center;
+    /* margin-top: 90px; */
+    background: #EDEDED;
+}
+
+#que{
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: stretch flex-end;
+    align-items: stretch;
+}

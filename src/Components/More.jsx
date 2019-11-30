@@ -207,45 +207,15 @@ class More extends Component {
             })
 
 
-
         }
-        //     console.log("In checked event");
-        //  this.setState({check:labelArray.id})    
-        //     if (event.target.checked) {
-        //         // this.setState({ open: false });
-        //         let noteData = {
-        //             "noteId": [this.state.noteId],
-        //             "id": labelArray.id,
-        //             // "label":labelArray.label,
-        //             // "userId": localStorage.getItem('userId'),
-        //         // "isDeleted": false,
-        //         }
-        //         userService.addLabelOnNote(noteData).then((data) => {
-        //             console.log("*****************Responce in add Label On Note*************",data);
-        //             // this.props.refresh()
-        //         }).catch((err) => {
-        //             console.log(err);
+        
+    }
 
-        //         })
+    AskQuestion=()=>{
 
-        //     } else {
-        //         for (let i = 0; i < this.state.noteLabels.length; i++) {
-
-        //             if (this.state.noteLabels[i].id === this.state.labelArray.id) {
-        //                 this.state.noteLabels.splice(i, 1)
-        //             }
-        //         }
-        //         this.setState({ noteLabels: this.state.noteLabels });
-        //         let requestObject = {
-        //             noteIdList: this.state.noteId,
-        //             labelId: this.state.labelArray.id
-        //         }
-        //         userService.deleteLabelFromNote(requestObject).then((data) => {
-        //             console.log("label deleted", data);
-        //             // this.props.refresh()
-        //         })
-        //     }
-
+        this.props.props.props.props.history.push("/dashboard/AskQuestion/"+this.props.NoteId)
+        
+     
     }
 
     render() {
@@ -335,6 +305,7 @@ class More extends Component {
                         <MenuList>
                             <MenuItem onClick={this.handleDeleteNote}>Delete note</MenuItem>
                             <MenuItem onClick={this.handleAddLabels}>Add label</MenuItem>
+                            <MenuItem onClick={this.AskQuestion}>Ask Question</MenuItem>
                         </MenuList>
                         {/* <div>
                                     <Button onClick={this.handleDeleteNote}>

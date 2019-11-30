@@ -13,9 +13,11 @@ import ListItem from '@material-ui/core/ListItem';
 import userService from '../services/userService'
 import { loadOptions } from '@babel/core';
 import ListItemText from '@material-ui/core/ListItemText';
-import { createMuiTheme, MuiThemeProvider, Button } from "@material-ui/core";
+import { createMuiTheme, MuiThemeProvider, Button, Paper, Menu } from "@material-ui/core";
 import MenuList from '@material-ui/core/MenuList';
 import PersonIcon from '@material-ui/icons/Person';
+import Popover from '@material-ui/core/Popover';
+import Popper from '@material-ui/core/Popper';
 
 
 // .--2553
@@ -35,7 +37,27 @@ const theme = createMuiTheme({
                 textTransform: "lowercase"
             }
 
-        }
+        },
+        
+    }
+})
+
+const theme1 = createMuiTheme({
+    overrides: {
+'MuiPaper': {
+    'root': {
+        width: '400px',
+        marginLeft: '400px',
+
+        marginTop: '400px'
+    },
+    'rounded': {
+        borderRadius: '4px',
+    },
+    'elevation1': {
+        boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 0px 1px 2px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
+    }
+}
     }
 })
 
@@ -51,7 +73,9 @@ class Collaborator extends Component {
             Collaborator: "",
             search: "",
             Suggestions: [],
-            colab:this.props.note.collaborators
+            colab:this.props.note.collaborators,
+            open:false,
+            anchorEl:null
         };
 
         console.log("Props in collaborator", this.props.note);
@@ -71,7 +95,7 @@ class Collaborator extends Component {
         this.setState({ [event.target.name]: event.target.value })
         console.log("Event.target is", event.target);
 
-        this.getUserList(event.target)
+        this.getUserList(event)
     }
 
   
@@ -81,9 +105,9 @@ class Collaborator extends Component {
         
     // }
 
-    getUserList = async (searchWord) => {
-        console.log("Search word is", searchWord.value);
-        await this.setState({ search: searchWord.value })
+    getUserList = async (event) => {
+        console.log("Search word is", event.target.value);
+        await this.setState({ search: event.target.value })
         console.log("Search", this.state.search);
 
         var data = {
@@ -94,7 +118,11 @@ class Collaborator extends Component {
             console.log("Responce in get user list On Note in collaborator", data);
             console.log("Suggestions ", data.data.data.details);
 
+            this.setState({open:!this.state.open})
+            this.setState({ anchorEl: event.currentTarget })
+
             this.setState({ Suggestions: data.data.data.details })
+          
 
             console.log("New suggestions are", this.state.Suggestions);
 
@@ -205,10 +233,10 @@ console.log("colab notes",this.props.note.collaborators);
 
             return (
                 <div id="pic">
-                    <div>
-                        <IconButton onClick={this.handleProfileClick}>
-                        <PersonIcon size="small"/>
-                        {/* <img src={require('../Assets/profile.png')} alt="Logo" id="profile" /> */}
+                    <div id="icon">
+                        <IconButton onClick={this.handleProfileClick} size="small" style={{backgroundColor:"#a0c3ff"}}>
+                        <PersonIcon size="small" color="primary"/>
+                        {/* <img src={require('../Assets/smallcolab.jpg')} alt="Logo" id="profile" /> */}
                         </IconButton>
                     </div>
                     <div id="fnlnemail">
@@ -267,8 +295,8 @@ console.log("colab notes",this.props.note.collaborators);
                                 </div>
 
                                 <div id="person">
-                                    <div>
-                                        <IconButton style={{ border: "solid 1px" }}>
+                                    <div id="prof">
+                                        <IconButton style={{ border: "solid 1px"}} size="small">
                                             <img src={require('../Assets/collaborator.svg')} alt="Logo" />
                                         </IconButton>
                                     </div>
@@ -290,10 +318,31 @@ console.log("colab notes",this.props.note.collaborators);
                                 </div>
 
                                 {this.state.Suggestions ?
+                                <MuiThemeProvider theme={theme1}>
+                                {/* <Popper
+                                open={this.state.open}
+                                anchorEl={this.state.anchorEl}
+                                onClose={this.handleClose}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left',
+                                }}
+                                style={{ width: '50%' }}
+                            > */}
+                            {/* <Paper> */}
+                                {/* <Menu> */}
                                     <MenuList>
 
                                         {array}
                                     </MenuList>
+                                    {/* </Menu> */}
+                                    {/* </Paper> */}
+                                    {/* </Popper> */}
+                                    </MuiThemeProvider>
 
                                     : null}
 

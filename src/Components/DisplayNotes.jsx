@@ -131,7 +131,13 @@ class DisplayNotes extends Component {
         var mapCards = this.props.notes.map(item => {
             return (
 
-                <Notes note={item} Title={item.title} Description={item.description} NoteId={item.id} Color={item.color} Reminder={item.reminder} Refresh={this.handle} />
+                <Notes note={item} 
+                    props = {this.props}
+                Title={item.title} 
+                Description={item.description}
+                 NoteId={item.id} Color={item.color}
+                  Reminder={item.reminder}
+                   Refresh={this.handle} />
 
             );
 

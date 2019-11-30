@@ -52,3 +52,17 @@
     margin-top: 2%;
     margin-left: 45%;
 }
+
+#icon{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2%;
+}
+
+#prof{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2%;
+}

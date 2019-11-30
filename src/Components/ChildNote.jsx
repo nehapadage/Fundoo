@@ -78,7 +78,7 @@ class ChildNote extends Component {
 
                 {/* id="display" */}
                 {/* <div >  */}
-                <DisplayNotes notes={this.state.data} ref={this.DisplayNotes} Refresh={this.getNotes} />
+                <DisplayNotes props = {this.props} notes={this.state.data} ref={this.DisplayNotes} Refresh={this.getNotes} />
                 {/* </div>  */}
             </div>
 

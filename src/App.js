@@ -15,6 +15,7 @@ import {Provider} from 'react-redux'
 import './App.css';
 import  store  from './Store/Store';
 import SearchNote from './Components/SearchNote'
+import AskQuestion from './Components/AskQuestion'
 
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -47,6 +48,7 @@ class App extends Component {
             <Route path='/dashboard/labelNotes' component={ChildLabel} />
             <Route path='/dashboard/label/:username' component={Label} />
             <Route path='/dashboard/search' component={SearchNote} />
+            <Route path='/dashboard/AskQuestion/:id' component={AskQuestion} />
             {/* <Route path='/dashboard' exact component={Dashboard} /> */}
            
           </Router>

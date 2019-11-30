@@ -351,6 +351,17 @@ class user {
         return remove;
     }
 
+    getNoteDetails(id){
+        console.log("In getNoteDetails in service",id);
+        var ids= axios.get('http://fundoonotes.incubation.bridgelabz.com/api/notes/getNotesDetail/'+id,{
+            headers: {
+                authorization: token
+            }
+        });
+
+        return ids;
+    }
+
 
 
     
