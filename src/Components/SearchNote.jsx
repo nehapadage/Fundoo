@@ -13,7 +13,8 @@ class SearchNote extends Component {
         this.state = {
             searchData:"",
             originalData:[],
-            data:[]
+            data:[],
+            
             // searchValue:""
         };
 

@@ -254,3 +254,14 @@
 }
 
 
+@media only screen and (max-width: 600px) { 
+
+   #search{
+       display: none;
+   }
+   #seconddiv{
+       display: none;
+   }
+}
+
+

@@ -1,7 +1,7 @@
 const initialState={
     searchData:"",
     gridData:true,
-    drawerData:false
+    drawerData:true
 }
 
 export function reducer(state=initialState,action){

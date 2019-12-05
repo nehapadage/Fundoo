@@ -180,7 +180,8 @@ class TakeNote extends Component {
                         <div className="displayButton">
                             {/* <div > */}
                             <Reminder />
-                            <Collaborator />
+                            {/* <Collaborator/>
+                            <Collaborator note={this.props.note} NoteId={this.state.noteId} REFRESH={this.handleRefresh}/> */}
                             <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
                             <Image />
 
@@ -213,7 +214,7 @@ class TakeNote extends Component {
                                 />
                             </div>
 
-                            <div>
+                            <div id="displayPaint">
                                 <Button><img src={require("../Assets/list.svg")} alt="" /></Button>
                                 <Button><img src={require("../Assets/paint.svg")} alt="" /></Button>
                                 <Button><img src={require("../Assets/image.svg")} alt="" /></Button>

@@ -37,7 +37,7 @@
         margin-top: 2%; */
     display: flex;
     flex-direction: row;
-    margin-left: 6%;
+    margin-left: 10%;
     transition: margin-left .13s cubic-bezier(0, 0, 0.1, 1) 0ms;
     }
 
@@ -45,18 +45,43 @@
  @media only screen and (max-width: 1295px) { 
 
     .cardsView{
-        margin-left: 27%;
+        margin-left: 20%;
+        
     }
 }
-/* @media only screen and (max-width: 320px) {
+@media only screen and (max-width: 375px) {
+
+    .cardsView{
+        margin-left: 9%;
+    }
+}
+@media only screen and (min-width: 400px) {
+
+    .cardsView{
+        margin-left: 15%;
+    }
+}
+@media only screen and (max-width: 320px) {
+
+    .cardsView{
+        margin-left: 2%;
+    }
+}
+/* @media only screen and (min-width: 500px) {
+
+    .cardsView{
+        margin-left: 3%;
+    }
+}
+@media only screen and (max-width: 800px) {
 
     .cardsView{
         margin-left: 8%;
     }
 } */
-@media only screen and (width: 360px) {
+/* @media only screen and (width: 360px) {
 
     .cardsView{
         margin-left: 10%;
     }
-}
+} */

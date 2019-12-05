@@ -362,6 +362,28 @@ class user {
         return ids;
     }
 
+    askQuestion(data){
+        console.log("In add question in service",data);
+        var add= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/questionAndAnswerNotes/addQuestionAndAnswer',data,{
+            headers: {
+                authorization: token
+            }
+        });
+
+        return add;   
+    }
+
+    Like(data){
+        console.log("In like question in service",data.parentId);
+        var like= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/questionAndAnswerNotes/like/'+data.parentId,data,{
+            headers: {
+                authorization: token
+            }
+        });
+
+        return like;   
+    }
+
 
 
     

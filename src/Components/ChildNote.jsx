@@ -73,7 +73,7 @@ class ChildNote extends Component {
         return (
             <div className="notek">
                 {/* <div> */}
-                <TakeNote refresh={this.getNotes} />
+                <TakeNote refresh={this.getNotes} note={this.state.data}/>
                 {/* </div> */}
 
                 {/* id="display" */}

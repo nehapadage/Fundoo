@@ -49,3 +49,13 @@
     place-content: stretch flex-end;
     align-items: stretch;
 }
+
+#ask{
+    background-color: #EDEDED;
+    margin-top: 2%;
+}
+
+#profName{
+    display: flex;
+    flex-direction: row;
+}

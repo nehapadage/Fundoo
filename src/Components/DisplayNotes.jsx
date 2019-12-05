@@ -145,7 +145,7 @@ class DisplayNotes extends Component {
 
 
         return (
-            <div> 
+            <div className="mainCard"> 
             
                 {this.props.gridValue ?
                 <div className={movement}>

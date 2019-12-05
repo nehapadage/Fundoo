@@ -17,7 +17,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-
+import CloseIcon from '@material-ui/icons/Close';
 import { createMuiTheme, MuiThemeProvider, Button } from "@material-ui/core";
 import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
@@ -118,7 +118,8 @@ class Dashboard extends Component {
       Event: '',
       event:'',
       propic:"",
-      originalLabels:[]
+      originalLabels:[],
+      flag:false
      
 
     }
@@ -130,8 +131,16 @@ class Dashboard extends Component {
     this.DisplayNotes = React.createRef()
   }
 
+  searchRedirect=()=>{
+    this.setState({searchText:""})
+    this.props.history.push('/dashboard/notes')
+  
+  }
+
   searching=()=>{
+    // this.setState({flag:!this.state.flag})
     this.props.history.push('/dashboard/search')
+    
   }
 
   handlechangeall = (event) => {
@@ -536,6 +545,9 @@ cancel=()=>{
                     onChange={this.handlechangeall}
                     onClick={this.searching}
                   />
+                
+                  <CloseIcon fontSize="small" onClick={this.searchRedirect}/>
+
                 </div>
 
                 <div id="seconddiv">

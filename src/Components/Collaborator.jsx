@@ -38,6 +38,14 @@ const theme = createMuiTheme({
             }
 
         },
+        'MuiDialog': {
+
+            'root': {
+
+                zIndex: '4001',
+
+            }
+        },
         
     }
 })
@@ -73,14 +81,21 @@ class Collaborator extends Component {
             Collaborator: "",
             search: "",
             Suggestions: [],
-            colab:this.props.note.collaborators,
+            colab:[],
             open:false,
             anchorEl:null
         };
 
-        console.log("Props in collaborator", this.props.note);
+        
 
 
+    }
+
+    componentDidMount=async()=>{
+        console.log("in compo did mount");
+        
+       await this.setState({colab:this.props.note.collaborators})
+        console.log("Props in collaborator", this.state.colab);
     }
 
     // componentWillReceiveProps= (newProps) => {
@@ -139,6 +154,8 @@ class Collaborator extends Component {
     }
 
     handleDialog = () => {
+        console.log("In opening dialog box");
+        
         this.setState({ dialog: !this.state.dialog })
     }
 
@@ -234,7 +251,7 @@ console.log("colab notes",this.props.note.collaborators);
             return (
                 <div id="pic">
                     <div id="icon">
-                        <IconButton onClick={this.handleProfileClick} size="small" style={{backgroundColor:"#a0c3ff"}}>
+                        <IconButton size="small" style={{backgroundColor:"#a0c3ff"}}>
                         <PersonIcon size="small" color="primary"/>
                         {/* <img src={require('../Assets/smallcolab.jpg')} alt="Logo" id="profile" /> */}
                         </IconButton>
@@ -261,12 +278,12 @@ console.log("colab notes",this.props.note.collaborators);
 
         return (
             <div>
-                <MuiThemeProvider theme={theme}>
+               
                     <IconButton onClick={this.handleDialog}>
                         <img src={require('../Assets/collaborator.svg')} alt="Logo" />
                     </IconButton>
-
-                    <Dialog aria-labelledby="simple-dialog-title" open={this.state.dialog}   >
+                    <MuiThemeProvider theme={theme}>
+                    <Dialog aria-labelledby="simple-dialog-title" open={this.state.dialog} style={{zIndex:4001}}  >
                         <div className="box" style={{ width: "600px", height: "auto" }}>
                             <div className="dialogBoxSize">
                                 <DialogTitle>Collaborator</DialogTitle>

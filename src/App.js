@@ -16,6 +16,7 @@ import './App.css';
 import  store  from './Store/Store';
 import SearchNote from './Components/SearchNote'
 import AskQuestion from './Components/AskQuestion'
+import 'froala-editor/js/froala_editor.pkgd.min.js';
 
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -30,7 +31,7 @@ class App extends Component {
   render(){
     return (
       <div className="App">
-
+    
 
       <Provider store={store}>
 
@@ -39,8 +40,7 @@ class App extends Component {
              <Route path="/register" component={createAccount} />
              <Route path="/forgetpassword" component={ForgetPassword} />
              <Route path="/resetpassword" component={ResetPassword} />
-            {/* <Route path="/dashboard" component={Dashboard} /> */}
-            <Route path='/dashboard'  component={Dashboard} />
+            <Route path='/dashboard' component={Dashboard} />
             <Route path='/dashboard/notes' component={ChildNote} />
             <Route path='/dashboard/archiveNotes' component={ChildArchive} />
             <Route path='/dashboard/trashNotes' component={ChildTrash} />
@@ -49,8 +49,6 @@ class App extends Component {
             <Route path='/dashboard/label/:username' component={Label} />
             <Route path='/dashboard/search' component={SearchNote} />
             <Route path='/dashboard/AskQuestion/:id' component={AskQuestion} />
-            {/* <Route path='/dashboard' exact component={Dashboard} /> */}
-           
           </Router>
           
           </Provider>
