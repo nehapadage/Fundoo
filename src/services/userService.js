@@ -373,6 +373,17 @@ class user {
         return add;   
     }
 
+    reply(data){
+        console.log("In reply question in service",data);
+        var rep= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/questionAndAnswerNotes/reply/'+data.id,data,{
+            headers: {
+                authorization: token
+            }
+        });
+
+        return rep;    
+    }
+
     Like(data){
         console.log("In like question in service",data.parentId);
         var like= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/questionAndAnswerNotes/like/'+data.parentId,data,{

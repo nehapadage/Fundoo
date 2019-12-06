@@ -17,6 +17,10 @@ import  store  from './Store/Store';
 import SearchNote from './Components/SearchNote'
 import AskQuestion from './Components/AskQuestion'
 import 'froala-editor/js/froala_editor.pkgd.min.js';
+import 'froala-editor/css/froala_style.min.css';
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+import FroalaEditor from 'react-froala-wysiwyg';
+
 
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -32,6 +36,9 @@ class App extends Component {
     return (
       <div className="App">
     
+   
+
+
 
       <Provider store={store}>
 

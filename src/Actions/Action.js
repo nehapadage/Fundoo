@@ -14,3 +14,8 @@ export const drawer=(value)=>({
     type:"DRAWER_STATUS",
     value:value
 })
+
+export const show=(value)=>({
+    type:"SHOW_STATUS",
+    value:value
+})

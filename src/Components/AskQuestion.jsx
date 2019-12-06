@@ -11,12 +11,18 @@ import ReplyIcon from '@material-ui/icons/Reply';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { array } from 'prop-types';
+import FroalaEditor from 'react-froala-wysiwyg';
+import { show } from '../Actions/Action'
+import { connect } from 'react-redux'
+import Snackbar from '@material-ui/core/Snackbar';
 
 class AskQuestion extends Component {
 
     constructor(props) {
         super(props);
         // console.log("Props are====>",this.props);
+
+        // this.handleModelChange = this.handleModelChange.bind(this);
 
         this.state = {
             Id: "",
@@ -29,7 +35,13 @@ class AskQuestion extends Component {
             like: 0,
             answer: [],
             que: [],
-            onlyMessage: []
+            onlyMessage: [],
+            ask: false,
+            reply: false,
+            flag: false,
+            reply1: false,
+            // currentId: ""
+
         };
 
     }
@@ -43,15 +55,26 @@ class AskQuestion extends Component {
 
     //   }
 
-  
+
 
     handlechangeall = (event) => {
         this.setState({ [event.target.name]: event.target.value })
     }
 
+    handleModelChange = (event) => {
+        console.log("Event in handleModelChange", event);
+        this.setState({ question: event })
+        console.log("Content is", this.state.question);
+        // this.setState({que:this.state.question})
+        //     console.log("Que is", this.state.que);
+
+    }
+
     componentDidMount = async () => {
         await this.setState({ Id: this.props.match.params.id });
-        this.getNoteDetails();
+        await this.getNoteDetails();
+
+
 
         // var today = new Date();
         // let day = today.getDate(); /** day of current date */
@@ -85,7 +108,31 @@ class AskQuestion extends Component {
             this.setState({ answer: res.data.data.data[0].questionAndAnswerNotes })
 
             this.setState({ que: this.state.answer[0] })
-            console.log("Que is", this.state.que);
+
+            if (this.state.answer.length) {
+                this.setState({ submit: true })
+            } else {
+                this.setState({ submit: false })
+            }
+
+
+            var arr = []
+            arr = this.state.answer.slice(1, this.state.answer.length)
+            console.log("Spliced array", arr);
+             this.setState({ answer: arr })
+    
+    
+            var array = this.state.answer.filter(res =>
+                (res.isApproved === true)
+            )
+    
+            console.log("Array of que and ans", this.state.answer);
+            this.setState({ answer: array })
+    
+            console.log("Array of filtered que and ans", this.state.answer);
+    
+
+            //     console.log("Que is", this.state.que);
 
         })
             .catch(err => {
@@ -104,20 +151,20 @@ class AskQuestion extends Component {
 
 
 
-        var arr = []
-        arr = this.state.answer.slice(1, this.state.answer.length)
-        console.log("Spliced array", arr);
-        await this.setState({ answer: arr })
+        // var arr = []
+        // arr = this.state.answer.slice(1, this.state.answer.length)
+        // console.log("Spliced array", arr);
+        // await this.setState({ answer: arr })
 
 
-        var array = this.state.answer.filter(res =>
-            (res.isApproved === true)
-        )
+        // var array = this.state.answer.filter(res =>
+        //     (res.isApproved === true)
+        // )
 
-        console.log("Array of que and ans", this.state.answer);
-        this.setState({ answer: array })
+        // console.log("Array of que and ans", this.state.answer);
+        // this.setState({ answer: array })
 
-        console.log("Array of filtered que and ans", this.state.answer);
+        // console.log("Array of filtered que and ans", this.state.answer);
 
     }
 
@@ -125,18 +172,29 @@ class AskQuestion extends Component {
         this.props.history.push('/dashboard/notes')
     }
 
+    handleClose1=()=>{
+        this.setState({flag:!this.state.flag})
+    }
+
     submit = () => {
 
-        this.setState({ submit: !this.state.submit })
+        // this.setState({ submit: !this.state.submit })
 
         var data = {
             message: this.state.question,
             notesId: this.state.Id
         }
-        userService.askQuestion(data).then(res => {
+        userService.askQuestion(data).then(async (res) => {
             console.log("Response in ask question--->", res);
 
-            // this.setState({submit:!this.state.submit})
+            await this.setState({ que: res.data.data.details })
+
+            //    console.log("State of ask",this.state.ask);
+
+
+            //   await this.props.show(this.state.ask)
+
+            this.setState({ submit: !this.state.submit })
 
 
         })
@@ -145,6 +203,61 @@ class AskQuestion extends Component {
             })
 
     }
+
+    submit1 = (id) => {
+
+        // this.setState({ submit: !this.state.submit })
+
+        var data = {
+            "message": this.state.question,
+            "id": id
+        }
+        userService.reply(data).then(async (res) => {
+            console.log("Response in reply question--->", res);
+
+            // await this.setState({ que: res.data.data.details })
+
+            //    console.log("State of ask",this.state.ask);
+
+
+            //   await this.props.show(this.state.ask)
+
+            this.setState({ reply: !this.state.reply })
+            this.setState({ flag: !this.state.flag })
+
+
+        })
+            .catch(err => {
+                console.log("Error in get all notes");
+            })
+
+    }
+
+    // submit2=()=>{
+    //     var data = {
+    //         message: this.state.question,
+    //         id: this.state.currentId
+    //     }
+    //     userService.reply(data).then(async (res) => {
+    //         console.log("Response in reply answer--->", res);
+
+    //         await this.setState({ que: res.data.data.details })
+
+    //         //    console.log("State of ask",this.state.ask);
+
+
+    //         //   await this.props.show(this.state.ask)
+
+    //         this.setState({ reply: !this.state.reply })
+    //         this.setState({ flag: !this.state.flag })
+
+
+    //     })
+    //         .catch(err => {
+    //             console.log("Error in get all notes");
+    //         })
+
+    // }
 
     handleLike = (id) => {
 
@@ -165,6 +278,25 @@ class AskQuestion extends Component {
         this.setState({ like: this.state.like + 1 })
     }
 
+    reply = () => {
+        this.setState({ reply: !this.state.reply })
+        this.setState({question:""})
+    }
+
+    reply1 = (currentId,id) => {
+        this.setState({ [currentId]: id })
+        this.setState({question:""})
+        // this.setState({reply1:!this.state.reply1})
+    }
+
+    close = () => {
+        this.setState({ reply: !this.state.reply })
+    }
+    close1 = () => {
+        this.setState({ currentId: "" })
+        // this.setState({ reply1: !this.state.reply1 })
+    }
+
     render() {
 
         var image = 'http://fundoonotes.incubation.bridgelabz.com/' + localStorage.getItem('imageUrl');
@@ -172,6 +304,8 @@ class AskQuestion extends Component {
 
         console.log("In ask question");
         console.log("Id in ask que", this.props.match.params.id);
+
+
 
 
 
@@ -199,14 +333,35 @@ class AskQuestion extends Component {
                                 </IconButton></div>
                                 <div style={{ margin: "2%" }}>{localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}</div>
                                 <div style={{ marginTop: "2%" }}>{this.state.que.createdDate.slice(0, 10) + " " + this.state.que.createdDate.slice(11, 19)}</div>
-                                <ReplyIcon style={{ margin: "1.5%" }} />
+                                <ReplyIcon style={{ margin: "1.5%" }} onClick={()=>this.reply(this.state.que.id)} />
                                 <div style={{ marginTop: "2%" }}>{this.state.like}</div>
                                 <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(this.state.que.id)} />
                             </div>
                             <div id="profName">
                                 <ArrowRightIcon fontSize="large" />
-                                <div style={{ fontWeight: "bold", color: "blue", fontSize: "x-large" }}>{this.state.que.message}</div>
+                                <div style={{ fontWeight: "bold", color: "blue", fontSize: "x-large", marginTop: "5px" }}
+                                    dangerouslySetInnerHTML={{ __html: this.state.que.message }}></div>
+                                {/* <div style={{ fontWeight: "bold", color: "blue", fontSize: "x-large" }}>{this.state.que.message}</div> */}
                             </div>
+
+
+
+                            {this.state.reply === true ?
+                                <div>
+                                    <div style={{ marginLeft: "5%", cursor: "default", marginTop: "1%", fontWeight: "700", marginLeft: "-94%" }} onClick={this.close}>Close</div>
+                                    <div style={{ marginTop: "2%" }}>
+                                        <FroalaEditor
+                                            tag='textarea'
+                                            config={this.config}
+                                            model={this.state.question}
+                                            onModelChange={this.handleModelChange}
+                                        />
+                                    </div>
+                                    <div id="que" style={{ marginTop: "2%" }}>
+                                        <Button style={{ backgroundColor: "#fa7e36" }} onClick={() => this.submit1(this.state.que.id)}>Submit-Answer</Button>
+                                    </div></div> : null}
+
+
 
                             {this.state.view ?
                                 <div id="que" onClick={this.viewHide}>
@@ -223,33 +378,186 @@ class AskQuestion extends Component {
 
                             {this.state.view === true ? this.state.answer.map((keys) => {
 
-                                console.log("In map", keys.message);
+                                // console.log("Inside map", keys.parentId ,this.state.que.id);
 
                                 return (
-                                    <div>
-                                        <div id="profName">
-                                            <div><IconButton>
-                                                <img src={image} alt="Logo" id="profile" />
-                                            </IconButton></div>
-                                            <div style={{ margin: "2%" }}>{localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}</div>
-                                            <div style={{ marginTop: "2%" }}>{keys.createdDate.slice(0, 10) + " " + keys.createdDate.slice(11, 19)}</div>
-                                            <ReplyIcon style={{ margin: "1.5%" }} />
-                                            <div style={{ marginTop: "2%" }}>{this.state.like}</div>
-                                            <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(keys.id)} />
-                                        </div>
-                                        <div id="profName">
-                                            <ArrowRightIcon fontSize="large" />
-                                            <div dangerouslySetInnerHTML={{ __html: keys.message }}></div>
-                                            {/* <div style={{ color: "grey", fontSize: "large" }}>{this.state.onlyMessage[index]}</div> */}
 
-                                        </div>
+                                    <div>
+                                        {this.state.que.id === keys.parentId ?
+
+                                            <div style={{ marginLeft: "2%" }}>
+                                                <div id="profName">
+                                                    <div><IconButton>
+                                                        <img src={image} alt="Logo" id="profile" />
+                                                    </IconButton></div>
+                                                    <div style={{ margin: "2%" }}>{localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}</div>
+                                                    <div style={{ marginTop: "2%" }}>{keys.createdDate.slice(0, 10) + " " + keys.createdDate.slice(11, 19)}</div>
+                                                    <ReplyIcon style={{ margin: "1.5%" }} onClick={() => this.reply1("currentId",keys.id)} />
+                                                    <div style={{ marginTop: "2%" }}>{this.state.like}</div>
+                                                    <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(keys.id)} />
+                                                </div>
+                                                <div id="profName1">
+                                                    <ArrowRightIcon fontSize="large" />
+                                                    <div id="data"
+                                                        dangerouslySetInnerHTML={{ __html: keys.message }}></div>
+                                                    {/* <div style={{ color: "grey", fontSize: "large" }}>{this.state.onlyMessage[index]}</div> */}
+
+                                                </div>
+
+
+                                                {this.state.view === true ? this.state.answer.map((key) => {
+
+                                                    // console.log("Inside map", keys.parentId ,this.state.que.id);
+
+                                                    return (
+
+                                                        <div>
+                                                            {keys.id === key.parentId ?
+
+                                                                <div style={{ marginLeft: "2%" }}>
+                                                                    <div id="profName">
+                                                                        <div><IconButton>
+                                                                            <img src={image} alt="Logo" id="profile" />
+                                                                        </IconButton></div>
+                                                                        <div style={{ margin: "2%" }}>{localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}</div>
+                                                                        <div style={{ marginTop: "2%" }}>{key.createdDate.slice(0, 10) + " " + key.createdDate.slice(11, 19)}</div>
+                                                                        <ReplyIcon style={{ margin: "1.5%" }} onClick={() => this.reply1("currentId1",key.id)} />
+                                                                        <div style={{ marginTop: "2%" }}>{this.state.like}</div>
+                                                                        <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(key.id)} />
+                                                                    </div>
+                                                                    <div id="profName1">
+                                                                        <ArrowRightIcon fontSize="large" />
+                                                                        <div id="data"
+                                                                            dangerouslySetInnerHTML={{ __html: key.message }}></div>
+                                                                        {/* <div style={{ color: "grey", fontSize: "large" }}>{this.state.onlyMessage[index]}</div> */}
+
+                                                                    </div>
+
+
+                                                                    {this.state.view === true ? this.state.answer.map((keye) => {
+
+                                                                        // console.log("Inside map", keys.parentId ,this.state.que.id);
+
+                                                                        return (
+
+                                                                            <div>
+                                                                                {key.id === keye.parentId ?
+
+                                                                                    <div style={{ marginLeft: "2%" }}>
+                                                                                        <div id="profName">
+                                                                                            <div><IconButton>
+                                                                                                <img src={image} alt="Logo" id="profile" />
+                                                                                            </IconButton></div>
+                                                                                            <div style={{ margin: "2%" }}>{localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}</div>
+                                                                                            <div style={{ marginTop: "2%" }}>{keye.createdDate.slice(0, 10) + " " + keye.createdDate.slice(11, 19)}</div>
+                                                                                            <ReplyIcon style={{ margin: "1.5%" }} onClick={() => this.reply1("currentId2",keye.id)} />
+                                                                                            <div style={{ marginTop: "2%" }}>{this.state.like}</div>
+                                                                                            <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(keye.id)} />
+                                                                                        </div>
+                                                                                        <div id="profName1">
+                                                                                            <ArrowRightIcon fontSize="large" />
+                                                                                            <div id="data"
+                                                                                                dangerouslySetInnerHTML={{ __html: keye.message }}></div>
+                                                                                            {/* <div style={{ color: "grey", fontSize: "large" }}>{this.state.onlyMessage[index]}</div> */}
+
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                    : null}
+                                                                                {this.state.currentId2 === keye.id ?
+                                                                                    <div>
+                                                                                        <div style={{ marginLeft: "5%", cursor: "default", marginTop: "1%", fontWeight: "700", marginLeft: "-94%" }} onClick={this.close1}>Close</div>
+                                                                                        <div style={{ marginTop: "2%" }}>
+                                                                                            <FroalaEditor
+                                                                                                tag='textarea'
+                                                                                                config={this.config}
+                                                                                                model={this.state.question}
+                                                                                                onModelChange={this.handleModelChange}
+                                                                                            />
+                                                                                        </div>
+                                                                                        <div id="que" style={{ marginTop: "2%" }}>
+                                                                                            <Button style={{ backgroundColor: "#fa7e36" }} onClick={() => this.submit1(keye.id)}>Submit-Answer</Button>
+                                                                                        </div></div> : null}
+
+                                                                            </div>
+
+
+
+                                                                        )
+                                                                    })
+
+                                                                        : null}
+
+                                                                </div>
+                                                                : null}
+                                                            {this.state.currentId1 === key.id ?
+                                                                <div>
+                                                                    <div style={{ marginLeft: "5%", cursor: "default", marginTop: "1%", fontWeight: "700", marginLeft: "-94%" }} onClick={this.close1}>Close</div>
+                                                                    <div style={{ marginTop: "2%" }}>
+                                                                        <FroalaEditor
+                                                                            tag='textarea'
+                                                                            config={this.config}
+                                                                            model={this.state.question}
+                                                                            onModelChange={this.handleModelChange}
+                                                                        />
+                                                                    </div>
+                                                                    <div id="que" style={{ marginTop: "2%" }}>
+                                                                        <Button style={{ backgroundColor: "#fa7e36" }} onClick={() => this.submit1(key.id)}>Submit-Answer</Button>
+                                                                    </div></div> : null}
+
+                                                        </div>
+
+
+
+                                                    )
+                                                })
+
+                                                    : null}
+
+                                            </div>
+                                            : null}
+                                        {this.state.currentId === keys.id ?
+                                            <div>
+                                                <div style={{ marginLeft: "5%", cursor: "default", marginTop: "1%", fontWeight: "700", marginLeft: "-94%" }} onClick={this.close1}>Close</div>
+                                                <div style={{ marginTop: "2%" }}>
+                                                    <FroalaEditor
+                                                        tag='textarea'
+                                                        config={this.config}
+                                                        model={this.state.question}
+                                                        onModelChange={this.handleModelChange}
+                                                    />
+                                                </div>
+                                                <div id="que" style={{ marginTop: "2%" }}>
+                                                    <Button style={{ backgroundColor: "#fa7e36" }} onClick={() => this.submit1(keys.id)}>Submit-Answer</Button>
+                                                </div></div> : null}
+
                                     </div>
 
+
+
                                 )
-
-
                             })
+
                                 : null}
+
+
+
+                            <div>
+                                <Snackbar
+
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    open={this.state.flag}
+                                    autoHideDuration={6000}
+                                    onClose={this.handleClose1}
+
+                                    message="Thank You for your answer"
+
+
+                                />
+                            </div>
 
                             {/* {this.state.view === true ? this.state.onlyMessage.map(msg => {
                                 
@@ -292,8 +600,18 @@ class AskQuestion extends Component {
                                 Make sure what you’re asking is unique, concise, and phrased like a question.
                     </div>
 
+                            <div style={{ marginTop: "2%" }}>
+                                <FroalaEditor
+                                    tag='textarea'
+                                    config={this.config}
 
-                            <Input
+                                    model={this.state.question}
+                                    onModelChange={this.handleModelChange}
+                                />
+                            </div>
+
+
+                            {/* <Input
                                 id="ask"
                                 placeholder='Type something...'
                                 margin="normal"
@@ -304,12 +622,12 @@ class AskQuestion extends Component {
                                 InputProps={{
                                     disableUnderline: true
                                 }}
-                            />
+                            /> */}
 
 
 
 
-                            <div id="que">
+                            <div id="que" style={{ marginTop: "2%" }}>
                                 <Button style={{ backgroundColor: "#fa7e36" }} onClick={this.submit}>Submit-Question</Button>
                             </div>
 
@@ -342,4 +660,8 @@ class AskQuestion extends Component {
         )
     }
 }
+// const mapDispatchToProps =
+//   {
+// show    
+//   }
 export default AskQuestion

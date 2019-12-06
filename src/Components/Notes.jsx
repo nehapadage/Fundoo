@@ -230,6 +230,10 @@ class Notes extends Component {
 
     }
 
+    gotoAsk=()=>{
+        this.props.props.props.history.push("/dashboard/AskQuestion/"+this.props.NoteId)
+    }
+
     render() {
 
         // console.log("Array is in Notes",this.props.note.questionAndAnswerNotes[0].message);
@@ -524,14 +528,16 @@ class Notes extends Component {
                                 <Button id="button" onClick={this.props.getNotes} >Close</Button>
                             </div> */}
                                 </div>
-                                <Divider/>
+                                {/* <Divider/> */}
                                 <div id="label3"> 
                                          {/* {this.props.note.questionAndAnswerNotes.map(item => ( */}
                                              {this.props.note.questionAndAnswerNotes.length ?
-                                            <div>
+                                            <div onClick={this.gotoAsk} style={{cursor:"default"}}>
                                                 <Divider/>
                                                 <div style={{ fontWeight: "bold",width:"150px",margin:"2%" }}>Question Asked</div>
-                                                <div style={{width:"200px",marginLeft:"10%",display:"flex",marginBottom:"2%"}}>{this.props.note.questionAndAnswerNotes[0].message}</div>
+                                                <div style={{width:"200px",marginLeft:"10%",display:"flex",marginBottom:"2%"}}
+                                                dangerouslySetInnerHTML={{ __html: this.props.note.questionAndAnswerNotes[0].message }}></div>
+                                                
                                             </div>
                                             : null } 
                                         {/* ))}  */}

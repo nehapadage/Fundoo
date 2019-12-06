@@ -16,6 +16,8 @@ import MenuList from '@material-ui/core/MenuList';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
+import {show} from '../Actions/Action'
+import {connect} from 'react-redux'
 
 const theme = createMuiTheme({
     overrides: {
@@ -70,7 +72,8 @@ class More extends Component {
             deleteSnack: false,
             addLabel: "",
             check: "",
-            noteLabelArray: []
+            noteLabelArray: [],
+            ask:true
             // demo: false,
             // demo1: false
         };
@@ -81,7 +84,7 @@ class More extends Component {
         // return (
         console.log("more", event)
         console.log("Props are====>", this.props);
-        console.log("NewProps", this.props.note.noteLabels);
+        // console.log("NewProps", this.props.note.noteLabels);
         this.setState({ noteLabelArray: this.props.note.noteLabels })
         this.setState({ flag: !this.state.flag })
         this.setState({ anchorEl: event.currentTarget })
@@ -213,12 +216,17 @@ class More extends Component {
 
     AskQuestion=()=>{
 
+       
+
         this.props.props.props.props.history.push("/dashboard/AskQuestion/"+this.props.NoteId)
         
      
     }
 
     render() {
+
+        // console.log("props In log",this.props.note.questionAndAnswerNotes.length);
+        
 
         // var label = this.state.labelArray.map(item => {
         //     return (
@@ -302,11 +310,23 @@ class More extends Component {
                         }}
                         style={{ width: '50%' }}
                     >
-                        <MenuList>
+                        
+
+                        {this.props.note ? <div>
+                            <MenuList>
                             <MenuItem onClick={this.handleDeleteNote}>Delete note</MenuItem>
                             <MenuItem onClick={this.handleAddLabels}>Add label</MenuItem>
-                            <MenuItem onClick={this.AskQuestion}>Ask Question</MenuItem>
-                        </MenuList>
+                            {this.props.note.questionAndAnswerNotes.length ?
+                            <MenuItem onClick={this.AskQuestion}>Show Question</MenuItem>
+                            : <MenuItem onClick={this.AskQuestion}>Ask Question</MenuItem>}
+                            </MenuList>
+                            </div> : 
+                            <MenuList>
+                            <MenuItem onClick={this.handleDeleteNote}>Delete note</MenuItem>
+                            <MenuItem onClick={this.handleAddLabels}>Add label</MenuItem>
+                            
+
+                        </MenuList>}
                         {/* <div>
                                     <Button onClick={this.handleDeleteNote}>
                                         <div>Delete note</div>
@@ -428,4 +448,12 @@ class More extends Component {
         )
     }
 }
+
+// const mapStateToProps = (state) => {
+//     console.log("In map state to props show value in more", state);
+
+//     return {
+//         showValue: state.showData,
+//     }
+// };
 export default More

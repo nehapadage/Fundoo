@@ -1,7 +1,8 @@
 const initialState={
     searchData:"",
     gridData:true,
-    drawerData:true
+    drawerData:true,
+    showData:true
 }
 
 export function reducer(state=initialState,action){
@@ -47,6 +48,16 @@ export function reducer(state=initialState,action){
             return{
                 ...state,
                 drawerData:action.value
+            }
+        }
+
+        case "SHOW_STATUS":{
+            console.log("In show status in reducer",action.value);
+            
+            // return newState.drawerData=action.value;
+            return{
+                ...state,
+                showData:action.value
             }
         }
 
