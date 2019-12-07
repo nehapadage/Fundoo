@@ -385,8 +385,10 @@ class user {
     }
 
     Like(data){
-        console.log("In like question in service",data.parentId);
-        var like= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/questionAndAnswerNotes/like/'+data.parentId,data,{
+        console.log("In service like status",data.like);
+        
+        console.log("In like question in service",data.id);
+        var like= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/questionAndAnswerNotes/like/'+data.id,data,{
             headers: {
                 authorization: token
             }
