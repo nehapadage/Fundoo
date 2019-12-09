@@ -45,10 +45,12 @@ class SearchNote extends Component {
       console.log("Original data is", this.state.originalData);
 
       var arr = []
+       console.log("In Filter",this.state.originalData.title); 
         if(this.props.searchValue !== ""){
-      arr = this.state.originalData.filter(key =>
+      arr = this.state.originalData.map(key =>
 
-        // console.log("In Filter"); 
+        // ((key.title.search(this.props.searchValue)) || (key.description.search(this.props.searchValue)))
+       
 
         ((key.title === this.props.searchValue) || (key.description === this.props.searchValue))
 
@@ -91,7 +93,7 @@ const mapStateToProps = (state) => {
     console.log("In map state to props in search note",state);
 
   let searchvalue=state;
-  console.log(" serach value ",searchvalue);
+  console.log("search value ",searchvalue);
   
     
     return{

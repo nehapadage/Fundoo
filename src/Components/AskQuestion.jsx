@@ -17,6 +17,7 @@ import FroalaEditor from 'react-froala-wysiwyg';
 import { show } from '../Actions/Action'
 import { connect } from 'react-redux'
 import Snackbar from '@material-ui/core/Snackbar';
+import StarRatings from 'react-star-ratings';
 
 class AskQuestion extends Component {
 
@@ -44,7 +45,8 @@ class AskQuestion extends Component {
             reply1: false,
             quelikes: [],
             LIKES: 0,
-            showLike: true
+            showLike: true,
+            count:0
             // currentId: ""
 
         };
@@ -72,6 +74,10 @@ class AskQuestion extends Component {
         console.log("Content is", this.state.question);
         // this.setState({que:this.state.question})
         //     console.log("Que is", this.state.que);
+
+    }
+
+    changeRating=()=>{
 
     }
 
@@ -403,35 +409,45 @@ class AskQuestion extends Component {
 
     count1 = () => {
         console.log("In count1", this.state.answer);
-
+       
         var anslikes = this.state.answer.map(res => {
-            return (
-                res.like
-            )
+          
+            return res.like.filter((lik) => {
+                if (lik.like === true && res.userId === lik.userId) {
+                var liked = true
+                }
+                if(res.like.like){
+                    this.setState({count:this.state.count+1})
+                }
+            })
+
         })
 
-       var anslik= anslikes.filter((element) => {
-            
-            return (element.length>0)
-        })
-
-        console.log("Likes in count1", anslikes);
-        console.log("Likes in count11", anslik);
-
-        var anss= anslik.map((ele) => {
-            
-            return (ele.filter((es)=>(es.like===true)))
-            
-        })
-
-        // this.setState({ LIKES: anss.length })
-
-        console.log("Likes in count111",anss,anss.length);
+        console.log("Count is",this.state.count);
         
 
+        // var anslik = anslikes.filter((element) => {
+
+        //     return (element.length > 0)
+        // })
+
+        // console.log("Likes in count1", anslikes);
+        // console.log("Likes in count11", anslik);
+
+        // var anss = anslik.map((ele) => {
+
+        //     return (ele.filter((es) => (es.like === true)))
+
+        // })
+
+        // // this.setState({ LIKES: anss.length })
+
+        // console.log("Likes in count111", anss, anss.length);
 
 
-       
+
+
+
 
         // this.setState({ LIKES: anslikes.length })
 
@@ -489,6 +505,14 @@ class AskQuestion extends Component {
                                 <ArrowRightIcon fontSize="large" />
                                 <div style={{ fontWeight: "bold", color: "blue", fontSize: "x-large", marginTop: "-20px" }}
                                     dangerouslySetInnerHTML={{ __html: this.state.que.message }}></div>
+                                    <div id="starRatings">
+                                    <StarRatings
+          rating={this.state.rating}
+          starRatedColor="blue"
+          changeRating={this.changeRating}
+          numberOfStars={5}
+          name='rating'
+        /></div>
                                 {/* <div style={{ fontWeight: "bold", color: "blue", fontSize: "x-large" }}>{this.state.que.message}</div> */}
                             </div>
 

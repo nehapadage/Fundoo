@@ -324,6 +324,7 @@ console.log("colab notes",this.props.note.collaborators);
                                             // className={classes.input}
                                             name="Collaborator"
                                             value={this.state.Collaborator}
+                                            autoComplete="off"
                                             onChange={this.handlechangeall}
                                             inputProps={{
                                                 'aria-label': 'description',
