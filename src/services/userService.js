@@ -397,6 +397,18 @@ class user {
         return like;   
     }
 
+    Rate(data){
+        console.log("In service rate status",data.rate);
+        
+        console.log("In like question in service",data.id);
+        var like= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/questionAndAnswerNotes/rate/'+data.id,data,{
+            headers: {
+                authorization: token
+            }
+        });
+
+        return like;   
+    }
 
 
     

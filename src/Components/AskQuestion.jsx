@@ -45,13 +45,18 @@ class AskQuestion extends Component {
             reply1: false,
             quelikes: [],
             LIKES: 0,
-            showLike: true,
-            count:0
+            showLike: '',
+            count: 0,
+            rating: 0,
+            liked: 0
+            // star_rating:0
             // currentId: ""
 
         };
 
     }
+
+
 
     // componentDidUpdate = async (prevProps)=> {
     //     // only update chart if the data has changed
@@ -77,9 +82,10 @@ class AskQuestion extends Component {
 
     }
 
-    changeRating=()=>{
+    // changeRating=()=>{
+    //     console.log("");
 
-    }
+    // }
 
     componentDidMount = async () => {
         await this.setState({ Id: this.props.match.params.id });
@@ -121,11 +127,48 @@ class AskQuestion extends Component {
             this.setState({ answer: res.data.data.data[0].questionAndAnswerNotes })
 
             await this.setState({ que: this.state.answer[0] })
-            this.setState({ quelikes: this.state.answer[0].like })
+            await this.setState({ quelikes: this.state.answer[0].like })
 
-            console.log("Question likes are", this.state.quelikes);
 
-            this.count();
+
+            var count = this.state.answer[0].rate.map(res => {
+                return (
+                    res.rate
+                )
+            })
+
+            console.log("Question rates are", count[0]);
+            if (count[0] > 0) {
+                this.setState({ rating: count[0] })
+            } else {
+                this.setState({ rating: 0 })
+            }
+
+            // console.log("rated ques count ", this.state.rating);
+
+
+            var count1 = this.state.answer[0].like.map(res => {
+                return (
+                    res.like === true
+                )
+            })
+
+            console.log("Question likes are", count1[0]);
+
+            if (count1[0] === true) {
+                this.setState({ liked: count1.length })
+            }
+            else {
+                this.setState({ liked: 0 })
+            }
+
+            console.log("liked ques count ", this.state.liked);
+
+
+
+
+
+            // this.count();
 
 
 
@@ -256,38 +299,11 @@ class AskQuestion extends Component {
 
     }
 
-    // submit2=()=>{
-    //     var data = {
-    //         message: this.state.question,
-    //         id: this.state.currentId
-    //     }
-    //     userService.reply(data).then(async (res) => {
-    //         console.log("Response in reply answer--->", res);
 
-    //         await this.setState({ que: res.data.data.details })
-
-    //         //    console.log("State of ask",this.state.ask);
-
-
-    //         //   await this.props.show(this.state.ask)
-
-    //         this.setState({ reply: !this.state.reply })
-    //         this.setState({ flag: !this.state.flag })
-
-
-    //     })
-    //         .catch(err => {
-    //             console.log("Error in get all notes");
-    //         })
-
-    // }
 
     handleLike = async (para, key) => {
 
         console.log("Like status", key);
-
-
-
 
         //   await  this.setState({like:key.like.length})
 
@@ -300,18 +316,24 @@ class AskQuestion extends Component {
             "id": key.id
         }
 
-        userService.Like(data).then(res => {
+        userService.Like(data).then(async(res) => {
             console.log("Response in like question--->", res);
-            if (this.state.LIKES === 0) {
-                this.setState({ LIKES: 1 })
-            }
-            else {
-                this.setState({ LIKES: 0 })
-            }
 
-            // this.setState({ showLike: !this.state.showLike })
+            console.log("Only data of like", res.config.data);
+            var ans = JSON.parse(res.config.data)
+            console.log("Like status", ans.like);
 
-            this.setState({ [para]: key.id })
+            this.setState({ liked: 1 })
+
+            console.log("Likes are", this.state.liked);
+
+          await  this.setState({ [para]: key.id })
+
+            // key.like[0].like = ans.like;
+
+            // console.log("Like status stored",key.like[0].like);
+            
+
 
 
 
@@ -322,16 +344,103 @@ class AskQuestion extends Component {
 
     }
 
-    handleUnLike = async (para, key) => {
+
+    handleLikeAns = async (para,key) => {
 
         console.log("Like status", key);
 
+        // key.like[0].like=true
+
+        var data = {
+            "like": true,
+            "id": key.id
+        }
+
+        userService.Like(data).then(res => {
+            console.log("Response in like question--->", res);
+
+            console.log("Only data of like", res.config.data);
+            var ans = JSON.parse(res.config.data)
+            console.log("Like status", ans.like);
+
+            // this.setState({ liked: 1 })
+
+            // console.log("Likes are", this.state.liked);
+
+            key.like[0].like = ans.like;
+
+            console.log("Like status stored in like ans",key.like[0].like);
+
+            this.setState({[para]:key.id})
+
+        })
+            .catch(err => {
+                console.log("Error in get all notes");
+            })
+
+    }
+
+    handleUnLikeAns = async (para,key) => {
+
+        console.log("Like status", key);
 
         //   await  this.setState({like:key.like.length})
 
         //   console.log("After setting value of like",this.state.like);
 
+        key.like[0].like=false
 
+        var data = {
+            "like": false,
+            "id": key.id
+        }
+
+        userService.Like(data).then(res => {
+            console.log("Response in like question--->", res);
+
+            console.log("Only data of like", res.config.data);
+            var ans = JSON.parse(res.config.data)
+            console.log("Like status", ans.like);
+
+            // this.setState({ liked: 1 })
+
+            // console.log("Likes are", this.state.liked);
+
+            key.like[0].like = ans.like;
+           
+
+            console.log("Like status stored in unlike ans",key.like[0].like);
+
+            this.setState({[para]:" "})
+
+
+
+            // if (this.state.LIKES === 0) {
+            //     this.setState({ LIKES: 1 })
+            // }
+            // else {
+            //     this.setState({ LIKES: 0 })
+            // }
+
+            // this.setState({ showLike: !this.state.showLike })
+
+            // this.setState({ [para]: key.id })
+
+
+
+        })
+            .catch(err => {
+                console.log("Error in get all notes");
+            })
+
+    }
+
+
+
+
+    handleUnLike = async (para, key) => {
+
+        console.log("Like status", key);
 
         var data = {
             "like": false,
@@ -340,17 +449,17 @@ class AskQuestion extends Component {
 
         userService.Like(data).then(res => {
             console.log("Response in unlike question--->", res);
-            if (this.state.LIKES === 0) {
-                this.setState({ LIKES: 1 })
-            }
-            else {
-                this.setState({ LIKES: 0 })
-            }
 
-            // this.setState({ showLike: !this.state.showLike })
+            console.log("Only data of unlike", res.config.data);
+            var ans = JSON.parse(res.config.data)
+            console.log("Like status", ans.like);
 
-            this.setState({ [para]: "" })
+            this.setState({ liked: 0 })
 
+            console.log("unLikes are", this.state.liked);
+           
+
+           
 
 
         })
@@ -388,8 +497,10 @@ class AskQuestion extends Component {
         // this.setState({ reply1: !this.state.reply1 })
     }
 
-    count = () => {
-        console.log("In count", this.state.quelikes);
+    count = async () => {
+
+
+        console.log("In like count question", this.state.quelikes);
 
         var likes = this.state.quelikes.filter(res => {
             return (
@@ -399,7 +510,7 @@ class AskQuestion extends Component {
 
         console.log("Likes in count", likes);
 
-        this.setState({ LIKES: likes.length })
+        await this.setState({ LIKES: likes.length })
 
         console.log("LIKES are", this.state.LIKES);
 
@@ -409,22 +520,22 @@ class AskQuestion extends Component {
 
     count1 = () => {
         console.log("In count1", this.state.answer);
-       
+
         var anslikes = this.state.answer.map(res => {
-          
+
             return res.like.filter((lik) => {
                 if (lik.like === true && res.userId === lik.userId) {
-                var liked = true
+                    var liked = true
                 }
-                if(res.like.like){
-                    this.setState({count:this.state.count+1})
+                if (res.like.like) {
+                    this.setState({ count: this.state.count + 1 })
                 }
             })
 
         })
 
-        console.log("Count is",this.state.count);
-        
+        console.log("Count is", this.state.count);
+
 
         // var anslik = anslikes.filter((element) => {
 
@@ -456,6 +567,99 @@ class AskQuestion extends Component {
 
         // return likes
     }
+
+    changeRating = async (newRating, id) => {
+        console.log("In ans change rating", newRating);
+        console.log("id" + id);
+        // console.log("Parameter", para);
+
+        // await this.setState({ rating: newRating })
+
+        // console.log("In change rating1", this.state.rating);
+
+
+        var data = {
+            "id": id,
+            "rate": newRating
+        }
+        userService.Rate(data).then(res => {
+            console.log("Response in rating question--->", res);
+
+            console.log("Only rate", res.config.data);
+            var ans = JSON.parse(res.config.data)
+            console.log("Answer", ans.rate);
+
+            this.setState({ rating: ans.rate })
+
+            // console.log("Ratings are", this.state.);
+            // this.setState({ showLike: !this.state.showLike })
+
+            // this.setState({ [para]: id })
+        })
+            .catch(err => {
+                console.log("Error in rate");
+            })
+
+    }
+
+    changeRatingAns = async (newRating, para, paraValue, id, key) => {
+        console.log("In ans change rating", newRating);
+        // console.log("key is ", key.rate[0].rate);
+       
+        console.log("Parameter", para);
+
+        // await this.setState({ rating: newRating })
+
+        // console.log("In change rating1", this.state.rating);
+
+
+        var data = {
+            "id": id,
+            "rate": newRating
+        }
+        userService.Rate(data).then(async(res) => {
+            console.log("Response in rating question--->", res);
+
+            console.log("Only rate", res.config.data);
+            var ans =await JSON.parse(res.config.data)
+            console.log("Answer", ans.rate);
+
+           await this.setState({ [paraValue]: ans.rate })
+
+            // console.log("Ratings are", this.state.);
+            // this.setState({ showLike: !this.state.showLike })
+
+            key.rate[0].rate = ans.rate;
+
+            // this.setState({ [para]: id })
+        })
+            .catch(err => {
+                console.log("Error in rate");
+            })
+
+    }
+    getLikeCount=(arr)=>{
+        console.log("like is working",arr);
+        var sum=0;
+        var array=arr.map(res=>(
+            res.like===true
+        ))
+        console.log("Array of true likes",array[0]);
+        if(array[0]===true){
+            sum++;
+        }
+        console.log("Sum is",sum);
+        
+        
+        return sum;
+    }
+
+
+    // handleStar = (event, id) => {
+    //     // event.preventDefault();
+    //     console.log("In handle star", id);
+
+    // }
 
     render() {
 
@@ -496,23 +700,35 @@ class AskQuestion extends Component {
                                 <ReplyIcon style={{ margin: "1.5%" }} onClick={() => this.reply(this.state.que.id)} />
                                 {this.state.que.like.length === undefined ?
                                     <div style={{ marginTop: "2%" }}>{0}</div> :
-                                    <div style={{ marginTop: "2%" }}>{this.state.LIKES}</div>}
-                                {this.state.showLike !== this.state.que.id ?
+                                    <div style={{ marginTop: "2%" }}>{this.state.liked}</div>}
+                                {/* {this.state.showLike !== this.state.que.id ? */}
+                                {this.state.liked === 0 ?
                                     <ThumbUpAltOutlinedIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike("showLike", this.state.que)} /> :
                                     <ThumbUpIcon size="large" style={{ margin: "1.5%" }} onClick={() => this.handleUnLike("showLike", this.state.que)} />}
                             </div>
                             <div id="profName">
                                 <ArrowRightIcon fontSize="large" />
-                                <div style={{ fontWeight: "bold", color: "blue", fontSize: "x-large", marginTop: "-20px" }}
+                                <div style={{ fontWeight: "bold", color: "black", fontSize: "x-large", marginTop: "-20px" }}
                                     dangerouslySetInnerHTML={{ __html: this.state.que.message }}></div>
-                                    <div id="starRatings">
+
+                                <div id="starRatings">
                                     <StarRatings
-          rating={this.state.rating}
-          starRatedColor="blue"
-          changeRating={this.changeRating}
-          numberOfStars={5}
-          name='rating'
-        /></div>
+                                        style={{ fontSize: "small" }}
+                                        rating={this.state.rating}
+                                        starRatedColor="orange"
+                                        changeRating={(event) => this.changeRating(event, this.state.que.id)}
+                                        // onClick={(event)=>this.handleStar( event,'hell')}
+                                        numberOfStars={5}
+                                        name='rating'
+                                        starDimension='20px'
+                                    // starSpacing='5px'
+                                    // starWidthAndHeight='10px'
+
+                                    />
+
+                                </div>
+
+                                <div style={{ margin: "1%" }}>{this.state.rating}</div>
                                 {/* <div style={{ fontWeight: "bold", color: "blue", fontSize: "x-large" }}>{this.state.que.message}</div> */}
                             </div>
 
@@ -550,7 +766,7 @@ class AskQuestion extends Component {
 
                             {this.state.view === true ? this.state.answer.map((keys) => {
 
-                                // console.log("Inside map", keys.parentId ,this.state.que.id);
+                                console.log("Inside map",keys.like.length);
 
                                 return (
 
@@ -565,11 +781,33 @@ class AskQuestion extends Component {
                                                     <div style={{ margin: "2%" }}>{localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}</div>
                                                     <div style={{ marginTop: "2%" }}>{keys.createdDate.slice(0, 10) + " " + keys.createdDate.slice(11, 19)}</div>
                                                     <ReplyIcon style={{ margin: "1.5%" }} onClick={() => this.reply1("currentId", keys.id)} />
-                                                    <div style={{ marginTop: "2%" }}>{this.state.LIKES}</div>
+                                                    <div style={{ marginTop: "2%" }}>{keys.like ==undefined ?0 : keys.like.length > 0 ? this.getLikeCount(keys.like) :0 }</div>
                                                     {/* <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(keye)} /> */}
-                                                    {this.state.showLike1 !== keys.id ?
-                                                        <ThumbUpAltOutlinedIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike("showLike1", keys)} /> :
-                                                        <ThumbUpIcon size="large" style={{ margin: "1.5%" }} onClick={() => this.handleUnLike("showLike1", keys)} />}
+                                                    {this.state.key1===keys.id || (keys.like.length>0 && keys.like[0].like===true)? 
+                                                     <ThumbUpIcon size="large" style={{ margin: "1.5%" }} onClick={() => this.handleUnLikeAns("key1",keys)} />
+
+                                                    : <ThumbUpAltOutlinedIcon style={{ margin: "1.5%" }} onClick={() => this.handleLikeAns("key1",keys)} /> }
+
+                                                        <div id="starRatings">
+
+                                                        <StarRatings
+                                                            style={{ fontSize: "small" }}
+                                                            rating={keys.rate.length > 0 ? keys.rate[0].rate : 0}
+                                                            starRatedColor="orange"
+                                                            changeRating={(event) => this.changeRatingAns(event, "showRate1", "showRateValue1", keys.id, keys)}
+                                                            // onClick={(event)=>this.handleStar( event,'hell')}
+                                                            numberOfStars={5}
+                                                            name='rating'
+                                                            starDimension='20px'
+                                                        // starSpacing='5px'
+                                                        // starWidthAndHeight='10px'
+
+                                                        />
+
+                                                    </div>
+                                                    <div style={{ margin: "1%" }}>{keys.rate.length > 0 ? keys.rate[0].rate : 0}</div>
+
+                                                
                                                 </div>
                                                 <div id="profName1">
                                                     <ArrowRightIcon fontSize="large" />
@@ -612,12 +850,34 @@ class AskQuestion extends Component {
                                                                         <div style={{ margin: "2%" }}>{localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}</div>
                                                                         <div style={{ marginTop: "2%" }}>{key.createdDate.slice(0, 10) + " " + key.createdDate.slice(11, 19)}</div>
                                                                         <ReplyIcon style={{ margin: "1.5%" }} onClick={() => this.reply1("currentId1", key.id)} />
-                                                                        <div style={{ marginTop: "2%" }}>{this.state.LIKES}</div>
-                                                                        {/* <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(keye)} /> */}
-                                                                        {this.state.showLike2 !== key.id ?
-                                                                            <ThumbUpAltOutlinedIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike("showLike2", key)} /> :
-                                                                            <ThumbUpIcon size="large" style={{ margin: "1.5%" }} onClick={() => this.handleUnLike("showLike2", key)} />}
+                                                                        <div style={{ marginTop: "2%" }}>{key.like.length > 0 ? this.getLikeCount(key.like) : 0}</div>
+                                                    {/* <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(keye)} /> */}
+                                                    {this.state.key2===key.id || key.like[0].like===true? 
+                                                     <ThumbUpIcon size="large" style={{ margin: "1.5%" }} onClick={() => this.handleUnLikeAns("key2",key)} />
+
+                                                    : <ThumbUpAltOutlinedIcon style={{ margin: "1.5%" }} onClick={() => this.handleLikeAns("key2",key)} /> }
+                                                                        <div id="starRatings">
+                                                                            <StarRatings
+                                                                                style={{ fontSize: "small" }}
+                                                                                rating={key.rate.length > 0 ? key.rate[0].rate : 0}
+                                                                                starRatedColor="orange"
+                                                                                changeRating={(event) => this.changeRatingAns(event, "showRate2", "showRateValue2", key.id,key)}
+                                                                                // onClick={(event)=>this.handleStar( event,'hell')}
+                                                                                numberOfStars={5}
+                                                                                name='rating'
+                                                                                starDimension='20px'
+                                                                            // starSpacing='5px'
+                                                                            // starWidthAndHeight='10px'
+
+                                                                            />
+
+                                                                        </div>
+
+                                                                        <div style={{ margin: "1%" }}>{key.rate.length > 0 ? key.rate[0].rate : 0}</div>
                                                                     </div>
+
+
+
                                                                     <div id="profName1">
                                                                         <ArrowRightIcon fontSize="large" />
                                                                         <div id="data"
@@ -659,11 +919,31 @@ class AskQuestion extends Component {
                                                                                             <div style={{ margin: "2%" }}>{localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}</div>
                                                                                             <div style={{ marginTop: "2%" }}>{keye.createdDate.slice(0, 10) + " " + keye.createdDate.slice(11, 19)}</div>
                                                                                             <ReplyIcon style={{ margin: "1.5%" }} onClick={() => this.reply1("currentId2", keye.id)} />
-                                                                                            <div style={{ marginTop: "2%" }}>{this.state.LIKES}</div>
-                                                                                            {/* <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(keye)} /> */}
-                                                                                            {this.state.showLike3 !== keye.id ?
-                                                                                                <ThumbUpAltOutlinedIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike("showLike3", keye)} /> :
-                                                                                                <ThumbUpIcon size="large" style={{ margin: "1.5%" }} onClick={() => this.handleUnLike("showLike3", keye)} />}
+                                                                                            <div style={{ marginTop: "2%" }}>{keye.like.length > 0 ? this.getLikeCount(keye.like) : 0}</div>
+                                                    {/* <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(keye)} /> */}
+                                                    {this.state.key3===keye.id || keye.like[0].like===true? 
+                                                     <ThumbUpIcon size="large" style={{ margin: "1.5%" }} onClick={() => this.handleUnLikeAns("key3",keye)} />
+
+                                                    : <ThumbUpAltOutlinedIcon style={{ margin: "1.5%" }} onClick={() => this.handleLikeAns("key3",keye)} /> }
+                                                                                            <div id="starRatings">
+                                                                                                <StarRatings
+                                                                                                    style={{ fontSize: "small" }}
+                                                                                                    rating={keye.rate.length > 0 ? keye.rate[0].rate : 0}
+                                                                                                    starRatedColor="orange"
+                                                                                                    changeRating={(event) => this.changeRatingAns(event, "showRate3", "showRateValue3", keye.id,keye)}
+                                                                                                    // onClick={(event)=>this.handleStar( event,'hell')}
+                                                                                                    numberOfStars={5}
+                                                                                                    name='rating'
+                                                                                                    starDimension='20px'
+                                                                                                // starSpacing='5px'
+                                                                                                // starWidthAndHeight='10px'
+
+                                                                                                />
+
+                                                                                            </div>
+
+                                                                                            <div style={{ margin: "1%" }}>{keye.rate.length > 0 ? keye.rate[0].rate : 0}</div>
+
                                                                                         </div>
                                                                                         <div id="profName1">
                                                                                             <ArrowRightIcon fontSize="large" />
@@ -837,6 +1117,7 @@ class AskQuestion extends Component {
                 }
 
             </div >
+
 
             // <IconButton>
             //     <img src={require('../Assets/image.svg')} alt="Logo" />

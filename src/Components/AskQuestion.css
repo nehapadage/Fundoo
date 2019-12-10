@@ -78,5 +78,9 @@
 }
 
 #starRatings{
-    font-size: "12px";
+    /* height: 10px;
+    background-color: aquamarine; */
+    /* font-size: "12px"; */
+    margin-left: 4%;
+    margin-top: 7px;
 }
