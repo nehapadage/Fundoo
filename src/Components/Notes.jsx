@@ -414,14 +414,14 @@ class Notes extends Component {
                                     <div id="descriptiondetail" onClick={this.OpenEdit}>
                                         {this.props.Description}
                                     </div>
-                                    {this.state.reminder.length > 0 && <div id="reminder">
+                                    {this.props.Reminder.length > 0 && <div id="reminder">
                                         {/* {this.props.Reminder} */}
 
                                         {/* <img src={require("../Assets/watch.svg")} alt="" />{this.state.reminder.toString().slice (4,10)+" "+this.state.reminder.toString().slice (16,21)} */}
 
                                         <Chip
                                             icon={<img src={require("../Assets/watch.svg")} alt="" />}
-                                            label={this.state.reminder.toString().slice(4, 10) + " " + this.state.reminder.toString().slice(16, 21)}
+                                            label={this.state.reminder.toString().slice(4,10) + " " + this.state.reminder.toString().slice(16,21)}
                                             onClick={(event) => this.handleReminderClick(event)}
                                             // onClick={<Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />}
                                             // onClick={<Reminder/>}

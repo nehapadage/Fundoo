@@ -11,15 +11,18 @@ import ChildTrash from './Components/ChildTrash'
 import ChildRemind from './Components/ChildRemind'
 import ChildLabel from './Components/ChildLabel'
 import Label from './Components/Label'
+import ChooseService from './Components/ChooseService'
 import {Provider} from 'react-redux'
 import './App.css';
 import  store  from './Store/Store';
 import SearchNote from './Components/SearchNote'
 import AskQuestion from './Components/AskQuestion'
+import SignUp from './Components/SignUp'
 import 'froala-editor/js/froala_editor.pkgd.min.js';
 import 'froala-editor/css/froala_style.min.css';
 import 'froala-editor/css/froala_editor.pkgd.min.css';
 import FroalaEditor from 'react-froala-wysiwyg';
+import shoppingCart from './Components/shoppingCart'
 
 
 
@@ -43,6 +46,8 @@ class App extends Component {
       <Provider store={store}>
 
         <Router>
+          <Route path="/" exact component={ChooseService} />
+          <Route path="/signUp" exact component={SignUp} />
             <Route path="/login" exact component={Login} />
              <Route path="/register" component={createAccount} />
              <Route path="/forgetpassword" component={ForgetPassword} />
@@ -56,6 +61,9 @@ class App extends Component {
             <Route path='/dashboard/label/:username' component={Label} />
             <Route path='/dashboard/search' component={SearchNote} />
             <Route path='/dashboard/AskQuestion/:id' component={AskQuestion} />
+            <Route path='/dashboard/shoppingCart' component={shoppingCart} />
+            
+
           </Router>
           
           </Provider>

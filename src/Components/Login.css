@@ -7,7 +7,8 @@
     height: 100vh;
  
      display: flex;
-     flex-direction: column;
+     flex-direction: row;
+     place-content: stretch center;
  }
 
  .adminMainDiv{
@@ -17,8 +18,63 @@
     padding: 40px;
     background-color: white;
   border : 1px solid #dadce0;
+   
   border-radius: 10px;;
     margin: auto auto;
+}
+
+.adminMainDivService {
+    min-height: auto;
+    width: 300px;
+    padding: 40px;
+    background-color: white;
+    /* border: 1px solid #dadce0; */
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: auto auto;
+    margin-left: 20%;
+
+}
+
+.combineDiv{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+
+/* .adminMainDiv1{
+
+    min-height: auto;
+    width:  300px;
+    padding: 40px;
+    background-color: white;
+  border : 1px solid #dadce0;
+  border-radius: 10px;;
+    margin: auto auto;
+} */
+
+
+.adminMainDiv1 {
+    /* min-height: auto;
+    width: 380px;
+    padding: 40px;
+    background-color: #dadce0;
+    border: 1px solid #dadce0;
+    border-radius: 10px;
+    margin: auto auto;
+    margin-right: 20%; */
+
+
+    min-height: auto;
+    width: 380px;
+    padding: 40px;
+    background-color: #dadce0;
+    border: 1px solid #dadce0;
+    border-radius: 10px;
+    margin: auto auto;
+    margin-right: 20%;
 }
 
 #fundoo{
@@ -74,7 +130,8 @@
 .textfields{
 
     width: auto;
-    height: 370px;
+    /* height: 370px; */
+    height: 300px;
 }
 
 #EmailPass{
@@ -98,6 +155,37 @@
     background-color:#1a73e8 ;
     margin-left: 170px;
 }
+
+#cardfuns{
+    display: flex;
+    flex-direction: row;
+    /* place-content: stretch center; */
+    /* justify-content: space-evenly; */
+
+}
+
+@media only screen and (max-width: 870px) {
+  
+
+        #cardfuns{
+            display: flex;
+            flex-direction: column;
+            /* justify-content: center; */
+            align-items: center;
+            margin-left: -2em;
+    
+        }
+ 
+    .mainBody{
+       
+         flex-direction: column;
+         align-items: center;
+    }
+    /* .adminMainDivService {
+        margin-top: 30em;
+       
+    } */
+} 
 
 
 

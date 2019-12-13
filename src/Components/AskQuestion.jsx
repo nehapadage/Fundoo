@@ -18,6 +18,7 @@ import { show } from '../Actions/Action'
 import { connect } from 'react-redux'
 import Snackbar from '@material-ui/core/Snackbar';
 import StarRatings from 'react-star-ratings';
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 class AskQuestion extends Component {
 
@@ -349,7 +350,10 @@ class AskQuestion extends Component {
 
         console.log("Like status", key);
 
-        // key.like[0].like=true
+        if(key.like.length>0){
+            key.like[0].like=true
+        }
+        
 
         var data = {
             "like": true,
@@ -537,35 +541,7 @@ class AskQuestion extends Component {
         console.log("Count is", this.state.count);
 
 
-        // var anslik = anslikes.filter((element) => {
-
-        //     return (element.length > 0)
-        // })
-
-        // console.log("Likes in count1", anslikes);
-        // console.log("Likes in count11", anslik);
-
-        // var anss = anslik.map((ele) => {
-
-        //     return (ele.filter((es) => (es.like === true)))
-
-        // })
-
-        // // this.setState({ LIKES: anss.length })
-
-        // console.log("Likes in count111", anss, anss.length);
-
-
-
-
-
-
-        // this.setState({ LIKES: anslikes.length })
-
-        // console.log("LIKES are", this.state.LIKES);
-
-
-        // return likes
+ 
     }
 
     changeRating = async (newRating, id) => {
@@ -781,7 +757,7 @@ class AskQuestion extends Component {
                                                     <div style={{ margin: "2%" }}>{localStorage.getItem('firstName') + " " + localStorage.getItem('lastName')}</div>
                                                     <div style={{ marginTop: "2%" }}>{keys.createdDate.slice(0, 10) + " " + keys.createdDate.slice(11, 19)}</div>
                                                     <ReplyIcon style={{ margin: "1.5%" }} onClick={() => this.reply1("currentId", keys.id)} />
-                                                    <div style={{ marginTop: "2%" }}>{keys.like ==undefined ?0 : keys.like.length > 0 ? this.getLikeCount(keys.like) :0 }</div>
+                                                    <div style={{ marginTop: "2%" }}>{keys.like.length > 0 ? this.getLikeCount(keys.like) :0 }</div>
                                                     {/* <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(keye)} /> */}
                                                     {this.state.key1===keys.id || (keys.like.length>0 && keys.like[0].like===true)? 
                                                      <ThumbUpIcon size="large" style={{ margin: "1.5%" }} onClick={() => this.handleUnLikeAns("key1",keys)} />
@@ -852,7 +828,7 @@ class AskQuestion extends Component {
                                                                         <ReplyIcon style={{ margin: "1.5%" }} onClick={() => this.reply1("currentId1", key.id)} />
                                                                         <div style={{ marginTop: "2%" }}>{key.like.length > 0 ? this.getLikeCount(key.like) : 0}</div>
                                                     {/* <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(keye)} /> */}
-                                                    {this.state.key2===key.id || key.like[0].like===true? 
+                                                    {this.state.key2===key.id || (key.like.length>0 && key.like[0].like===true)? 
                                                      <ThumbUpIcon size="large" style={{ margin: "1.5%" }} onClick={() => this.handleUnLikeAns("key2",key)} />
 
                                                     : <ThumbUpAltOutlinedIcon style={{ margin: "1.5%" }} onClick={() => this.handleLikeAns("key2",key)} /> }
@@ -921,7 +897,7 @@ class AskQuestion extends Component {
                                                                                             <ReplyIcon style={{ margin: "1.5%" }} onClick={() => this.reply1("currentId2", keye.id)} />
                                                                                             <div style={{ marginTop: "2%" }}>{keye.like.length > 0 ? this.getLikeCount(keye.like) : 0}</div>
                                                     {/* <ThumbUpIcon style={{ margin: "1.5%" }} onClick={() => this.handleLike(keye)} /> */}
-                                                    {this.state.key3===keye.id || keye.like[0].like===true? 
+                                                    {this.state.key3===keye.id || (keye.like.length>0 && keye.like[0].like===true)? 
                                                      <ThumbUpIcon size="large" style={{ margin: "1.5%" }} onClick={() => this.handleUnLikeAns("key3",keye)} />
 
                                                     : <ThumbUpAltOutlinedIcon style={{ margin: "1.5%" }} onClick={() => this.handleLikeAns("key3",keye)} /> }

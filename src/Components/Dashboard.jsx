@@ -27,6 +27,7 @@ import {search} from '../Actions/Action'
 import {drawer} from '../Actions/Action'
 import {view} from '../Actions/Action'
 import {connect} from 'react-redux'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 
 
@@ -261,6 +262,10 @@ class Dashboard extends Component {
 
   getLabels = () => {
     this.props.history.push('/dashboard/labelNotes')
+  }
+
+  handleCart=()=>{
+    this.props.history.push('/dashboard/shoppingCart')
   }
 
   getOneLabel = (labelName) => {
@@ -551,6 +556,13 @@ cancel=()=>{
                 </div>
 
                 <div id="seconddiv">
+                <div>
+                    <IconButton onClick={this.handleCart}>
+                      <ShoppingCartIcon/>
+                    </IconButton>
+                  </div>
+
+                
                   <div>
                     <IconButton>
                       <img src={require('../Assets/refresh.svg')} alt="Logo" id="imageFlex1" />

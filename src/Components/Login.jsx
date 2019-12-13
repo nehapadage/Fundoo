@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Login.css'
 import userService from '../services/userService'
-
+import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
@@ -21,6 +21,50 @@ const theme = createMuiTheme({
 
 });
 
+const theme2 = createMuiTheme({
+    overrides: {
+        'MuiCard': {
+            'root': {
+                width: '180px',
+                height: '220px',
+                backgroundColor: '#acacac'
+            },
+
+        }
+    }
+})
+
+const theme3 = createMuiTheme({
+    overrides: {
+        'MuiCard': {
+            'root': {
+                width: '180px',
+                height: '220px',
+                backgroundColor: '#f7bb00'
+            },
+
+        }
+    }
+})
+
+const theme1 = createMuiTheme({
+    overrides: {
+        'MuiPaper': {
+            'root': {
+                width: '180px',
+                height: '220px',
+                zIndex: '10px',
+            },
+            'elevation1': {
+                boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 0px 1px 2px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
+            },
+            // 'hover':{
+            //     transition:'box-shadow 280ms cubic-bezier(.4,0,.2,1)'
+            // }
+        }
+    }
+})
+
 
 class Login extends Component {
 
@@ -35,6 +79,7 @@ class Login extends Component {
             passwordError: "",
             flag: false,
             progress: false,
+            array:[]
         }
     }
 
@@ -181,24 +226,30 @@ class Login extends Component {
         console.log("Flag after", this.state.flag);
     };
 
-    // componentDidMount() {
-    //     // function tick() {
-    //     //     // reset when reaching 100%
-    //     //     // (this.state.progress===100)?(this.setState({progress:0})):(this.setState({progress:this.state.progress + 1}))
-    //     // }
+    componentDidMount() {
+        userService.getService().then(res => {
+            console.log("Response in like question--->", res);
+            this.setState({ array: res.data.data.data })
 
-    //     const timer = setInterval(20);
-    //     return () => {
-    //         clearInterval(timer);
-    //     };
-    // }
+            // console.log("Array is",this.state.array[0].price);
+
+
+        })
+            .catch(err => {
+                console.log("Error in get all data");
+            })
+    }
 
 
     render() {
+        var styles = localStorage.getItem('cartID') ? "adminMainDivService" : "adminMainDiv"
         return (
             <MuiThemeProvider theme={theme}>
             <div className="mainBody">
-                <div className="adminMainDiv">
+                {/* <div className="combineDiv"> */}
+
+               
+                <div className={styles}>
                     <div id="fundoo">
                         <label id="flabel">F</label>
                         <label id="ulabel">u</label>
@@ -302,9 +353,68 @@ class Login extends Component {
                         </div>
                     </div>
 
-
+{/* here */}
 
                 </div>
+
+{/* here */}
+                {localStorage.getItem('cartID') ? 
+                <div className="adminMainDiv1">
+                        <div>Service</div>
+
+                        <div id="cardfuns" style={{marginLeft:"-11%"}}>
+                    <MuiThemeProvider theme={theme}>
+                        {this.state.array.map(res => {
+                            return (
+                                <div id="addfun1ss">
+                                    {localStorage.getItem('cartID')===res.id ? 
+                                    <MuiThemeProvider theme={theme3}>
+                                        <Card className="cardfun1s">
+                                           
+                                            <div id="addfuns">SELECTED</div>
+                      
+                                        </Card>
+                                    </MuiThemeProvider>
+                                    :
+                                    <MuiThemeProvider theme={theme2}>
+                                    <Card className="cardfun1s">
+                                      
+                     <div id="addfuns">ADD TO CART</div> 
+                                    </Card>
+                            </MuiThemeProvider> }
+                                    <MuiThemeProvider theme={theme1}>
+                                        <Card style={{ position: "relative", padding: "5px" }} className="cardfun2">
+                                            <div style={{ marginLeft: "8%", marginRight: "3%", marginTop: "2%" }}>
+                                                <div id="addfun2">price: ${res.price} per month</div>
+                                                <div style={{ color: "blue", display: "flex", marginTop: "2%" }}>{res.name}</div>
+                                                <div style={{ display: "flex", flexDirection: "row", marginTop: "2%" }}>
+                                                    {/* <FiberManualRecordIcon fontSize="small" /> */}
+                                                    <div id="addfun3">.</div>
+                                                    <div id="addfun4">${res.price}/month</div>
+                                                </div>
+                                                <div style={{ display: "flex", flexDirection: "row", marginTop: "2%" }}>
+                                                    {/* <FiberManualRecordIcon fontSize="small" /> */}
+                                                    <div id="addfun3">.</div>
+                                                    <div id="addfun4">{res.description}</div>
+                                                </div>
+                                            </div>
+                                        </Card>
+                                    </MuiThemeProvider>
+
+                                </div>
+
+                            )
+                        })}
+
+                    </MuiThemeProvider>
+                </div>
+
+                    </div>
+                    : null}
+
+
+
+{/* </div> */}
             </div>
             </MuiThemeProvider>
         );

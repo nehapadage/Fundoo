@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import './createAccount.css'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { createMuiTheme, MuiThemeProvider} from "@material-ui/core";
+import { createMuiTheme, MuiThemeProvider, Paper} from "@material-ui/core";
 import userService from '../services/userService'
 import Snackbar from '@material-ui/core/Snackbar';
+import Card from '@material-ui/core/Card';
 
 const theme = createMuiTheme({
     overrides: {
@@ -19,11 +20,70 @@ const theme = createMuiTheme({
 
 });
 
+const theme2 = createMuiTheme({
+    overrides: {
+        'MuiCard': {
+            'root': {
+                width: '180px',
+                height: '220px',
+                backgroundColor: '#acacac'
+            },
+
+        }
+    }
+})
+
+const theme3 = createMuiTheme({
+    overrides: {
+        'MuiCard': {
+            'root': {
+                width: '180px',
+                height: '220px',
+                backgroundColor: '#f7bb00'
+            },
+
+        }
+    }
+})
+
+const theme4 = createMuiTheme({
+    overrides: {
+        'MuiButton':{
+            'label':{
+                marginTop:'-5px'
+            } 
+        }
+
+        
+    }
+})
+
+
+
+const theme1 = createMuiTheme({
+    overrides: {
+        'MuiPaper': {
+            'root': {
+                width: '180px',
+                height: '220px',
+                zIndex: '10px',
+            },
+            'elevation1': {
+                boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 0px 1px 2px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
+            },
+            // 'hover':{
+            //     transition:'box-shadow 280ms cubic-bezier(.4,0,.2,1)'
+            // }
+        }
+    }
+})
+
 class createAccount extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            array:[],
             firstName: "",
             lastName: "",
             email: "",
@@ -40,6 +100,21 @@ class createAccount extends Component {
             flagButton:"",
             flagButtonError:""
         }
+    }
+
+    componentDidMount(){
+        userService.getService().then(res => {
+            console.log("Response in like question--->", res);
+            this.setState({ array: res.data.data.data })
+
+            // console.log("Array is",this.state.array[0].price);
+
+
+        })
+            .catch(err => {
+                console.log("Error in get all data");
+            })
+
     }
 
 
@@ -82,7 +157,7 @@ class createAccount extends Component {
          emailError : "",
          passwordError : "",
          confirmPasswordError: "",
-            flagButtonError:""
+            // flagButtonError:""
         };
 
     
@@ -119,9 +194,9 @@ class createAccount extends Component {
             errors.confirmPasswordError = "Password length should greater than 6 and less than 12";
           }
 
-          if(this.state.flagButton===""){
-              errors.flagButtonError="Please select basic or advance"
-          }
+        //   if(this.state.flagButton===""){
+        //       errors.flagButtonError="Please select basic or advance"
+        //   }
     
           this.setState({
             ...this.state,
@@ -147,7 +222,16 @@ class createAccount extends Component {
         registerData.lastName = this.state.lastName;
         registerData.email = this.state.email;
         registerData.password = this.state.password;
-        registerData.service = this.state.flagButton
+
+        if(localStorage.getItem('cartID')){
+            localStorage.getItem('price')===99 ? 
+            registerData.service = "advance" : registerData.service = "basic"
+        } 
+       else{
+        registerData.service = this.state.flagButton 
+       } 
+
+        // registerData.service = this.state.flagButton
 
         console.log("registerData--> ", JSON.stringify(registerData))
 
@@ -158,8 +242,9 @@ class createAccount extends Component {
 
             if (res.data.data.success === true) {
                 this.setState({ flag1: true })
+                this.props.history.push('/login')
                 // alert(`Registration Successful-----`);
-                this.setRedirect();
+                // this.setRedirect();
             }
             // else {
             //     alert(`Email Already Exists-----`);
@@ -192,8 +277,8 @@ class createAccount extends Component {
               passwordError: "",
               confirmPassword: "",
               confirmPasswordError: "",
-              flag:"",
-              flagButton:""
+            //   flag:"",
+            //   flagButton:""
             });
         }
         
@@ -231,12 +316,21 @@ console.log("Button clicked=",this.state.flagButton);
         console.log("Button clicked=",this.state.flagButton);
     }
 
+    cart=()=>{
+        this.props.history.push('/')
+    }
+
     render() {
+
+        // var styles = localStorage.getItem('cartID') === true ? theme2 : theme3
+
         return (
+            <div className="regdiv">
             <MuiThemeProvider theme={theme}>
                 <div className="maindiv1">
+                    {/* <Paper> */}
                 {/* <form onSubmit={this.handlesubmit} ></form> */}
-                <div id="fundoo1">
+                <div id="fundoo">
                     <label id="flabel">F</label>
                     <label id="ulabel">u</label>
                     <label id="nlabel">n</label>
@@ -244,17 +338,24 @@ console.log("Button clicked=",this.state.flagButton);
                     <label id="olabel">o</label>
                     <label id="o2label">o</label>
                 </div>
-                <div id="text1">Create your Fundoo Account</div>
+                {localStorage.getItem('cartID') ?
+                <MuiThemeProvider theme={theme4}>
+                    <div id="butfun"> 
+                        <Button style={{ backgroundColor: "#acacac", height: "25px"}} onClick={this.cart}>go to cart</Button>
+                    </div>
+                    </MuiThemeProvider>
+                    : null}
+                <div id="textfun">Create your Fundoo Account</div>
 
-                <div id="fnln">
-                    <div >
+                 <div id="fnln">
+                    <div  >
                     <TextField
-                        id="firstName"
+                    id="fnfun"
+                        // id="firstName"
                         label="First name"
                         type="string"
                         name="firstName"
                         value={this.state.firstName}
-                        // autoComplete="email"
                         margin="normal"
                         variant="outlined"
                         onChange={this.handlechangeall}
@@ -263,15 +364,15 @@ console.log("Button clicked=",this.state.flagButton);
                     />
                     </div>
                     &nbsp;&nbsp;&nbsp;
-                    <div>
+                    <div >
                     <TextField
-                        id="lastName"
+                    id="lnfun"
+                        // id="lastName"
                         label="Last name"
                         type="string"
                         name="lastName"
                         value={this.state.lastName}
-                        // autoComplete="email"
-                        error={this.state.lastNameError}
+                        // error={this.state.lastNameError}
                         margin="normal"
                         variant="outlined"
                         onChange={this.handlechangeall}
@@ -291,7 +392,7 @@ console.log("Button clicked=",this.state.flagButton);
             {this.state.lastNameError}
           </div>
                 </div>
-                <div id="email1">
+               <div id="email1">
                         <TextField
                             id="emailText"
                             label="Email Id"
@@ -305,7 +406,7 @@ console.log("Button clicked=",this.state.flagButton);
                             errorText={this.state.emailError}
                         />
                     </div>
-                    <div style={{ fontSize: 12, color: "red", marginLeft: "-36%"}}>
+                    <div style={{ fontSize: 12, color: "red", marginLeft: "-5%"}}>
             {this.state.emailError}
           </div>
                     <div id="text2">You can use letters and numbers</div>
@@ -313,7 +414,8 @@ console.log("Button clicked=",this.state.flagButton);
                     <div id="passcon">
                         <div>
                         <TextField
-                            id="pass"
+                            // id="pass"
+                            id="fnfun"
                             label="Password"
                             type="password"
                             name="password"
@@ -327,7 +429,8 @@ console.log("Button clicked=",this.state.flagButton);
                         &nbsp;&nbsp;&nbsp;
                         <div>
                         <TextField
-                            id="conpass"
+                            // id="conpass"
+                            id="lnfun"
                             label="Confirm Password"
                             type="password"
                             name="confirmPassword"
@@ -349,9 +452,59 @@ console.log("Button clicked=",this.state.flagButton);
                         {this.state.confirmPasswordError}
                     </div>
                     </div>
-                    <div id="basic_adv_button">
-                    
-                    
+
+                     
+                         {localStorage.getItem('cartID') ? 
+                        //  <div>neha here should b mapping</div>
+
+                        <div id="cardfun" style={{marginLeft:"-5%"}}>
+                    <MuiThemeProvider theme={theme}>
+                        {this.state.array.map(res => {
+                            return (
+                                <div id="addfun1s">
+                                    {localStorage.getItem('cartID')===res.id ? 
+                                    <MuiThemeProvider theme={theme3}>
+                                        <Card className="cardfun1s">
+                                           
+                                            <div id="addfuns">SELECTED</div>
+                      
+                                        </Card>
+                                    </MuiThemeProvider>
+                                    :
+                                    <MuiThemeProvider theme={theme2}>
+                                    <Card className="cardfun1s">
+                                      
+                     <div id="addfuns">ADD TO CART</div> 
+                                    </Card>
+                            </MuiThemeProvider> }
+                                    <MuiThemeProvider theme={theme1}>
+                                        <Card style={{ position: "relative", padding: "5px" }} className="cardfun2">
+                                            <div style={{ marginLeft: "8%", marginRight: "3%", marginTop: "2%" }}>
+                                                <div id="addfun2">price: ${res.price} per month</div>
+                                                <div style={{ color: "blue", display: "flex", marginTop: "2%" }}>{res.name}</div>
+                                                <div style={{ display: "flex", flexDirection: "row", marginTop: "2%" }}>
+                                                    {/* <FiberManualRecordIcon fontSize="small" /> */}
+                                                    <div id="addfun3">.</div>
+                                                    <div id="addfun4">${res.price}/month</div>
+                                                </div>
+                                                <div style={{ display: "flex", flexDirection: "row", marginTop: "2%" }}>
+                                                    {/* <FiberManualRecordIcon fontSize="small" /> */}
+                                                    <div id="addfun3">.</div>
+                                                    <div id="addfun4">{res.description}</div>
+                                                </div>
+                                            </div>
+                                        </Card>
+                                    </MuiThemeProvider>
+
+                                </div>
+
+                            )
+                        })}
+
+                    </MuiThemeProvider>
+                </div>
+                         :    
+                         <div id="basic_adv_button">              
                     <Button id="bas"
                             onClick={this.handleBasic}
                         >Basic
@@ -359,11 +512,12 @@ console.log("Button clicked=",this.state.flagButton);
                         <Button id="adv"
                             onClick={this.handleAdvance}
                         >Advance
-                        </Button>
-                    </div>
+                        </Button> </div>}
+                    
                     <div style={{ fontSize: 12, color: "red",marginLeft: "-36%" }}>
             {this.state.flagButtonError}
           </div>
+    
                     <div id="lastrow">
                     
                         <Button id="login1"
@@ -372,7 +526,6 @@ console.log("Button clicked=",this.state.flagButton);
                         </Button>
                     
                         <div>
-                        {/* {this.renderRedirect()} */}
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -408,11 +561,12 @@ console.log("Button clicked=",this.state.flagButton);
                             onClose={this.handleClose1}
                            
                             message="Registration Successful"
-                       />
+                       /> 
                         
-
+                        {/* </Paper> */}
             </div>
             </MuiThemeProvider>
+            </div>
 
                 
             

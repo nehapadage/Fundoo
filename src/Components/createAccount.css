@@ -1,7 +1,15 @@
+.regdiv{
+    height: 100vh;
+ 
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
+    justify-content: center;
+}
 
 .maindiv1{
-    background-color: white;
-    /* text-align: center; */
+    /* background-color: white;
+  
     padding: 110px;
     width: 300px;
     height: 270px;
@@ -11,14 +19,37 @@
     border-color: grey;
     display: flex;
     flex-direction: column;
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap; */
+
+
+
+    min-height: auto;
+    width:  28em;
+    padding: 10px;
+    background-color: white;
+  border : 1px solid #dadce0;
+  /* border: 1px solid black; */
+  border-radius: 10px;;
+    margin: auto auto;
+    margin-top: 2em;
+
+
+
+    /* min-height: auto;
+    width: 431px;
+    padding: 40px;
+    background-color: #dadce0;
+    border: 1px solid #dadce0;
+    border-radius: 10px;
+    margin: auto auto;
+    margin-right: 11%; */
 }
 
 #fnln{
-    margin-left: -85px; 
+    /* margin-left: -85px;  */
      display: flex;
     flex-direction: row; 
-    justify-content: space-around; 
+    justify-content: space-between; 
     /* height: auto;
     width: 300px; */
     
@@ -26,31 +57,32 @@
 }
 
 #fnlnerr{
-    margin-left: -85px; 
+    /* margin-left: -85px;  */
     display: flex;
    flex-direction: row; 
    justify-content: space-around;    
 }
 
 #passconerr{
-    margin-left: -85px; 
+    /* margin-left: -85px;  */
     display: flex;
    flex-direction: row; 
    justify-content: space-around;    
 }
 
 #passcon{
-    margin-left: -85px; 
+    /* margin-left: -85px;  */
     display: flex;
    flex-direction: row; 
    justify-content: space-between; 
 }
 
 #lastrow{
-    margin-left: -85px; 
+    /* margin-left: -85px;  */
     display: flex;
     flex-direction: row;  
    justify-content: space-between; 
+   padding: 4%;
 }
 
 #login1{
@@ -72,14 +104,15 @@ height: 10px;
 #email1{
     display: flex;  
     justify-content: flex-start;
-    margin-left: -85px;
+    /* margin-left: -85px; */
     /* width: 442px;
     height: 20px; */
     /* background-color: thistle; */
 }
 
 #emailText{
-    width: 358px;
+    width: 475px;
+    /* width: 100%; */
 }
 
 
@@ -113,7 +146,7 @@ height: 10px;
         /* margin-left: -280px; */
         display: flex;
         /* flex-direction: row; */
-        margin-left: -85px;
+        /* margin-left: -85px; */
         justify-content: flex-start;
 
 }
@@ -150,9 +183,9 @@ height: 10px;
 #basic_adv_button{
      display:flex;
     flex-direction: row;
-     width: 100%; 
+     width: 50%; 
      justify-content: space-between;
-     margin-left: -28%;
+     /* margin-left: -28%; */
 }  
 
 #bas{
@@ -170,4 +203,204 @@ height: 10px;
     justify-content: flex-end;
     font-size: 15px; 
 }
+
+#textfun{
+    font-family: 'Roboto',arial,sans-serif;
+    font-size: 13px;
+    color: #3c4043;
+    display: flex;
+    justify-content: center;
+}
+
+#butfun{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: -2em;
+}
+
+/* #fnfun{
+    width: 475px;
+ }
+ #lnfun{
+      width: 475px;
+   } */
+
+
+   /* @media only screen and (max-width: 800px) {
+    .maindiv1{
+        width: 100%;
+    }
+} */
+
+@media only screen and (max-width: 660px) {
+    .maindiv1{
+        width: 90%;
+    }
+
+    #emailText{
+        width: 400px;
+        /* width: 100%; */
+        /* align-items: center; */
+
+    }
+    #email1{
+        /* width: 475px; */
+        /* width: 100%; */
+        /* align-items: center; */
+        justify-content: center;
+
+    }
+    #fnln{
+         display: flex;
+        flex-direction: column; 
+        justify-content: center;
+        /* align-items: center; */
+        
+    }
+
+    #passcon{
+        /* margin-left: -85px;  */
+        display: flex;
+       flex-direction: column; 
+       align-items: center;
+              /* justify-content: space-between;  */
+    }
+    
+    #fnfun{
+         width: 400px;
+      }
+      #lnfun{
+           width: 400px;
+        }
+        #pass{
+            width: 400px;
+         }
+         #conpass{
+              width: 400px;
+           }
+           #text2{
+               justify-content: center;
+           }
+           #passcon{
+               justify-content: center;
+           }
+
+           #lastrow{ 
+           justify-content: center; 
+           }
+   
+} 
+
+@media only screen and (max-width: 480px) {
+    .maindiv1{
+        width: 90%;
+    }
+
+    #emailText{
+        width: 300px;
+        /* width: 100%; */
+        /* align-items: center; */
+
+    }
+    #email1{
+        /* width: 475px; */
+        /* width: 100%; */
+        /* align-items: center; */
+        justify-content: center;
+
+    }
+    #fnln{
+         display: flex;
+        flex-direction: column; 
+        justify-content: center;
+        /* align-items: center; */
+        
+    }
+
+    #passcon{
+        /* margin-left: -85px;  */
+        display: flex;
+       flex-direction: column; 
+       align-items: center;
+              /* justify-content: space-between;  */
+    }
+    
+    #fnfun{
+         width: 300px;
+      }
+      #lnfun{
+           width: 300px;
+        }
+        #pass{
+            width: 300px;
+         }
+         #conpass{
+              width: 300px;
+           }
+           #text2{
+               justify-content: center;
+           }
+           #passcon{
+               justify-content: center;
+           }
+   
+} 
+
+@media only screen and (max-width: 380px) {
+    .maindiv1{
+        width: 90%;
+    }
+
+    #emailText{
+        width: 250px;
+        /* width: 100%; */
+        /* align-items: center; */
+
+    }
+    #email1{
+        /* width: 475px; */
+        /* width: 100%; */
+        /* align-items: center; */
+        justify-content: center;
+
+    }
+    #fnln{
+         display: flex;
+        flex-direction: column; 
+        justify-content: center;
+        /* align-items: center; */
+        
+    }
+
+    #passcon{
+        /* margin-left: -85px;  */
+        display: flex;
+       flex-direction: column; 
+       align-items: center;
+              /* justify-content: space-between;  */
+    }
+    
+    #fnfun{
+         width: 250px;
+      }
+      #lnfun{
+           width: 250px;
+        }
+        #pass{
+            width: 250px;
+         }
+         #conpass{
+              width: 250px;
+           }
+           #text2{
+               justify-content: center;
+           }
+           #passcon{
+               justify-content: center;
+           }
+   
+} 
+
+
 

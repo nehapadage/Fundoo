@@ -410,6 +410,17 @@ class user {
         return like;   
     }
 
+    getService(){
+             
+            var service= axios.get('http://fundoonotes.incubation.bridgelabz.com/api/user/service',{
+            headers: {
+                authorization: token
+            }
+        });
+
+        return service;   
+    }
+
 
     
 
