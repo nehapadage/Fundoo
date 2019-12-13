@@ -28,20 +28,22 @@
     width: 300px;
     padding: 40px;
     background-color: white;
-    /* border: 1px solid #dadce0; */
-    border: 1px solid black;
+    border: 1px solid #dadce0;
+    /* border: 1px solid black; */
     border-radius: 10px;
     margin: auto auto;
-    margin-left: 20%;
+    /* margin-left: 10%; */
 
 }
 
 .combineDiv{
-    width: 80%;
+    width: auto;
+    padding: 2%;
+    margin: auto auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    border: 1px solid black;
+    /* justify-content: space-between; */
+    /* border: 1px solid black; */
 }
 
 /* .adminMainDiv1{
@@ -164,7 +166,27 @@
 
 }
 
-@media only screen and (max-width: 870px) {
+/* @media only screen and (min-width: 765px) {
+    .adminMainDivService {
+        margin-top: 0em;
+    }
+    .combineDiv{
+        margin-top: 0em;
+    }
+    
+    
+} */
+
+/* @media only screen and (min-width: 375px) {
+    .adminMainDivService {
+        margin-top: 0em;
+    }
+    .combineDiv{
+        margin-top: 0em;
+    }
+} */
+
+@media only screen and (max-width: 1024px) {
   
 
         #cardfuns{
@@ -182,11 +204,51 @@
          align-items: center;
     }
     /* .adminMainDivService {
+        margin-left: 10%;
+    } */
+    .adminMainDiv1 {
+        margin-left: 10%;
+    }
+    .combineDiv{
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 2em;
+    }
+  
+    /* .adminMainDivService {
         margin-top: 30em;
        
     } */
 } 
 
+@media only screen and (max-width: 450px) {
+
+.combineDiv{
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 2em;
+}
+
+    .adminMainDivService {
+        margin-top: 32em;
+        width: 70%;
+        margin-left: 2px;
+       
+    }
+    .adminMainDiv1 {
+        width: 70%;
+    }
+    #EmailPass {
+        width: 230px;
+    }
+    /* #log{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    } */
+}
 
 
 
