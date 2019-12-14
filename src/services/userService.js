@@ -421,6 +421,31 @@ class user {
         return service;   
     }
 
+    getShop(){
+        var shop= axios.get('http://fundoonotes.incubation.bridgelabz.com/api/productcarts/myCart',{
+            headers: {
+                authorization: token
+            }
+        });
+
+        return shop; 
+    }
+
+    placeOrder(datas){
+        console.log("Data in place order",datas,token);
+        
+        var place= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/productcarts/placeOrder',JSON.stringify({
+            data: datas
+        }),{
+            headers: {
+                ContentType:'application/json',
+                authorization: token
+            }
+        });
+
+        return place; 
+    }
+
 
     
 

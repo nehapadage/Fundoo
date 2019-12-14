@@ -13,8 +13,158 @@
 }
 
 #mainShop1{
-    display: flex; 
+    display: flex;
     flex-direction: row;
-    /* padding: 5%;
-    margin-left: 5%; */
+    padding: 3em;
+    /* margin-left: 10%; */
+    justify-content: space-evenly;
+}
+
+#cartbar{
+    width: 20em;
+    height: 0.3em;
+    /* background-color: #0E89C2; */
+    background-color: #D1C4E9;
+    margin-top: 0.7em;
+    /* margin: 1em; */
+}
+
+#cart{
+    display: flex;
+    /* justify-content: flex-start; */
+    /* margin-left: 12.5em; */
+    margin-top: -0.5em;
+}
+#cart1{
+    margin-top: -2em;
+    margin-left: -0.5em;
+}
+#cart2{
+    margin-top: -2em;
+    margin-left: 12.5em;
+}
+#cartNames{
+    display: flex;
+    flex-direction: column;
+}
+#cartNames1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0.7em;
+    color: #928f8f;
+    font-size: 12px;
+}
+
+#colorStyle{
+    color: #FFBB00;
+}
+
+#mainShop2{
+    padding: 0.5em;
+    font-weight: bold;
+    font-size: x-large;
+    display: flex;
+    margin-left: 6em;
+}
+#divider{
+    margin-left: 9em; 
+    width: 55em;
+}
+
+#items{
+    display: flex;
+    flex-direction: row;
+}
+
+#item1{
+        background-color: #797777;
+        color: white;
+        border-radius: 8px;
+        width: 10%;
+        text-align: left;
+      
+        margin: 1em;
+        margin-left: 10em;
+}
+#item2{
+    display: flex;
+    flex-direction: column;
+    /* width: 100em; */
+    /* border: 1px solid black; */
+    text-align: left;
+
+}
+#subItem1{
+    margin: 1em;
+    font-size: 15px;
+    color: #0E89C2;
+}
+#subItem2{
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+   
+}
+#dot{
+    font-size: 45px;
+    margin-top: -0.7em;
+    margin-left: 0.25em;
+}
+#item3{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+#subItem3{
+    font-weight: bold;
+    margin: 1em;
+    margin-left: 4em; 
+}
+#subItem4{
+    color: #0E89C2;
+   
+    margin-left: 4em; 
+    margin-top: -0.5em;
+}
+#item4{
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 10em;
+    text-align: left;
+    padding: 1em;
+    margin: 1em;
+}
+#subItem5{
+    margin-top: 1em;
+    color:  #0E89C2;
+    display: flex;
+    margin-left: 10em; 
+}
+#subItem6{
+    margin-top: 0.5em;
+    background-color: #0E89C2;
+    cursor: pointer;
+    color: white;
+    border-radius: 4px;
+}
+#additems{
+    display: flex;
+    flex-direction: row;
+    margin-top: 2em;
+    justify-content: space-evenly;
+
+}
+#additems1{
+    margin-left: -1em;
+}
+#additems2{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+#status{
+    margin-top: 1em;
+    color:  #0E89C2;
+    font-weight: bold;
 }
