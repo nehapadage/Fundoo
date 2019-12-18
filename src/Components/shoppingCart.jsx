@@ -6,7 +6,6 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Divider from '@material-ui/core/Divider';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import userService from '../services/userService'
 import Snackbar from '@material-ui/core/Snackbar';
@@ -52,11 +51,17 @@ class shoppingCart extends Component {
 
     }
 
-    componentDidMount() {
-        userService.getShop().then((res) => {
+    componentDidMount=async()=>{
+        this.setState({ color: true })
+       await this.setState({ cart: true, cart1: false })
+        console.log("status of cart",this.state.cart,this.state.cart1,this.state.cart2);
+
+        
+
+        userService.getShop().then(async(res) => {
             console.log("Response in get shopping details", res);
 
-            this.setState({ price: res.data.data[0].price })
+          await  this.setState({ price: res.data.data[0].price })
             console.log("Description is", res.data.data[0].product.description);
             this.setState({ description: res.data.data[0].product.description })
             this.setState({ status: res.data.data[0].status })
@@ -65,32 +70,39 @@ class shoppingCart extends Component {
         }).catch((err) => {
             console.log(err);
         })
-        this.setState({ color: true })
-        this.setState({ cart: true, cart1: false })
+       
+        
     }
 
-    proceed = () => {
+    proceed = async() => {
         this.setState({ color1: true })
-        this.setState({ cart: false, cart1: true })
+       await this.setState({ cart: false, cart1: true })
+        console.log("status of cart1",this.state.cart,this.state.cart1,this.state.cart2);
+        
     }
 
-    place = () => {
+    place = async() => {
         if (this.state.address === '') {
             this.setState({ snack: true })
         }
         else {
 
-            var data={       
-                cartId:localStorage.getItem('cartID'),
-                address:this.state.address,
+        //     this.setState({ color2: true })
+        //    await this.setState({ cart: false, cart1: false, cart2: true })
+        //     console.log("status of cart2",this.state.cart,this.state.cart1,this.state.cart2);
+
+            var data = {
+                cartId: localStorage.getItem('cartID'),
+                address: this.state.address,
             }
 
-            userService.placeOrder(data).then((res) => {
+            userService.placeOrder(data).then(async(res) => {
                 console.log("Response in place order", res);
 
 
                 this.setState({ color2: true })
-                this.setState({ cart: false, cart1: false, cart2: true })
+               await this.setState({ cart: false, cart1: false, cart2: true })
+                console.log("status of cart2",this.state.cart,this.state.cart1,this.state.cart2);
 
             }).catch((err) => {
                 console.log(err);
@@ -111,11 +123,14 @@ class shoppingCart extends Component {
         this.setState({ snack: !this.state.snack })
     }
 
+   
+
     render() {
         var colorStyle = this.state.color ? "colorStyle" : null
         var colorStyle1 = this.state.color1 ? "colorStyle" : null
         var colorStyle2 = this.state.color2 ? "colorStyle" : null
-        var cartStyle = this.state.cart ? "cart" : this.state.cart1 ? "cart1" : "cart2"
+        var cartStyle = this.state.cart===true ? "cart" : this.state.cart1===true ? "cart1" : "cart2"
+        var VALUE= this.state.cart ? 0 : this.state.cart1 ? 50 : 100;
         // var cartStyle= this.state.cart1 ? "cart1" : null
         return (
             <MuiThemeProvider theme={theme}>
@@ -123,20 +138,21 @@ class shoppingCart extends Component {
                     <div id="mainShop1">
                         <Button style={{ backgroundColor: "#FFBB00", width: "fit-content" }}>FundooNotes</Button>
                         <div id="cartNames">
-                            <div id="cartbar">
+                            {/* <div id="cartbar"> 
                                 <ShoppingCartIcon id={cartStyle} />
-                            </div>
+                             </div> */}
 
-                            {/* const BorderLinearProgress = withStyles({
-                                root: {
-                                height: 10,
-                            backgroundColor: lighten('#ff6c5c', 0.5),
-                          },
-  bar: {
-                                borderRadius: 20,
-                            backgroundColor: '#ff6c5c',
-                          },
-                        })(LinearProgress); */}
+
+
+                            <LinearProgress
+                            id="cartbar"
+                                // className={classes.margin}
+                                variant="determinate"
+                                color="primary"
+                                value={VALUE}
+                            />
+                             <ShoppingCartIcon id={cartStyle} />
+
 
                             <div id="cartNames1">
                                 <div id={colorStyle}>signin</div>

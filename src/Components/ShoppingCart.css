@@ -23,10 +23,9 @@
 #cartbar{
     width: 20em;
     height: 0.3em;
-    /* background-color: #0E89C2; */
     background-color: #D1C4E9;
-    margin-top: 0.7em;
-    /* margin: 1em; */
+    /* margin-top: 0.7em; */
+   
 }
 
 #cart{
@@ -34,14 +33,17 @@
     /* justify-content: flex-start; */
     /* margin-left: 12.5em; */
     margin-top: -0.5em;
+    z-index: 5;
 }
 #cart1{
-    margin-top: -2em;
-    margin-left: -0.5em;
+    margin-top: -0.5em;
+    margin-left: 6em;
+    z-index: 5;
 }
 #cart2{
-    margin-top: -2em;
+    margin-top: -0.5em;
     margin-left: 12.5em;
+    z-index: 5;
 }
 #cartNames{
     display: flex;

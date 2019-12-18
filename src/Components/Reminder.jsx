@@ -121,6 +121,7 @@ class Reminder extends Component {
             reminderDate = (new Date(year, month, day, 20, 0, 0)).toString();
             console.log("today date", reminderDate);
 
+
         } /** for reminder setting for tomorrow with time 8 AM */
         else if (requestValue === 2) {
             var tomorrow = new Date();
@@ -168,9 +169,9 @@ class Reminder extends Component {
                 console.log(err);
             })
         }
-        //  else {
-        //     this.props.setReminder(reminderDate);
-        // }
+         else {
+            this.props.setReminder(reminderDate);
+        }
 
 
     }

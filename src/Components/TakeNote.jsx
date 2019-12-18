@@ -13,6 +13,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Chip from '@material-ui/core/Chip';
 
 const theme = createMuiTheme({
     overrides: {
@@ -46,7 +47,9 @@ class TakeNote extends Component {
             description: "",
             noteId: "",
             Color: "",
-            token: localStorage.getItem('LoginToken')
+            reminder: "",
+            token: localStorage.getItem('LoginToken'),
+            colab:""
         };
 
     }
@@ -61,7 +64,8 @@ class TakeNote extends Component {
             let noteData = {
                 "title": this.state.title,
                 "description": this.state.description,
-                "color": this.state.Color
+                "color": this.state.Color,
+                "reminder": this.state.reminder
             }
 
             userService.createNote(noteData, this.state.token).then(res => {
@@ -72,7 +76,8 @@ class TakeNote extends Component {
 
                 this.setState({ title: "" });
                 this.setState({ description: "" });
-                this.setState({ Color: "#ffffff" });
+                this.setState({ Color: "#ffffff", reminder: "" });
+
 
                 console.log("Changed color is", this.state.Color);
 
@@ -109,6 +114,7 @@ class TakeNote extends Component {
                 "title": this.state.title,
                 "description": this.state.description,
                 "color": this.state.Color,
+                "reminder": this.state.reminder,
                 "isArchived": true
             }
 
@@ -135,12 +141,31 @@ class TakeNote extends Component {
 
     }
 
+    reminder = (reminder) => {
+        console.log("Reminder in take note", reminder);
+        this.setState({ reminder: reminder })
+    }
+
+    handleReminderDelete = () => {
+        console.log("In Reminder delete");
+
+        this.setState({ reminder: "" })
+        // this.props.refresh()
+
+
+    }
+
+    colab = (colab) => {
+        console.log("Colaborator in take note", colab);
+        this.setState({ colab: colab.email})
+    }
+
 
     render() {
 
 
         return (
-        // <MuiThemeProvider theme={theme}>
+            // <MuiThemeProvider theme={theme}>
 
             <div className="createcardStyle">
                 {this.state.noteViewController ?
@@ -177,11 +202,28 @@ class TakeNote extends Component {
                             />
 
                         </div>
+
+                        {this.state.reminder.length > 0 && <div style={{ display: "flex", marginLeft: "1em" }}>
+                            {/* {this.props.Reminder} */}
+
+                            {/* <img src={require("../Assets/watch.svg")} alt="" />{this.state.reminder.toString().slice (4,10)+" "+this.state.reminder.toString().slice (16,21)} */}
+
+                            <Chip
+                                icon={<img src={require("../Assets/watch.svg")} alt="" />}
+                                label={this.state.reminder.toString().slice(4, 10) + " " + this.state.reminder.toString().slice(16, 21)}
+                                // onClick={(event) => this.handleReminderClick(event)}
+                                // onClick={<Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />}
+                                // onClick={<Reminder/>}
+                                onDelete={this.handleReminderDelete}
+                            />
+
+                        </div>}
+
                         <div className="displayButton">
                             {/* <div > */}
-                            <Reminder />
-                            {/* <Collaborator/>
-                            <Collaborator note={this.props.note} NoteId={this.state.noteId} REFRESH={this.handleRefresh}/> */}
+                            <Reminder setReminder={this.reminder} />
+                            <Collaborator colabs={this.colab} />
+                            {/* <Collaborator note={this.props.note} NoteId={this.state.noteId} REFRESH={this.handleRefresh}/> */}
                             <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
                             <Image />
 
@@ -225,7 +267,7 @@ class TakeNote extends Component {
 
                 }
             </div>
-        // </MuiThemeProvider>
+            // </MuiThemeProvider>
 
         )
     }

@@ -71,6 +71,7 @@ class user {
 
 
     getAllNotes() {
+        var token = localStorage.getItem('LoginToken')
 
         console.log("Token in getAllNotes--> ", token)
 
@@ -188,6 +189,8 @@ class user {
     }
 
     getLabels(){
+        var token = localStorage.getItem('LoginToken')
+
         var label = axios.get('http://fundoonotes.incubation.bridgelabz.com/api/noteLabels/getNoteLabelList',  {
             headers: {
                 authorization: token

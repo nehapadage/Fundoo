@@ -23,11 +23,12 @@ import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
 import { file } from '@babel/types';
-import {search} from '../Actions/Action'
-import {drawer} from '../Actions/Action'
-import {view} from '../Actions/Action'
-import {connect} from 'react-redux'
+import { search } from '../Actions/Action'
+import { drawer } from '../Actions/Action'
+import { view } from '../Actions/Action'
+import { connect } from 'react-redux'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PersonIcon from '@material-ui/icons/Person';
 
 
 
@@ -53,7 +54,11 @@ const theme = createMuiTheme({
     MuiButton: {
       label: {
         color: "grey",
-        textTransform: "lowercase"
+        textTransform: "lowercase",
+      },
+      root: {
+        minWidth: "fit-content",
+        height: "fit-content"
       }
     },
     MuiPaper: {
@@ -61,8 +66,8 @@ const theme = createMuiTheme({
         marginTop: "0px !important"
       }
     },
-    MuiInputBase:{
-      root:{
+    MuiInputBase: {
+      root: {
         width: "100%"
       }
     }
@@ -70,7 +75,7 @@ const theme = createMuiTheme({
 
 });
 
- 
+
 
 
 const theme1 = createMuiTheme({
@@ -117,37 +122,37 @@ class Dashboard extends Component {
       dialog: false,
       imageName: '',
       Event: '',
-      event:'',
-      propic:"",
-      originalLabels:[],
-      flag:false
-     
+      event: '',
+      propic: "",
+      originalLabels: [],
+      flag: false
+
 
     }
 
-   
+
 
     // this.onDrop = this.onDrop.bind(this);
 
     this.DisplayNotes = React.createRef()
   }
 
-  searchRedirect=()=>{
-    this.setState({searchText:""})
+  searchRedirect = () => {
+    this.setState({ searchText: "" })
     this.props.history.push('/dashboard/notes')
-  
+
   }
 
-  searching=()=>{
+  searching = () => {
     // this.setState({flag:!this.state.flag})
     this.props.history.push('/dashboard/search')
-    
+
   }
 
   handlechangeall = (event) => {
     this.setState({ [event.target.name]: event.target.value })
     this.props.search(event.target.value)
-    
+
   }
 
   componentDidMount() {
@@ -264,7 +269,7 @@ class Dashboard extends Component {
     this.props.history.push('/dashboard/labelNotes')
   }
 
-  handleCart=()=>{
+  handleCart = () => {
     this.props.history.push('/dashboard/shoppingCart')
   }
 
@@ -279,21 +284,21 @@ class Dashboard extends Component {
 
 
   toggleDrawer = () => {
-    this.setState({open: !this.state.open }) // first false ---> true
-    console.log("State of drawer in dashboard",this.state.open);
+    this.setState({ open: !this.state.open }) // first false ---> true
+    console.log("State of drawer in dashboard", this.state.open);
     this.props.drawer(this.state.open)
 
     // const data = {
-      
+
     // }
     // this.props.dispatch({
     //   type:'ADD_POST',
     //   data});
-    
+
     // localStorage.setItem('Drawer',this.state.open)
   }
 
-  changeGrid =() => {
+  changeGrid = () => {
     this.setState({ grid: !this.state.grid })
     this.props.view(this.state.grid)
 
@@ -304,7 +309,7 @@ class Dashboard extends Component {
     //  localStorage.setItem('List',!(localStorage.getItem('List')))
 
     // this.props.history.push('/dashboard/notes')
-    
+
   }
 
   handleProfileClick = event => {
@@ -348,13 +353,13 @@ class Dashboard extends Component {
 
   change = async (event) => {
     var fil = document.getElementById("myFile");
-   console.log("File",fil);
-   
-    console.log(" select file event ",event);
-    
+    console.log("File", fil);
+
+    console.log(" select file event ", event);
+
     console.log("Event in ondrop", event[0]);
 
-    this.setState({event:event[0]})
+    this.setState({ event: event[0] })
 
     // this.setState({event:event[0].name})
     // console.log("Picture before ondrop ", this.state.pictures);
@@ -363,22 +368,22 @@ class Dashboard extends Component {
     reader.readAsDataURL(event[0]); // read file as data url
 
     reader.onload = (event) => { // called once readAsDataURL is completed
-      console.log('event on load',event);
-      
+      console.log('event on load', event);
+
       const url = event.target.result;
       this.setState({ Event: url })
       console.log("Final event", this.state.Event);
 
-      this.setState({imageFlag:!this.state.imageFlag})
-      this.setState({pop:!this.state.pop})
+      this.setState({ imageFlag: !this.state.imageFlag })
+      this.setState({ pop: !this.state.pop })
 
-     
+
     }
 
-   
-   
 
-    
+
+
+
 
 
     // await this.setState({
@@ -403,41 +408,41 @@ class Dashboard extends Component {
 
   }
 
-  setProfile=async()=>{
+  setProfile = async () => {
 
     // var data={
     //   "status":this.state.Event,
     //   "type":"formData"
     // }
 
-      // this.b64toBlob(this.state.Event)
-      // console.log("B64 conversion",this.b64toBlob(this.state.Event));
-      
+    // this.b64toBlob(this.state.Event)
+    // console.log("B64 conversion",this.b64toBlob(this.state.Event));
+
 
     console.log("Final event in set profile", this.state.Event);
 
     var pic = new FormData();
-    console.log("formdata before append",pic);
+    console.log("formdata before append", pic);
 
-    
-    
-    await pic.append('file',this.state.event);
+
+
+    await pic.append('file', this.state.event);
 
     // pic.append('file', pic)
-    console.log(" appended ",pic.append('file',this.state.event));
+    console.log(" appended ", pic.append('file', this.state.event));
 
-   await this.setState({propic:pic})
+    await this.setState({ propic: pic })
 
-    console.log("Propic",this.state.propic);
-    
-    
+    console.log("Propic", this.state.propic);
+
+
 
     userService.setProfile(this.state.propic).then((res) => {
       console.log("respnse in setting profile--> ", res)
 
-      localStorage.setItem('imageUrl',res.data.status.imageUrl)
+      localStorage.setItem('imageUrl', res.data.status.imageUrl)
 
-      this.setState({dialog:!this.state.dialog})
+      this.setState({ dialog: !this.state.dialog })
 
       // if (res.data.data.success === true) {
       //     this.setState({ flag1: true })
@@ -446,50 +451,50 @@ class Dashboard extends Component {
       // }
       // else {
       //     alert(`Email Already Exists-----`);
-          
+
       // }
-  }).catch((err) => {
+    }).catch((err) => {
       // this.setState({ flag: true })
       console.log("error in registration--> ", err)
-  })
+    })
 
 
-}
+  }
 
-cancel=()=>{
-  this.setState({dialog:!this.state.dialog})
- 
-}
+  cancel = () => {
+    this.setState({ dialog: !this.state.dialog })
 
-// b64toBlob(b64Data, contentType, sliceSize) {
-//   contentType = contentType || '';
-//   sliceSize = sliceSize || 512;
+  }
 
-//   var byteCharacters = atob(b64Data);
-//   var byteArrays = [];
+  // b64toBlob(b64Data, contentType, sliceSize) {
+  //   contentType = contentType || '';
+  //   sliceSize = sliceSize || 512;
 
-//   for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-//       var slice = byteCharacters.slice(offset, offset + sliceSize);
+  //   var byteCharacters = atob(b64Data);
+  //   var byteArrays = [];
 
-//       var byteNumbers = new Array(slice.length);
-//       for (var i = 0; i < slice.length; i++) {
-//           byteNumbers[i] = slice.charCodeAt(i);
-//       }
+  //   for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+  //       var slice = byteCharacters.slice(offset, offset + sliceSize);
 
-//       var byteArray = new Uint8Array(byteNumbers);
+  //       var byteNumbers = new Array(slice.length);
+  //       for (var i = 0; i < slice.length; i++) {
+  //           byteNumbers[i] = slice.charCodeAt(i);
+  //       }
 
-//       byteArrays.push(byteArray);
-//   }
+  //       var byteArray = new Uint8Array(byteNumbers);
 
-// var blob = new Blob(byteArrays, {type: contentType});
-// return blob;
-// }
+  //       byteArrays.push(byteArray);
+  //   }
 
-
+  // var blob = new Blob(byteArrays, {type: contentType});
+  // return blob;
+  // }
 
 
 
-  
+
+
+
 
 
 
@@ -550,19 +555,19 @@ cancel=()=>{
                     onChange={this.handlechangeall}
                     onClick={this.searching}
                   />
-                
-                  <CloseIcon fontSize="small" onClick={this.searchRedirect}/>
+
+                  <CloseIcon fontSize="small" onClick={this.searchRedirect} />
 
                 </div>
 
                 <div id="seconddiv">
-                <div>
+                  <div>
                     <IconButton onClick={this.handleCart}>
-                      <ShoppingCartIcon/>
+                      <ShoppingCartIcon />
                     </IconButton>
                   </div>
 
-                
+
                   <div>
                     <IconButton>
                       <img src={require('../Assets/refresh.svg')} alt="Logo" id="imageFlex1" />
@@ -591,25 +596,29 @@ cancel=()=>{
 
 
 
-
-                <div>
-                  <IconButton onClick={this.handleProfileClick}>
-                    <img src={image} alt="Logo" id="profile" />
+                {localStorage.getItem('imageUrl') === '' ?
+                  <IconButton onClick={this.handleProfileClick} size="small" style={{ backgroundColor: "#a0c3ff", margin: "1%", border: "2px solid", borderColor: "white" }}>
+                    <PersonIcon size="small" color="primary" />
                   </IconButton>
-                </div>
+                  : <div>
+                    <IconButton onClick={this.handleProfileClick}>
+                      <img src={image} alt="Logo" id="profile" />
+                    </IconButton>
+                  </div>}
+
               </Toolbar>
 
             </AppBar>
 
             <Dialog aria-labelledby="simple-dialog-title" open={this.state.dialog} className="dialog1">
-            <div id="simple-dialog-title" style={{width:'50%', height:'50%'}}>
-              <div id="title">
-              <DialogTitle>Selected profile photo</DialogTitle>
-              </div>
-              {/* <div>
+              <div id="simple-dialog-title" style={{ width: '50%', height: '50%' }}>
+                <div id="title">
+                  <DialogTitle>Selected profile photo</DialogTitle>
+                </div>
+                {/* <div>
                 To crop this image, drag the region below and then click "Set as profile photo"
                     </div> */}
-              {/* <Cropper
+                {/* <Cropper
                 // ref={cropper}
                 src={this.state.Event}
 
@@ -618,19 +627,19 @@ cancel=()=>{
                 aspectRatio={16 / 9}
                 guides={false}
                 crop={(event) => this.crop(event)} /> */}
-                <div id="image" style={{width:'100%', height:'100%'}} >
-                <img src={this.state.Event} alt="img"/>
+                <div id="image" style={{ width: '100%', height: '100%' }} >
+                  <img src={this.state.Event} alt="img" />
                 </div>
-              {/* <img src={this.state.imageName} alt="Logo" /> */}
-              {/* <img src={image}/> */}
-              <div id="buttons">
-                <div id="set">
-              <Button onClick={this.setProfile}>Set as profile photo</Button>
-              </div>
-              <div>
-              <button onClick={this.cancel}>cancel</button>
-              </div>
-              </div>
+                {/* <img src={this.state.imageName} alt="Logo" /> */}
+                {/* <img src={image}/> */}
+                <div id="buttons">
+                  <div id="set">
+                    <Button onClick={this.setProfile}>Set as profile photo</Button>
+                  </div>
+                  <div>
+                    <button onClick={this.cancel}>cancel</button>
+                  </div>
+                </div>
               </div>
             </Dialog>
 
@@ -654,17 +663,29 @@ cancel=()=>{
                                   id="myFile"
                                   imgExtension={['.jpeg', '.jpg', '.png', '.gif']}
                                   maxFileSize={5242880}
-                                  
+
                                 />
                                 // <input type="file"  alt="img"  onChange={(event) => this.change(event)}/>
-                                : <img src={image} alt="Logo" id="profile1" onClick={this.handleChangeProfile} />}
-                              
+                                :
+                                <div>
+                                  {localStorage.getItem('imageUrl') === '' ?
+                                    // <IconButton onClick={this.handleChangeProfile} size="large" style={{ backgroundColor: "#a0c3ff", margin: "1%", border: "2px solid", borderColor: "white" }}>
+                                      <PersonIcon size="large" color="primary" />
+                                    // </IconButton>
+                                     : <img src={image} alt="Logo" id="profile1" onClick={this.handleChangeProfile} />
+                                  }
+                                </div>
+
+
+
+                              }
+
 
                               {/* <img src={require('../Assets/profile.png')} alt="Logo" id="profile1" /> */}
                             </IconButton>
                           </div>
                         </MuiThemeProvider>
-                          {/* <input type="file" onClick={(event) => this.change(event)}></input> */}
+                        {/* <input type="file" onClick={(event) => this.change(event)}></input> */}
 
                         <div>
                           {this.state.firstName + " " + this.state.lastName}
@@ -678,6 +699,7 @@ cancel=()=>{
 
                       <div>
                         <Button
+                          style={{ height: "35px" }}
                           id="logoutButton"
                           variant="contained"
                           color="primary"
@@ -747,20 +769,20 @@ cancel=()=>{
 }
 
 const mapStateToProps = (state) => {
-  console.log("In map state to props",state);
-  
-  return{
-    drawerValue:state
-    
+  console.log("In map state to props", state);
+
+  return {
+    drawerValue: state
+
   }
 };
 
 const mapDispatchToProps =
-  {
-search,
- view,
-drawer
-    
-  }
+{
+  search,
+  view,
+  drawer
 
-export default connect(mapStateToProps,mapDispatchToProps) (Dashboard)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

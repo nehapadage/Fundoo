@@ -93,9 +93,11 @@ class Collaborator extends Component {
 
     componentDidMount=async()=>{
         console.log("in compo did mount");
-        
-       await this.setState({colab:this.props.note.collaborators})
+        if(this.props.note){
+            await this.setState({colab:this.props.note.collaborators})
         console.log("Props in collaborator", this.state.colab);
+        }
+       
     }
 
     // componentWillReceiveProps= (newProps) => {
@@ -163,6 +165,7 @@ class Collaborator extends Component {
         console.log("All data in add collaborator", data);
         data.id = this.props.NoteId
 
+        if(this.props.NoteId){
         userService.addCollaborator(data).then((res) => {
             console.log("Responce in addCollaborator On Note in collaborator", res);
             console.log("data",data);
@@ -183,6 +186,13 @@ class Collaborator extends Component {
             console.log(err);
 
         })
+    }
+    else{
+        this.state.colab.push(data.email)
+        console.log("Colab for take note",this.state.colab);
+        
+        this.props.colabs(data)
+    }
 
 
     }
@@ -246,7 +256,7 @@ class Collaborator extends Component {
 
         var array1 = this.state.colab.map((key) => {
             console.log("In colab map");
-console.log("colab notes",this.props.note.collaborators);
+// console.log("colab notes",this.props.note.collaborators);
 
             return (
                 <div id="pic">
