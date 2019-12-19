@@ -56,13 +56,24 @@ class user {
 
         return reset;
     }
+    getEncodData(toConvert) {
+        const formBody = [];
+        for (const property in toConvert) {
+          const encodedKey = encodeURIComponent(property);
+          const encodedValue = encodeURIComponent(toConvert[property]);
+          formBody.push(encodedKey + '=' + encodedValue);
+        }
+        return formBody.join('&');
+      }
 
-    createNote(noteData, token) {
+    createNote(noteData) {
         console.log("create note data in services--> ", noteData)
 
-        var note = axios.post(url + '/notes/addNotes', noteData, {
+        var note = axios.post(url + '/notes/addNotes', this.getEncodData(noteData), {
             headers: {
-                authorization: token
+                authorization: token,
+                ContentType:'multipart/form-data',
+                
             }
         });
 
@@ -425,7 +436,11 @@ class user {
     }
 
     getShop(){
-        var shop= axios.get('http://fundoonotes.incubation.bridgelabz.com/api/productcarts/myCart',{
+        var token = localStorage.getItem('LoginToken')
+        var cart = localStorage.getItem('LoginCartId')
+        console.log("Login cart id-->",cart);
+        
+        var shop= axios.get('http://fundoonotes.incubation.bridgelabz.com/api/productcarts/getCartDetails/'+cart,{
             headers: {
                 authorization: token
             }
@@ -437,9 +452,7 @@ class user {
     placeOrder(datas){
         console.log("Data in place order",datas,token);
         
-        var place= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/productcarts/placeOrder',JSON.stringify({
-            data: datas
-        }),{
+        var place= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/productcarts/placeOrder',datas,{
             headers: {
                 ContentType:'application/json',
                 authorization: token
@@ -447,6 +460,19 @@ class user {
         });
 
         return place; 
+    }
+
+    addToCart(data){
+        console.log("Data in add to cart",data);
+        
+        var addc= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/productcarts/addToCart',data,{
+            headers: {
+                ContentType:'application/json',
+                authorization: token
+            }
+        });
+
+        return addc;  
     }
 
 

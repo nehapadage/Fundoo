@@ -93,7 +93,7 @@ const theme = createMuiTheme({
 })
 
 const mapStateToProps = (state) => {
-    console.log("In map state to props in notes", state);
+    // console.log("In map state to props in notes", state);
 
     return {
         viewStatus: state.gridData

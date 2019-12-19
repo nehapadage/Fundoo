@@ -52,19 +52,32 @@ class shoppingCart extends Component {
     }
 
     componentDidMount=async()=>{
-        this.setState({ color: true })
-       await this.setState({ cart: true, cart1: false })
-        console.log("status of cart",this.state.cart,this.state.cart1,this.state.cart2);
+    //     this.setState({ color: true })
+    //    await this.setState({ cart: true, cart1: false })
+    //     console.log("status of cart",this.state.cart,this.state.cart1,this.state.cart2);
 
         
 
         userService.getShop().then(async(res) => {
             console.log("Response in get shopping details", res);
 
-          await  this.setState({ price: res.data.data[0].price })
-            console.log("Description is", res.data.data[0].product.description);
-            this.setState({ description: res.data.data[0].product.description })
-            this.setState({ status: res.data.data[0].status })
+          await  this.setState({ price: res.data.data.price })
+            console.log("Description is", res.data.data.product);
+            this.setState({ description: res.data.data.product.description })
+            this.setState({ status: res.data.data.status })
+
+            if(res.data.data.isOrderPlaced===false){
+                this.setState({ color: true })
+                 this.setState({ cart: true, cart1: false })
+                 console.log("status of cart",this.state.cart,this.state.cart1,this.state.cart2);
+            }
+            else{
+                console.log("In else");
+                
+                this.setState({ color2: true })
+                 this.setState({ cart: false, cart1: false, cart2: true })
+                 console.log("status of cart2",this.state.cart,this.state.cart1,this.state.cart2);
+            }
 
 
         }).catch((err) => {
@@ -92,7 +105,7 @@ class shoppingCart extends Component {
         //     console.log("status of cart2",this.state.cart,this.state.cart1,this.state.cart2);
 
             var data = {
-                cartId: localStorage.getItem('cartID'),
+                cartId: localStorage.getItem('LoginCartId'),
                 address: this.state.address,
             }
 
@@ -133,7 +146,9 @@ class shoppingCart extends Component {
         var VALUE= this.state.cart ? 0 : this.state.cart1 ? 50 : 100;
         // var cartStyle= this.state.cart1 ? "cart1" : null
         return (
+           
             <MuiThemeProvider theme={theme}>
+                {localStorage.getItem('cartID') ? 
                 <div className="mainShop">
                     <div id="mainShop1">
                         <Button style={{ backgroundColor: "#FFBB00", width: "fit-content" }}>FundooNotes</Button>
@@ -266,6 +281,8 @@ class shoppingCart extends Component {
 
                     />
                 </div>
+                :
+                    <div>You have Empty cart</div> }
             </MuiThemeProvider>
 
 

@@ -39,7 +39,7 @@ class Reminder extends Component {
             userReminderDate: "",
             userReminderTime: ""
         };
-        console.log(" propsin constructor", this.props);
+        // console.log(" propsin constructor", this.props);
 
     }
     // componentDidUpdate() {

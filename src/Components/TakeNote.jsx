@@ -14,6 +14,8 @@ import Button from "@material-ui/core/Button";
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Chip from '@material-ui/core/Chip';
+import Tooltip from '@material-ui/core/Tooltip';
+import PersonIcon from '@material-ui/icons/Person';
 
 const theme = createMuiTheme({
     overrides: {
@@ -49,7 +51,9 @@ class TakeNote extends Component {
             Color: "",
             reminder: "",
             token: localStorage.getItem('LoginToken'),
-            colab:""
+            colab: [],
+            colabEmail:""
+
         };
 
     }
@@ -61,14 +65,51 @@ class TakeNote extends Component {
         if ((this.state.title === "" && this.state.description === "") || (this.state.title === "")) {
             console.log("title and description is empty");
         } else {
+
+            var array=[]
+
+            console.log("State colab",this.state.colab);
+          var info= this.state.colab.map(key=>{
+                return{
+                    "firstName":key.firstName,
+                    "lastName":key.lastName,
+                    "email":key.email,
+                    "userId":key.userId
+                }
+            })
+            // var info={
+            //     "firstName":this.state.colab[0].firstName,
+            //     "lastName":this.state.colab[0].lastName,
+            //     "email":this.state.colab[0].email,
+            //     "userId":this.state.colab[0].userId
+            // }
+            // let result = JSON.stringify(Object(info));
+
+
+
+            // array.push(info)
+
             let noteData = {
                 "title": this.state.title,
                 "description": this.state.description,
                 "color": this.state.Color,
-                "reminder": this.state.reminder
+                "reminder": this.state.reminder,
+              
+                "collaberators":JSON.stringify(info)
+                   
+               
             }
 
-            userService.createNote(noteData, this.state.token).then(res => {
+        //    noteData.collaberators= [
+        //        JSON.stringify(
+        //         "firstName"=this.state.colab[0].firstName,
+        //         "lastName"=this.state.colab[0].lastName,
+        //         "email"=this.state.colab[0].email,
+        //         "userId"=this.state.colab[0].userId
+        //     )]
+
+            console.log("note data--> ", noteData)
+            userService.createNote(noteData).then(res => {
                 console.log("Response in creating notes--->", res);
                 console.log("NoteId is=", res.data.status.details.id);
                 // this.setState({ noteId: res.data.status.details.id })
@@ -76,7 +117,7 @@ class TakeNote extends Component {
 
                 this.setState({ title: "" });
                 this.setState({ description: "" });
-                this.setState({ Color: "#ffffff", reminder: "" });
+                this.setState({ Color: "#ffffff", reminder: "",colab:[] });
 
 
                 console.log("Changed color is", this.state.Color);
@@ -96,7 +137,9 @@ class TakeNote extends Component {
 
 
     handlechangeall = (event) => {
+        console.log("tille--> ", event.target.value)
         this.setState({ [event.target.name]: event.target.value })
+        
     }
 
     handleRefresh = (color) => {
@@ -110,15 +153,26 @@ class TakeNote extends Component {
         if ((this.state.title === "" && this.state.description === "") || (this.state.title === "")) {
             console.log("title and description is empty");
         } else {
+
+            var info= this.state.colab.map(key=>{
+                return{
+                    "firstName":key.firstName,
+                    "lastName":key.lastName,
+                    "email":key.email,
+                    "userId":key.userId
+                }
+            })
+
             let noteData = {
                 "title": this.state.title,
                 "description": this.state.description,
                 "color": this.state.Color,
                 "reminder": this.state.reminder,
-                "isArchived": true
+                "isArchived": true,
+                "collaberators":JSON.stringify(info)
             }
 
-            userService.createNote(noteData, this.state.token).then(res => {
+            userService.createNote(noteData).then(res => {
                 console.log("Response in creating notes--->", res);
                 console.log("NoteId is=", res.data.status.details.id);
                 // this.setState({ noteId: res.data.status.details.id })
@@ -155,9 +209,15 @@ class TakeNote extends Component {
 
     }
 
-    colab = (colab) => {
+    colab = async(colab) => {
         console.log("Colaborator in take note", colab);
-        this.setState({ colab: colab.email})
+       await this.setState({ colab: colab })
+//    await this.state.colab.push(colab)
+        console.log("Status of colab",this.state.colab);
+        console.log("Status of colab1",this.state.colab[0].email);
+        // await this.setState({ colabEmail: colab.email })
+        // console.log("Status of colab email",this.state.colabEmail);
+        
     }
 
 
@@ -202,6 +262,18 @@ class TakeNote extends Component {
                             />
 
                         </div>
+
+                        {this.state.colab.length > 0 && <div id="label1" style={{marginLeft:'1em'}}>
+                            {this.state.colab.map(item => (
+                            <Tooltip title={item.email} placement="center">
+                                <IconButton size="small" style={{ backgroundColor: "#a0c3ff", margin: "1%" }}>
+                                    <PersonIcon size="small" color="primary" />
+                                    {/* <img src={require('../Assets/smallcolab.jpg')} alt="Logo" id="profile" /> */}
+                                </IconButton>
+                            </Tooltip>
+                           ))} 
+                        </div>
+                        }
 
                         {this.state.reminder.length > 0 && <div style={{ display: "flex", marginLeft: "1em" }}>
                             {/* {this.props.Reminder} */}

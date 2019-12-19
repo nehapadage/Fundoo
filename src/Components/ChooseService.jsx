@@ -120,6 +120,29 @@ class ChooseService extends Component {
     }
 
     handleDialog = async (key) => {
+
+        console.log("Product id is",key.id);
+
+        var data={
+            "productId":key.id
+        }
+        
+
+        userService.addToCart(data).then(res => {
+            console.log("Response in add to cart--->", res);
+            // this.setState({ array: res.data.data.data })
+
+            localStorage.setItem('LoginCartId',res.data.data.details.id)
+
+            // console.log("Array is",this.state.array[0].price);
+
+
+        })
+            .catch(err => {
+                console.log("Error in add to cart");
+            })
+
+
         this.setState({ dialog: true })
        await this.setState({ price: key.price })
         localStorage.setItem('price',this.state.price)

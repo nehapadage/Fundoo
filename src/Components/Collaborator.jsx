@@ -83,7 +83,8 @@ class Collaborator extends Component {
             Suggestions: [],
             colab:[],
             open:false,
-            anchorEl:null
+            anchorEl:null,
+            data:''
         };
 
         
@@ -92,10 +93,10 @@ class Collaborator extends Component {
     }
 
     componentDidMount=async()=>{
-        console.log("in compo did mount");
+        // console.log("in compo did mount");
         if(this.props.note){
             await this.setState({colab:this.props.note.collaborators})
-        console.log("Props in collaborator", this.state.colab);
+        // console.log("Props in collaborator", this.state.colab);
         }
        
     }
@@ -163,9 +164,10 @@ class Collaborator extends Component {
 
     addCollaborator = (data) => {
         console.log("All data in add collaborator", data);
-        data.id = this.props.NoteId
+       
 
         if(this.props.NoteId){
+            data.id = this.props.NoteId
         userService.addCollaborator(data).then((res) => {
             console.log("Responce in addCollaborator On Note in collaborator", res);
             console.log("data",data);
@@ -188,10 +190,12 @@ class Collaborator extends Component {
         })
     }
     else{
-        this.state.colab.push(data.email)
+      
+        this.state.colab.push(data)
         console.log("Colab for take note",this.state.colab);
-        
-        this.props.colabs(data)
+        this.setState({ Suggestions: [] })
+        this.setState({data:data})
+       
     }
 
 
@@ -237,7 +241,26 @@ class Collaborator extends Component {
     }
 
     save=()=>{
+        if(this.props.NoteId){
        this.props.REFRESH()
+        }
+        else{
+            console.log("In save",this.state.data);
+
+            // var info={
+            //     "firstName":this.state.data.firstName,
+            //     "lastName":this.state.data.lastName,
+            //     "email":this.state.data.email,
+            //     "userId":this.state.data.userId
+            // }
+
+            // console.log("In save info is",[JSON.stringify(info)]);
+            
+            
+            this.props.colabs(this.state.colab)
+            this.setState({ dialog: !this.state.dialog })
+           
+        }
     }
 
     render() {
@@ -255,7 +278,7 @@ class Collaborator extends Component {
         })
 
         var array1 = this.state.colab.map((key) => {
-            console.log("In colab map");
+            // console.log("In colab map");
 // console.log("colab notes",this.props.note.collaborators);
 
             return (
@@ -282,7 +305,7 @@ class Collaborator extends Component {
             )
         })
 
-        console.log("In collaborator");
+        // console.log("In collaborator");
 
         var image = 'http://fundoonotes.incubation.bridgelabz.com/' + localStorage.getItem('imageUrl');
 
