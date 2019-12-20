@@ -12,7 +12,8 @@ class ChildRemind extends Component {
 
         this.state = {
             originalData: [],
-            data: []
+            data: [],
+            data1:[]
         };
 
     }
@@ -28,6 +29,36 @@ class ChildRemind extends Component {
           this.setState({ data: res.data.data.data })
     
           console.log("Responce in Getting reminder notes ***********", this.state.data);
+
+        //   var arr = []
+
+        //     arr = this.state.data.filter(key =>
+
+        //         // console.log("In Filter"); 
+
+        //         ((key.isPined === false))
+
+        //     );
+
+        //     console.log("Array is", arr);
+
+        //     this.setState({ data: arr })
+
+        //     console.log("Filtered Array is", this.state.data);
+
+          var arr1 = []
+            arr1 = this.state.data.filter(key =>
+
+                // console.log("In Filter"); 
+
+                (key.isPined === true)
+
+            );
+            console.log("Array of pined is", arr1);
+
+            this.setState({ data1: arr1 })
+
+            console.log("Filtered pined Array is", this.state.data1);
     
     
     
@@ -53,7 +84,7 @@ class ChildRemind extends Component {
 
                 {/* id="display" */}
                 {/* <div >  */}
-                <DisplayNotes notes={this.state.data} ref={this.DisplayNotes} Refresh={this.getReminderNotes} />
+                <DisplayNotes notes={this.state.data} pined={this.state.data1} ref={this.DisplayNotes} Refresh={this.getReminderNotes} />
                 {/* </div>  */}
             </div>
 

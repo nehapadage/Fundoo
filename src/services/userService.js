@@ -56,6 +56,7 @@ class user {
 
         return reset;
     }
+    
     getEncodData(toConvert) {
         const formBody = [];
         for (const property in toConvert) {

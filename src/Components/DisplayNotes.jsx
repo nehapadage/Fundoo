@@ -143,14 +143,39 @@ class DisplayNotes extends Component {
 
         })
 
+        if(this.props.pined!==undefined)
+        {
+       
+        var mapCardsPin = this.props.pined.map(item => {
+            return (
+
+                <Notes note={item}
+                    props={this.props}
+                    Title={item.title}
+                    Description={item.description}
+                    NoteId={item.id} Color={item.color}
+                    Reminder={item.reminder}
+                    Refresh={this.handle} />
+
+            );
+
+        })
+    }
+
 
         return (
             <div className="mainCard">
 
                 {this.props.gridValue ?
                     <div className={movement}>
+                        {((this.props.pined!==undefined) && (this.props.pined.length)) ?
+                            <div className="cardsView2">
+                                <h3 id="pins">Pinned</h3>
+                                <Masonry className="cardsView">{mapCardsPin}</Masonry>
+                                <h3 id="pins">Others</h3> 
+                            </div> : null}
+
                         <Masonry className="cardsView">
-                            
                             {mapCards}
                             {/* <Notes filteredData={this.state.data}/> */}
                         </Masonry>

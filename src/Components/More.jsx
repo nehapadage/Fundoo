@@ -16,8 +16,8 @@ import MenuList from '@material-ui/core/MenuList';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
-import {show} from '../Actions/Action'
-import {connect} from 'react-redux'
+import { show } from '../Actions/Action'
+import { connect } from 'react-redux'
 
 const theme = createMuiTheme({
     overrides: {
@@ -73,7 +73,7 @@ class More extends Component {
             addLabel: "",
             check: "",
             noteLabelArray: [],
-            ask:true
+            ask: true
             // demo: false,
             // demo1: false
         };
@@ -85,7 +85,9 @@ class More extends Component {
         console.log("more", event)
         console.log("Props are====>", this.props);
         // console.log("NewProps", this.props.note.noteLabels);
-        this.setState({ noteLabelArray: this.props.note.noteLabels })
+        if (this.props.note) {
+            this.setState({ noteLabelArray: this.props.note.noteLabels })
+        }
         this.setState({ flag: !this.state.flag })
         this.setState({ anchorEl: event.currentTarget })
 
@@ -167,6 +169,8 @@ class More extends Component {
 
         if (event.target.checked === true) {
             console.log("Already checked");
+
+            if(this.props.note){
             let noteData = {
                 "noteId": [this.state.noteId],
                 "id": labelArray.id,
@@ -181,6 +185,9 @@ class More extends Component {
                 console.log(err);
 
             })
+        }else{
+            this.props.label(labelArray)
+        }
 
         }
         else if (event.target.checked === false) {
@@ -193,8 +200,9 @@ class More extends Component {
                     this.state.noteLabelArray.splice(i, 1)
                 }
             }
-            this.setState({ noteLabelArray: this.state.noteLabelArray});
-            
+            this.setState({ noteLabelArray: this.state.noteLabelArray });
+
+            if(this.props.note){
             let requestObject = {
                 "noteId": [this.state.noteId],
                 "id": labelArray.id,
@@ -203,30 +211,34 @@ class More extends Component {
                 console.log("label deleted", data);
                 this.props.refresh()
                 console.log("Refresh called in delete");
-                
+
             }).catch((err) => {
                 console.log(err);
 
             })
+        }else{
+            console.log("Unchecked in else");
+            this.props.labeldelete(labelArray) 
+        }
 
 
         }
-        
+
     }
 
-    AskQuestion=()=>{
+    AskQuestion = () => {
 
-       
 
-        this.props.props.props.props.history.push("/dashboard/AskQuestion/"+this.props.NoteId)
-        
-     
+
+        this.props.props.props.props.history.push("/dashboard/AskQuestion/" + this.props.NoteId)
+
+
     }
 
     render() {
 
-        // console.log("props In log",this.props.note.questionAndAnswerNotes.length);
-        
+        console.log("props In log", this.props.NoteId);
+
 
         // var label = this.state.labelArray.map(item => {
         //     return (
@@ -310,23 +322,22 @@ class More extends Component {
                         }}
                         style={{ width: '50%' }}
                     >
-                        
+
 
                         {this.props.note ? <div>
                             <MenuList>
-                            <MenuItem onClick={this.handleDeleteNote}>Delete note</MenuItem>
-                            <MenuItem onClick={this.handleAddLabels}>Add label</MenuItem>
-                            {this.props.note.questionAndAnswerNotes.length ?
-                            <MenuItem onClick={this.AskQuestion}>Show Question</MenuItem>
-                            : <MenuItem onClick={this.AskQuestion}>Ask Question</MenuItem>}
-                            </MenuList>
-                            </div> : 
-                            <MenuList>
-                            <MenuItem onClick={this.handleDeleteNote}>Delete note</MenuItem>
-                            <MenuItem onClick={this.handleAddLabels}>Add label</MenuItem>
-                            
 
-                        </MenuList>}
+                                <MenuItem onClick={this.handleDeleteNote}>Delete note</MenuItem>
+                                <MenuItem onClick={this.handleAddLabels}>Add label</MenuItem>
+                                {this.props.note.questionAndAnswerNotes.length ?
+                                    <MenuItem onClick={this.AskQuestion}>Show Question</MenuItem>
+                                    : <MenuItem onClick={this.AskQuestion}>Ask Question</MenuItem>}
+                            </MenuList>
+                        </div> :
+                            <MenuList>
+                                {/* <MenuItem onClick={this.handleDeleteNote}>Delete note</MenuItem> */}
+                                <MenuItem onClick={this.handleAddLabels}>Add label</MenuItem>
+                            </MenuList>}
                         {/* <div>
                                     <Button onClick={this.handleDeleteNote}>
                                         <div>Delete note</div>

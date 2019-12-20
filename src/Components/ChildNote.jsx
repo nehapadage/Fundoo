@@ -13,7 +13,8 @@ class ChildNote extends Component {
 
         this.state = {
             originalData: [],
-            data: []
+            data: [],
+            data1: []
         };
 
     }
@@ -32,8 +33,8 @@ class ChildNote extends Component {
             console.log("Only data--->", res.data.data.data);
 
             // this.setState({ data : res.data.data.data })
-            this.setState({ data: [] })
-            this.setState({ originalData: res.data.data.data.reverse()})
+            this.setState({ data: [],data1:[] })
+            this.setState({ originalData: res.data.data.data.reverse() })
 
             console.log("Original data is", this.state.originalData);
 
@@ -43,7 +44,7 @@ class ChildNote extends Component {
 
                 // console.log("In Filter"); 
 
-                ((key.isArchived === false) && (key.isDeleted === false))
+                ((key.isArchived === false) && (key.isDeleted === false) && (key.isPined === false))
 
             );
 
@@ -52,6 +53,21 @@ class ChildNote extends Component {
             this.setState({ data: arr })
 
             console.log("Filtered Array is", this.state.data);
+
+
+            var arr1 = []
+            arr1 = this.state.originalData.filter(key =>
+
+                // console.log("In Filter"); 
+
+                (key.isPined === true)
+
+            );
+            console.log("Array of pined is", arr1);
+
+            this.setState({ data1: arr1 })
+
+            console.log("Filtered pined Array is", this.state.data1);
 
 
         })
@@ -73,12 +89,12 @@ class ChildNote extends Component {
         return (
             <div className="notek">
                 {/* <div> */}
-                <TakeNote refresh={this.getNotes} note={this.state.data}/>
+                <TakeNote refresh={this.getNotes} note={this.state.data} />
                 {/* </div> */}
 
                 {/* id="display" */}
                 {/* <div >  */}
-                <DisplayNotes props = {this.props} notes={this.state.data} ref={this.DisplayNotes} Refresh={this.getNotes} />
+                <DisplayNotes props={this.props} notes={this.state.data} pined={this.state.data1} ref={this.DisplayNotes} Refresh={this.getNotes} />
                 {/* </div>  */}
             </div>
 

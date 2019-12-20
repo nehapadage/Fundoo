@@ -12,7 +12,7 @@ import Archive from './Archive'
 import More from './More'
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
-import { createMuiTheme, MuiThemeProvider} from "@material-ui/core";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -121,7 +121,7 @@ class Notes extends Component {
             Event: "",
             List: localStorage.getItem('List'),
             Grid: localStorage.getItem('Grid'),
-            pin:false
+            pin: this.props.note.isPined
         };
 
         // this.displayNotes=React.createRef()
@@ -231,44 +231,65 @@ class Notes extends Component {
 
     }
 
-    gotoAsk=()=>{
-        this.props.props.props.history.push("/dashboard/AskQuestion/"+this.props.NoteId)
+    gotoAsk = () => {
+        this.props.props.props.history.push("/dashboard/AskQuestion/" + this.props.NoteId)
     }
 
-    handlePin=()=>{
-       let data={
-        noteIdList:[this.props.NoteId],
-            isPined:true
+    handlePin = () => {
+        if(this.state.wholeData.isArchived===true){
+            let data = {
+                noteIdList: [this.props.NoteId],
+                isPined: true,
+                isArchived:false
+            }
+            userService.pin(data).then(res => {
+                console.log("Response in handle pin", res);
+                this.setState({ pin: !this.state.pin })
+                this.props.Refresh()
+            })
+                .catch(err => {
+                    console.log("Error in handle pin", err);
+                })
+    
+    
+        }else{
+            let data = {
+                noteIdList: [this.props.NoteId],
+                isPined: true
+            }
+            userService.pin(data).then(res => {
+                console.log("Response in handle pin", res);
+                this.setState({ pin: !this.state.pin })
+                this.props.Refresh()
+            })
+                .catch(err => {
+                    console.log("Error in handle pin", err);
+                })
+    
+    
         }
-        userService.pin(data).then(res=>{
-            console.log("Response in handle pin",res);
-            this.setState({pin:!this.state.pin})
-        })
-        .catch(err=>{
-            console.log("Error in handle pin",err);    
-        })
-       
-
+        
     }
 
-    handlePinned=()=>{
-        let data={
-            noteIdList:[this.props.NoteId],
-            isPined:false
+    handlePinned = () => {
+        let data = {
+            noteIdList: [this.props.NoteId],
+            isPined: false
         }
-        userService.pin(data).then(res=>{
-            console.log("Response in handle pin",res);
-            this.setState({pin:!this.state.pin})
+        userService.pin(data).then(res => {
+            console.log("Response in handle pin", res);
+            this.setState({ pin: !this.state.pin })
+            this.props.Refresh()
         })
-        .catch(err=>{
-            console.log("Error in handle pin",err);    
-        })
+            .catch(err => {
+                console.log("Error in handle pin", err);
+            })
     }
 
     render() {
 
         // console.log("Array is in Notes",this.props.note.questionAndAnswerNotes[0].message);
-        
+
 
 
         // console.log("In notes");
@@ -310,7 +331,13 @@ class Notes extends Component {
                                             {/* {this.props.Title} */}
                                         </div>
                                         <div>
-                                            <IconButton><img src={require("../Assets/pin.svg")} alt="" /></IconButton>
+                                            {this.state.wholeData.isDeleted === true ? null :
+                                                <div>
+                                                    {this.state.pin === true ?
+                                                        <IconButton onClick={this.handlePinned}><img src={require("../Assets/pinned.svg")} alt="" /></IconButton>
+                                                        : <IconButton onClick={this.handlePin}><img src={require("../Assets/pin.svg")} alt="" /></IconButton>
+                                                    }
+                                                </div>}
                                         </div>
                                     </div>
 
@@ -369,7 +396,7 @@ class Notes extends Component {
 
                                 </div>
                                 {/* chipRemind={this.state.chipRemind} */}
-                                <div className="displayButton" style={{marginLeft:"5%"}}>
+                                <div className="displayButton" style={{ marginLeft: "5%" }}>
                                     {/* <div > */}
 
                                     {(this.state.wholeData.isArchived === false && this.state.wholeData.isDeleted === false) ?
@@ -438,11 +465,14 @@ class Notes extends Component {
                                             {this.props.Title}
                                         </div>
                                         <div>
-                                            {this.state.pin===true ?
-                                                <IconButton onClick={this.handlePinned}><img src={require("../Assets/pinned.svg")} alt="" /></IconButton>
-                                           : <IconButton onClick={this.handlePin}><img src={require("../Assets/pin.svg")} alt="" /></IconButton>
-                                            }
-                                           </div>
+                                            {this.state.wholeData.isDeleted === true ? null :
+                                                <div>
+                                                    {this.state.pin === true ?
+                                                        <IconButton onClick={this.handlePinned}><img src={require("../Assets/pinned.svg")} alt="" /></IconButton>
+                                                        : <IconButton onClick={this.handlePin}><img src={require("../Assets/pin.svg")} alt="" /></IconButton>
+                                                    }
+                                                </div>}
+                                        </div>
                                     </div>
 
                                     <div id="descriptiondetail" onClick={this.OpenEdit}>
@@ -455,7 +485,7 @@ class Notes extends Component {
 
                                         <Chip
                                             icon={<img src={require("../Assets/watch.svg")} alt="" />}
-                                            label={this.state.reminder.toString().slice(4,10) + " " + this.state.reminder.toString().slice(16,21)}
+                                            label={this.state.reminder.toString().slice(4, 10) + " " + this.state.reminder.toString().slice(16, 21)}
                                             onClick={(event) => this.handleReminderClick(event)}
                                             // onClick={<Reminder event={this.state.Event} chipRemind={this.state.chipRemind} Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} REFRESH={this.handleRefresh} />}
                                             // onClick={<Reminder/>}
@@ -546,7 +576,7 @@ class Notes extends Component {
                                         : null
                                     }
 
-                                    
+
 
 
 
@@ -563,19 +593,19 @@ class Notes extends Component {
                             </div> */}
                                 </div>
                                 {/* <Divider/> */}
-                                <div id="label3"> 
-                                         {/* {this.props.note.questionAndAnswerNotes.map(item => ( */}
-                                             {this.props.note.questionAndAnswerNotes.length ?
-                                            <div onClick={this.gotoAsk} style={{cursor:"default"}}>
-                                                <Divider/>
-                                                <div style={{ fontWeight: "bold",width:"150px",margin:"2%" }}>Question Asked</div>
-                                                <div style={{width:"200px",marginLeft:"10%",display:"flex",marginBottom:"2%"}}
+                                <div id="label3">
+                                    {/* {this.props.note.questionAndAnswerNotes.map(item => ( */}
+                                    {this.props.note.questionAndAnswerNotes.length ?
+                                        <div onClick={this.gotoAsk} style={{ cursor: "default" }}>
+                                            <Divider />
+                                            <div style={{ fontWeight: "bold", width: "150px", margin: "2%" }}>Question Asked</div>
+                                            <div style={{ width: "200px", marginLeft: "10%", display: "flex", marginBottom: "2%" }}
                                                 dangerouslySetInnerHTML={{ __html: this.props.note.questionAndAnswerNotes[0].message }}></div>
-                                                
-                                            </div>
-                                            : null } 
-                                        {/* ))}  */}
-                                     </div> 
+
+                                        </div>
+                                        : null}
+                                    {/* ))}  */}
+                                </div>
                                 {/* </div> */}
                             </Card>
                         </MuiThemeProvider>

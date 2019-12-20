@@ -52,7 +52,9 @@ class TakeNote extends Component {
             reminder: "",
             token: localStorage.getItem('LoginToken'),
             colab: [],
-            colabEmail:""
+            colabEmail: "",
+            array: [],
+            pin:false
 
         };
 
@@ -66,16 +68,21 @@ class TakeNote extends Component {
             console.log("title and description is empty");
         } else {
 
-            var array=[]
+            var array = []
 
-            console.log("State colab",this.state.colab);
-          var info= this.state.colab.map(key=>{
-                return{
-                    "firstName":key.firstName,
-                    "lastName":key.lastName,
-                    "email":key.email,
-                    "userId":key.userId
+            console.log("State colab", this.state.colab);
+            var info = this.state.colab.map(key => {
+                return {
+                    "firstName": key.firstName,
+                    "lastName": key.lastName,
+                    "email": key.email,
+                    "userId": key.userId
                 }
+            })
+            var info1 = this.state.array.map(key => {
+                return (
+                    key.id
+                )
             })
             // var info={
             //     "firstName":this.state.colab[0].firstName,
@@ -94,19 +101,20 @@ class TakeNote extends Component {
                 "description": this.state.description,
                 "color": this.state.Color,
                 "reminder": this.state.reminder,
-              
-                "collaberators":JSON.stringify(info)
-                   
-               
+                "isPined":this.state.pin,
+                "collaberators": JSON.stringify(info),
+                "labelIdList": JSON.stringify(info1)
+
+
             }
 
-        //    noteData.collaberators= [
-        //        JSON.stringify(
-        //         "firstName"=this.state.colab[0].firstName,
-        //         "lastName"=this.state.colab[0].lastName,
-        //         "email"=this.state.colab[0].email,
-        //         "userId"=this.state.colab[0].userId
-        //     )]
+            //    noteData.collaberators= [
+            //        JSON.stringify(
+            //         "firstName"=this.state.colab[0].firstName,
+            //         "lastName"=this.state.colab[0].lastName,
+            //         "email"=this.state.colab[0].email,
+            //         "userId"=this.state.colab[0].userId
+            //     )]
 
             console.log("note data--> ", noteData)
             userService.createNote(noteData).then(res => {
@@ -117,7 +125,7 @@ class TakeNote extends Component {
 
                 this.setState({ title: "" });
                 this.setState({ description: "" });
-                this.setState({ Color: "#ffffff", reminder: "",colab:[] });
+                this.setState({ Color: "#ffffff", reminder: "", colab: [], array: [] });
 
 
                 console.log("Changed color is", this.state.Color);
@@ -139,7 +147,7 @@ class TakeNote extends Component {
     handlechangeall = (event) => {
         console.log("tille--> ", event.target.value)
         this.setState({ [event.target.name]: event.target.value })
-        
+
     }
 
     handleRefresh = (color) => {
@@ -154,13 +162,18 @@ class TakeNote extends Component {
             console.log("title and description is empty");
         } else {
 
-            var info= this.state.colab.map(key=>{
-                return{
-                    "firstName":key.firstName,
-                    "lastName":key.lastName,
-                    "email":key.email,
-                    "userId":key.userId
+            var info = this.state.colab.map(key => {
+                return {
+                    "firstName": key.firstName,
+                    "lastName": key.lastName,
+                    "email": key.email,
+                    "userId": key.userId
                 }
+            })
+            var info1 = this.state.array.map(key => {
+                return (
+                    key.id
+                )
             })
 
             let noteData = {
@@ -169,7 +182,9 @@ class TakeNote extends Component {
                 "color": this.state.Color,
                 "reminder": this.state.reminder,
                 "isArchived": true,
-                "collaberators":JSON.stringify(info)
+                "isPined":this.state.pin,
+                "collaberators": JSON.stringify(info),
+                "labelIdList": JSON.stringify(info1)
             }
 
             userService.createNote(noteData).then(res => {
@@ -209,16 +224,43 @@ class TakeNote extends Component {
 
     }
 
-    colab = async(colab) => {
+    colab = async (colab) => {
         console.log("Colaborator in take note", colab);
-       await this.setState({ colab: colab })
-//    await this.state.colab.push(colab)
-        console.log("Status of colab",this.state.colab);
-        console.log("Status of colab1",this.state.colab[0].email);
+        await this.setState({ colab: colab })
+        //    await this.state.colab.push(colab)
+        console.log("Status of colab", this.state.colab);
+        console.log("Status of colab1", this.state.colab[0].email);
         // await this.setState({ colabEmail: colab.email })
         // console.log("Status of colab email",this.state.colabEmail);
-        
+
     }
+
+    handleLabel = (res) => {
+        console.log("In take note handle label", res);
+
+        this.state.array.push(res)
+        this.setState({ array: this.state.array })
+        console.log("In take note handle label Array------>", this.state.array);
+
+    }
+
+    handleLabelDelete = (res) => {
+        console.log("In delete label", res);
+        this.state.array.splice(res, 1);
+        this.setState({ array: this.state.array })
+        console.log("In take note handle delete label Array------>", this.state.array);
+    }
+
+
+    handlePin = async() => {
+
+     await   this.setState({ pin: !this.state.pin })
+        console.log("Status of pin in take note",this.state.pin);
+        
+
+    }
+
+   
 
 
     render() {
@@ -245,7 +287,10 @@ class TakeNote extends Component {
                                     />
                                 </div>
                                 <div>
-                                    <Button><img src={require("../Assets/pin.svg")} alt="" /></Button>
+                                    {this.state.pin === true ?
+                                        <IconButton onClick={this.handlePin}><img src={require("../Assets/pinned.svg")} alt="" /></IconButton>
+                                        : <IconButton onClick={this.handlePin}><img src={require("../Assets/pin.svg")} alt="" /></IconButton>
+                                    }
                                 </div>
                             </div>
 
@@ -263,15 +308,15 @@ class TakeNote extends Component {
 
                         </div>
 
-                        {this.state.colab.length > 0 && <div id="label1" style={{marginLeft:'1em'}}>
+                        {this.state.colab.length > 0 && <div id="label1" style={{ marginLeft: '1em' }}>
                             {this.state.colab.map(item => (
-                            <Tooltip title={item.email} placement="center">
-                                <IconButton size="small" style={{ backgroundColor: "#a0c3ff", margin: "1%" }}>
-                                    <PersonIcon size="small" color="primary" />
-                                    {/* <img src={require('../Assets/smallcolab.jpg')} alt="Logo" id="profile" /> */}
-                                </IconButton>
-                            </Tooltip>
-                           ))} 
+                                <Tooltip title={item.email} placement="center">
+                                    <IconButton size="small" style={{ backgroundColor: "#a0c3ff", margin: "1%" }}>
+                                        <PersonIcon size="small" color="primary" />
+                                        {/* <img src={require('../Assets/smallcolab.jpg')} alt="Logo" id="profile" /> */}
+                                    </IconButton>
+                                </Tooltip>
+                            ))}
                         </div>
                         }
 
@@ -291,12 +336,22 @@ class TakeNote extends Component {
 
                         </div>}
 
+                        {this.state.array.length > 0 && <div id="label1">
+                            {this.state.array.map(item => (
+                                <Chip
+                                    label={item.label}
+                                    // onClick={this.handleLabel}
+                                    onDelete={() => this.handleLabelDelete(item.id)}
+                                />
+                            ))}
+                        </div>}
+
                         <div className="displayButton">
                             {/* <div > */}
                             <Reminder setReminder={this.reminder} />
                             <Collaborator colabs={this.colab} />
                             {/* <Collaborator note={this.props.note} NoteId={this.state.noteId} REFRESH={this.handleRefresh}/> */}
-                            <Color Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
+                            <Color refresh={this.handleRefresh} />
                             <Image />
 
                             <IconButton onClick={this.archive}>
@@ -304,7 +359,7 @@ class TakeNote extends Component {
                             </IconButton>
 
                             {/* <Archive Title={this.state.title} Description={this.state.description}  NoteId={this.state.noteId} Refresh={this.handleRefresh}/> */}
-                            <More Title={this.state.title} Description={this.state.description} NoteId={this.state.noteId} refresh={this.handleRefresh} />
+                            <More label={this.handleLabel} labeldelete={this.handleLabelDelete} refresh={this.handleRefresh} />
                             {/* </div> */}
                             <div>
                                 <Button onClick={this.handleNoteViewController}>close</Button>

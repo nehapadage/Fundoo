@@ -180,3 +180,16 @@
     /* margin: auto; */
     margin-top: 3em;
 }
+
+
+@media only screen and (max-width: 660px) {
+
+    #items{
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+        margin-left: -2em;
+
+    }
+} 
