@@ -282,7 +282,7 @@ class shoppingCart extends Component {
                     />
                 </div>
                 :
-                    <div>You have Empty cart</div> }
+                    <h1 id="emptyCart">Your Cart is Empty</h1> }
             </MuiThemeProvider>
 
 

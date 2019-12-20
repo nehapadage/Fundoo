@@ -475,6 +475,18 @@ class user {
         return addc;  
     }
 
+    pin(data){
+        console.log("Data in pin",data);
+        
+        var pins= axios.post('http://fundoonotes.incubation.bridgelabz.com/api/notes/pinUnpinNotes',data,{
+            headers: {
+                ContentType:'application/json',
+                authorization: token
+            }
+        });
+        return pins;   
+    }
+
 
     
 

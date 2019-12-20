@@ -120,7 +120,8 @@ class Notes extends Component {
             wholeData: this.props.note,
             Event: "",
             List: localStorage.getItem('List'),
-            Grid: localStorage.getItem('Grid')
+            Grid: localStorage.getItem('Grid'),
+            pin:false
         };
 
         // this.displayNotes=React.createRef()
@@ -234,6 +235,36 @@ class Notes extends Component {
         this.props.props.props.history.push("/dashboard/AskQuestion/"+this.props.NoteId)
     }
 
+    handlePin=()=>{
+       let data={
+        noteIdList:[this.props.NoteId],
+            isPined:true
+        }
+        userService.pin(data).then(res=>{
+            console.log("Response in handle pin",res);
+            this.setState({pin:!this.state.pin})
+        })
+        .catch(err=>{
+            console.log("Error in handle pin",err);    
+        })
+       
+
+    }
+
+    handlePinned=()=>{
+        let data={
+            noteIdList:[this.props.NoteId],
+            isPined:false
+        }
+        userService.pin(data).then(res=>{
+            console.log("Response in handle pin",res);
+            this.setState({pin:!this.state.pin})
+        })
+        .catch(err=>{
+            console.log("Error in handle pin",err);    
+        })
+    }
+
     render() {
 
         // console.log("Array is in Notes",this.props.note.questionAndAnswerNotes[0].message);
@@ -279,7 +310,7 @@ class Notes extends Component {
                                             {/* {this.props.Title} */}
                                         </div>
                                         <div>
-                                            <Button><img src={require("../Assets/pin.svg")} alt="" /></Button>
+                                            <IconButton><img src={require("../Assets/pin.svg")} alt="" /></IconButton>
                                         </div>
                                     </div>
 
@@ -407,8 +438,11 @@ class Notes extends Component {
                                             {this.props.Title}
                                         </div>
                                         <div>
-                                            <Button><img src={require("../Assets/pin.svg")} alt="" /></Button>
-                                        </div>
+                                            {this.state.pin===true ?
+                                                <IconButton onClick={this.handlePinned}><img src={require("../Assets/pinned.svg")} alt="" /></IconButton>
+                                           : <IconButton onClick={this.handlePin}><img src={require("../Assets/pin.svg")} alt="" /></IconButton>
+                                            }
+                                           </div>
                                     </div>
 
                                     <div id="descriptiondetail" onClick={this.OpenEdit}>

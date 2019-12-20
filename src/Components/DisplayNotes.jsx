@@ -131,13 +131,13 @@ class DisplayNotes extends Component {
         var mapCards = this.props.notes.map(item => {
             return (
 
-                <Notes note={item} 
-                    props = {this.props}
-                Title={item.title} 
-                Description={item.description}
-                 NoteId={item.id} Color={item.color}
-                  Reminder={item.reminder}
-                   Refresh={this.handle} />
+                <Notes note={item}
+                    props={this.props}
+                    Title={item.title}
+                    Description={item.description}
+                    NoteId={item.id} Color={item.color}
+                    Reminder={item.reminder}
+                    Refresh={this.handle} />
 
             );
 
@@ -145,21 +145,22 @@ class DisplayNotes extends Component {
 
 
         return (
-            <div className="mainCard"> 
-            
+            <div className="mainCard">
+
                 {this.props.gridValue ?
-                <div className={movement}>
-                <Masonry className="cardsView">
-                    {mapCards}
-                    {/* <Notes filteredData={this.state.data}/> */}
-                </Masonry>
-                </div>
-                :
-                <div className="cardsView1">
-                    {mapCards}
-                    {/* <Notes filteredData={this.state.data}/> */}
-                </div>
-    }
+                    <div className={movement}>
+                        <Masonry className="cardsView">
+                            
+                            {mapCards}
+                            {/* <Notes filteredData={this.state.data}/> */}
+                        </Masonry>
+                    </div>
+                    :
+                    <div className="cardsView1">
+                        {mapCards}
+                        {/* <Notes filteredData={this.state.data}/> */}
+                    </div>
+                }
             </div>
         )
     }
@@ -170,7 +171,7 @@ const mapStateToProps = (state) => {
 
     return {
         drawerValue: state.drawerData,
-        gridValue:state.gridData
+        gridValue: state.gridData
 
     }
 };

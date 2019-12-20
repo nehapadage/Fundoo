@@ -170,3 +170,13 @@
     color:  #0E89C2;
     font-weight: bold;
 }
+
+#emptyCart{
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+    /* margin: auto; */
+    margin-top: 3em;
+}
