@@ -225,7 +225,7 @@ class shoppingCart extends Component {
                             <div style={{ marginLeft: "3em" }}>
                                 {this.state.cart == true ?
                                     <div id="item4">
-                                        <div>Subtotal(1 item) : ${this.state.price}</div>
+                                        <div id="price">Subtotal(1 item) : ${this.state.price}</div>
                                         <div id="subItem6" onClick={this.proceed}>Proceed to Checkout</div>
                                     </div> : null}
                             </div>
@@ -250,15 +250,16 @@ class shoppingCart extends Component {
                                     value={this.state.address}
                                     // label="Multiline"
                                     multiline
-                                    rows="3"
+                                    rows="4"
                                     // defaultValue="Default Value"
                                     variant="outlined"
+
                                     onChange={this.handlechangeall}
                                 />
                             </div>
                             <div id="additems2">
-                                <div style={{ fontSize: "12px" }}>payment method</div>
-                                <div style={{ color: "#0E89C2" }}>Cash on Delivery</div>
+                                <div id="payment">payment method</div>
+                                <div id="payment" style={{ color: "#0E89C2" }}>Cash on Delivery</div>
                             </div>
                         </div>
 

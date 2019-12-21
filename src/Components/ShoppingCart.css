@@ -30,6 +30,7 @@
 
 #cart{
     display: flex;
+    /* font-size: xx-large; */
     /* justify-content: flex-start; */
     /* margin-left: 12.5em; */
     margin-top: -0.5em;
@@ -181,15 +182,106 @@
     margin-top: 3em;
 }
 
+#payment{
+    font-size: 12px;
+}
 
-@media only screen and (max-width: 660px) {
 
+@media only screen and (max-width: 500px) {
+    .mainShop{
+        max-width:100%;
+    }
     #items{
         display: flex;
         flex-direction: column;
-        /* justify-content: center; */
-        align-items: center;
-        margin-left: -2em;
-
+        /* justify-content: left; */
+        align-items: flex-start;
+    }
+    #subItem2 {
+        margin-left: 6em;
+        font-size: xx-large;
+        width: 100%;
+    }
+    #subItem1 {
+        margin-left: 6em;
+        font-size: xx-large;
+        width: 100%;
+    }
+    #subItem5 {
+        margin-left: 6em;
+        font-size: xx-large;
+        width: 100%;
+    }
+    #mainShop1 {
+        flex-direction: column;
+        padding: 2em;
+        margin-left: 10em;
+    }
+    #cartNames {
+        margin-top: 5em;
+    }
+    #cartNames1 {
+        width: 28em;
+        font-size: 20px;
+    }
+    #mainShop2 {
+        margin-left: 3.5em;
+        font-size: 3.0em;
+        width: 200%;
+    }
+    #item1 {
+        margin-left: 6em;
+        width: 5em;
+        font-size: xx-large;
+    }
+    #cartbar {
+        width: 33em;
+        height: 0.5em;
+    }
+    #item3 {
+        margin-left: 2em;
+        font-size: xx-large;
+    }
+    #item4 {
+        margin-top: 2em;
+        margin-left: 9em;
+        width: 20em;
+    }
+    #cart{
+        display: flex;
+        font-size: xx-large;
+    }
+    #cart1{
+        margin-left: 10.5em;
+    }
+    #cart2{
+        margin-left: 21em;
+    } 
+    #dot {
+        font-size: 4em;
+        margin-top: -0.7em;
+         margin-left: 0em;
+    }
+    #price{
+        font-size: xx-large;
+    }
+    #payment{
+        width: 108%;
+        margin-left: 3em;
+        font-size: x-large;
+    }
+    #additems1{
+        border: 1px solid black;
+        /* margin-left: 2em; */
+    }
+    #additems{
+        flex-direction:row;
+        margin-left: 13em;
+        width: 100%;
+    }
+    #status {
+        margin-left: 6em;
+        margin-top: 2em;
+        font-size: xx-large;
     }
 } 
