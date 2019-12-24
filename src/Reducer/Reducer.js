@@ -22,8 +22,6 @@ export function reducer(state=initialState,action){
     
     switch(action.type){
         case "SEARCH_VALUE":{
-            console.log("dfvcdfvd",action.value);
-            
             // return newState.searchData=action.value;
             return{
                 ...state,
@@ -32,8 +30,6 @@ export function reducer(state=initialState,action){
         }
 
         case "VIEW_STATUS":{
-            console.log("In view status in reducer",action.value);
-            
             // return newState.gridData=action.value;
             return{
                 ...state,
@@ -42,8 +38,6 @@ export function reducer(state=initialState,action){
         }
 
         case "DRAWER_STATUS":{
-            console.log("In drawer status in reducer",action.value);
-            
             // return newState.drawerData=action.value;
             return{
                 ...state,
@@ -52,8 +46,6 @@ export function reducer(state=initialState,action){
         }
 
         case "SHOW_STATUS":{
-            console.log("In show status in reducer",action.value);
-            
             // return newState.drawerData=action.value;
             return{
                 ...state,

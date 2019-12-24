@@ -236,11 +236,11 @@ class Notes extends Component {
     }
 
     handlePin = () => {
-        if(this.state.wholeData.isArchived===true){
+        if (this.state.wholeData.isArchived === true) {
             let data = {
                 noteIdList: [this.props.NoteId],
                 isPined: true,
-                isArchived:false
+                isArchived: false
             }
             userService.pin(data).then(res => {
                 console.log("Response in handle pin", res);
@@ -250,9 +250,9 @@ class Notes extends Component {
                 .catch(err => {
                     console.log("Error in handle pin", err);
                 })
-    
-    
-        }else{
+
+
+        } else {
             let data = {
                 noteIdList: [this.props.NoteId],
                 isPined: true
@@ -265,10 +265,10 @@ class Notes extends Component {
                 .catch(err => {
                     console.log("Error in handle pin", err);
                 })
-    
-    
+
+
         }
-        
+
     }
 
     handlePinned = () => {
@@ -288,7 +288,7 @@ class Notes extends Component {
 
     render() {
 
-        console.log("Array is in Notes",this.props.note);
+        console.log("Array is in Notes", this.props);
 
 
 
@@ -312,7 +312,7 @@ class Notes extends Component {
                 {this.state.flag ?
                     <MuiThemeProvider theme={theme1}>
                         <div className="style1">
-                            <Card style={{ backgroundColor: this.state.color }}>
+                            <Card style={{ backgroundColor: this.props.Color }}>
                                 {/* <div className="createcardStyle4"> */}
 
                                 <div className="createNoteStyle3" >
@@ -457,7 +457,7 @@ class Notes extends Component {
 
                         <MuiThemeProvider theme={GridList}>
 
-                            <Card draggable onDragStart={(e) => this.props.handleDragStart(e,this.props.NoteId)} style={{ backgroundColor: this.state.color }} >
+                            <Card draggable onDragStart={(e) => this.props.handleDragStart(e, this.props.NoteId)} style={{ backgroundColor: this.props.Color }} >
 
                                 {/* <div className="createcardStyle4"> */}
                                 <div className="createNoteStyle3">
