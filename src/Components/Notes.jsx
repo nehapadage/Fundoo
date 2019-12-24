@@ -288,7 +288,7 @@ class Notes extends Component {
 
     render() {
 
-        // console.log("Array is in Notes",this.props.note.questionAndAnswerNotes[0].message);
+        console.log("Array is in Notes",this.props.note);
 
 
 
@@ -456,7 +456,9 @@ class Notes extends Component {
                     <div className="style">
 
                         <MuiThemeProvider theme={GridList}>
-                            <Card style={{ backgroundColor: this.state.color }} >
+
+                            <Card draggable onDragStart={(e) => this.props.handleDragStart(e,this.props.NoteId)} style={{ backgroundColor: this.state.color }} >
+
                                 {/* <div className="createcardStyle4"> */}
                                 <div className="createNoteStyle3">
 

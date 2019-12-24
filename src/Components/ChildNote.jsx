@@ -19,7 +19,7 @@ class ChildNote extends Component {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.getNotes();
     }
 
@@ -82,8 +82,38 @@ class ChildNote extends Component {
         this.props.refresh();
     }
 
+
+    handleDragStart=(e,note)=>{
+        console.log("Note id drag",note);
+        
+        e.dataTransfer.setData('text/plain', note);
+    }
+ 
+    onDrop=(e,index)=>{
+        let note = e.dataTransfer.getData('text');
+        let temp,noteArray=this.state.data;
+        console.log("Index",index,this.state.data); 
+
+        for(let i=0;i<noteArray.length;i++){ 
+           
+            if(noteArray[i].id === note){
+                console.log('hi');
+                
+                temp=noteArray[index];
+                noteArray[index]=noteArray[i];
+                noteArray[i]=temp;
+                break;
+            }
+        }
+        // this.setState({ data: [],})
+        this.setState({
+            data:noteArray,
+            data1:[] 
+        })
+    }
+
     render() {
-        console.log("In Child Note");
+        console.log("In Child Note",this.state.data);
         // console.log("Props in child note", this.props.notes);
 
         return (
@@ -94,7 +124,7 @@ class ChildNote extends Component {
 
                 {/* id="display" */}
                 {/* <div >  */}
-                <DisplayNotes props={this.props} notes={this.state.data} pined={this.state.data1} ref={this.DisplayNotes} Refresh={this.getNotes} />
+                <DisplayNotes dropCard={this.onDrop} handleDragStart={this.handleDragStart} props={this.props} notes={this.state.data} pined={this.state.data1} ref={this.DisplayNotes} Refresh={this.getNotes} />
                 {/* </div>  */}
             </div>
 

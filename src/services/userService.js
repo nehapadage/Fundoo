@@ -441,7 +441,8 @@ class user {
         var cart = localStorage.getItem('LoginCartId')
         console.log("Login cart id-->",cart);
         
-        var shop= axios.get('http://fundoonotes.incubation.bridgelabz.com/api/productcarts/getCartDetails/'+cart,{
+        // var shop= axios.get('http://fundoonotes.incubation.bridgelabz.com/api/productcarts/getCartDetails/'+cart,{
+            var shop= axios.get('http://fundoonotes.incubation.bridgelabz.com/api/productcarts/myCart',{
             headers: {
                 authorization: token
             }

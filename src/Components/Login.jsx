@@ -115,6 +115,8 @@ class Login extends Component {
             errors.passwordError = "Password length should greater than 6 and less than 12";
         }
 
+       
+
         this.setState({
             ...this.state,
             ...errors
@@ -226,7 +228,7 @@ class Login extends Component {
 
         this.setState({ flag: false })
 
-        console.log("Flag after", this.state.flag);
+        // console.log("Flag after", this.state.flag);
     };
 
     componentDidMount() {

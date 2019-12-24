@@ -1,0 +1,976 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App snapshot renders 1`] = `
+<div
+  className="mainBody"
+>
+  <div
+    className={null}
+  >
+    <div
+      className="adminMainDiv"
+    >
+      <div
+        id="fundoo"
+      >
+        <label
+          id="flabel"
+        >
+          F
+        </label>
+        <label
+          id="ulabel"
+        >
+          u
+        </label>
+        <label
+          id="nlabel"
+        >
+          n
+        </label>
+        <label
+          id="dlabel"
+        >
+          d
+        </label>
+        <label
+          id="olabel"
+        >
+          o
+        </label>
+        <label
+          id="o2label"
+        >
+          o
+        </label>
+      </div>
+      <div>
+        <div
+          id="login"
+        >
+          Login 
+        </div>
+        <div
+          id="text"
+        >
+          Use your Fundoo Account
+        </div>
+      </div>
+      <div
+        className="textfields"
+      >
+        <div
+          className="emailIdField"
+        >
+          <div
+            className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
+            errorText=""
+          >
+            <label
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+              data-shrink={false}
+              htmlFor="EmailPass"
+              id="EmailPass-label"
+            >
+              Email Id
+            </label>
+            <div
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+              onClick={[Function]}
+            >
+              <input
+                aria-invalid={false}
+                autoComplete="email"
+                className="MuiInputBase-input MuiOutlinedInput-input"
+                disabled={false}
+                id="EmailPass"
+                name="email"
+                onAnimationStart={[Function]}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                type="email"
+                value=""
+              />
+              <fieldset
+                aria-hidden={true}
+                className="PrivateNotchedOutline-root-60 MuiOutlinedInput-notchedOutline"
+                style={
+                  Object {
+                    "paddingLeft": 8,
+                  }
+                }
+              >
+                <legend
+                  className="PrivateNotchedOutline-legend-61"
+                  style={
+                    Object {
+                      "width": 0.01,
+                    }
+                  }
+                >
+                  <span
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "&#8203;",
+                      }
+                    }
+                  />
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "color": "red",
+              "fontSize": 12,
+            }
+          }
+        >
+          
+        </div>
+        <div
+          className="PasswordField"
+        >
+          <div
+            className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
+          >
+            <label
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+              data-shrink={false}
+              htmlFor="EmailPass"
+              id="EmailPass-label"
+            >
+              Password
+            </label>
+            <div
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+              onClick={[Function]}
+            >
+              <input
+                aria-invalid={false}
+                autoComplete="current-password"
+                className="MuiInputBase-input MuiOutlinedInput-input"
+                disabled={false}
+                id="EmailPass"
+                name="password"
+                onAnimationStart={[Function]}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                type="password"
+                value=""
+              />
+              <fieldset
+                aria-hidden={true}
+                className="PrivateNotchedOutline-root-60 MuiOutlinedInput-notchedOutline"
+                style={
+                  Object {
+                    "paddingLeft": 8,
+                  }
+                }
+              >
+                <legend
+                  className="PrivateNotchedOutline-legend-61"
+                  style={
+                    Object {
+                      "width": 0.01,
+                    }
+                  }
+                >
+                  <span
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "&#8203;",
+                      }
+                    }
+                  />
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "color": "red",
+              "fontSize": 12,
+            }
+          }
+        >
+          
+        </div>
+        <div>
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            id="forgotPass"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Forgot Password?
+            </span>
+          </button>
+        </div>
+        <div
+          id="text"
+        >
+          Not your computer? Use Guest mode to sign in privately.
+        </div>
+        <div>
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            id="learnMore"
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Learn more
+            </span>
+          </button>
+        </div>
+        <div
+          id="log"
+        >
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            id="createAccount"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Create account
+            </span>
+          </button>
+          <div>
+            <button
+              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              disabled={false}
+              id="loginButton"
+              onBlur={[Function]}
+              onClick={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              tabIndex={0}
+              type="button"
+            >
+              <span
+                className="MuiButton-label"
+              >
+                Login
+              </span>
+            </button>
+          </div>
+          <div />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Login component tests snapshot renders 1`] = `
+<div
+  className="mainBody"
+>
+  <div
+    className={null}
+  >
+    <div
+      className="adminMainDiv"
+    >
+      <div
+        id="fundoo"
+      >
+        <label
+          id="flabel"
+        >
+          F
+        </label>
+        <label
+          id="ulabel"
+        >
+          u
+        </label>
+        <label
+          id="nlabel"
+        >
+          n
+        </label>
+        <label
+          id="dlabel"
+        >
+          d
+        </label>
+        <label
+          id="olabel"
+        >
+          o
+        </label>
+        <label
+          id="o2label"
+        >
+          o
+        </label>
+      </div>
+      <div>
+        <div
+          id="login"
+        >
+          Login 
+        </div>
+        <div
+          id="text"
+        >
+          Use your Fundoo Account
+        </div>
+      </div>
+      <div
+        className="textfields"
+      >
+        <div
+          className="emailIdField"
+        >
+          <div
+            className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
+            errorText=""
+          >
+            <label
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+              data-shrink={false}
+              htmlFor="EmailPass"
+              id="EmailPass-label"
+            >
+              Email Id
+            </label>
+            <div
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+              onClick={[Function]}
+            >
+              <input
+                aria-invalid={false}
+                autoComplete="email"
+                className="MuiInputBase-input MuiOutlinedInput-input"
+                disabled={false}
+                id="EmailPass"
+                name="email"
+                onAnimationStart={[Function]}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                type="email"
+                value=""
+              />
+              <fieldset
+                aria-hidden={true}
+                className="PrivateNotchedOutline-root-60 MuiOutlinedInput-notchedOutline"
+                style={
+                  Object {
+                    "paddingLeft": 8,
+                  }
+                }
+              >
+                <legend
+                  className="PrivateNotchedOutline-legend-61"
+                  style={
+                    Object {
+                      "width": 0.01,
+                    }
+                  }
+                >
+                  <span
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "&#8203;",
+                      }
+                    }
+                  />
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "color": "red",
+              "fontSize": 12,
+            }
+          }
+        >
+          
+        </div>
+        <div
+          className="PasswordField"
+        >
+          <div
+            className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
+          >
+            <label
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+              data-shrink={false}
+              htmlFor="EmailPass"
+              id="EmailPass-label"
+            >
+              Password
+            </label>
+            <div
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+              onClick={[Function]}
+            >
+              <input
+                aria-invalid={false}
+                autoComplete="current-password"
+                className="MuiInputBase-input MuiOutlinedInput-input"
+                disabled={false}
+                id="EmailPass"
+                name="password"
+                onAnimationStart={[Function]}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                type="password"
+                value=""
+              />
+              <fieldset
+                aria-hidden={true}
+                className="PrivateNotchedOutline-root-60 MuiOutlinedInput-notchedOutline"
+                style={
+                  Object {
+                    "paddingLeft": 8,
+                  }
+                }
+              >
+                <legend
+                  className="PrivateNotchedOutline-legend-61"
+                  style={
+                    Object {
+                      "width": 0.01,
+                    }
+                  }
+                >
+                  <span
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "&#8203;",
+                      }
+                    }
+                  />
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "color": "red",
+              "fontSize": 12,
+            }
+          }
+        >
+          
+        </div>
+        <div>
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            id="forgotPass"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Forgot Password?
+            </span>
+          </button>
+        </div>
+        <div
+          id="text"
+        >
+          Not your computer? Use Guest mode to sign in privately.
+        </div>
+        <div>
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            id="learnMore"
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Learn more
+            </span>
+          </button>
+        </div>
+        <div
+          id="log"
+        >
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            id="createAccount"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Create account
+            </span>
+          </button>
+          <div>
+            <button
+              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              disabled={false}
+              id="loginButton"
+              onBlur={[Function]}
+              onClick={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              tabIndex={0}
+              type="button"
+            >
+              <span
+                className="MuiButton-label"
+              >
+                Login
+              </span>
+            </button>
+          </div>
+          <div />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Login snapshot renders 1`] = `
+<div
+  className="mainBody"
+>
+  <div
+    className={null}
+  >
+    <div
+      className="adminMainDiv"
+    >
+      <div
+        id="fundoo"
+      >
+        <label
+          id="flabel"
+        >
+          F
+        </label>
+        <label
+          id="ulabel"
+        >
+          u
+        </label>
+        <label
+          id="nlabel"
+        >
+          n
+        </label>
+        <label
+          id="dlabel"
+        >
+          d
+        </label>
+        <label
+          id="olabel"
+        >
+          o
+        </label>
+        <label
+          id="o2label"
+        >
+          o
+        </label>
+      </div>
+      <div>
+        <div
+          id="login"
+        >
+          Login 
+        </div>
+        <div
+          id="text"
+        >
+          Use your Fundoo Account
+        </div>
+      </div>
+      <div
+        className="textfields"
+      >
+        <div
+          className="emailIdField"
+        >
+          <div
+            className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
+            errorText=""
+          >
+            <label
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+              data-shrink={false}
+              htmlFor="EmailPass"
+              id="EmailPass-label"
+            >
+              Email Id
+            </label>
+            <div
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+              onClick={[Function]}
+            >
+              <input
+                aria-invalid={false}
+                autoComplete="email"
+                className="MuiInputBase-input MuiOutlinedInput-input"
+                disabled={false}
+                id="EmailPass"
+                name="email"
+                onAnimationStart={[Function]}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                type="email"
+                value=""
+              />
+              <fieldset
+                aria-hidden={true}
+                className="PrivateNotchedOutline-root-60 MuiOutlinedInput-notchedOutline"
+                style={
+                  Object {
+                    "paddingLeft": 8,
+                  }
+                }
+              >
+                <legend
+                  className="PrivateNotchedOutline-legend-61"
+                  style={
+                    Object {
+                      "width": 0.01,
+                    }
+                  }
+                >
+                  <span
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "&#8203;",
+                      }
+                    }
+                  />
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "color": "red",
+              "fontSize": 12,
+            }
+          }
+        >
+          
+        </div>
+        <div
+          className="PasswordField"
+        >
+          <div
+            className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"
+          >
+            <label
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+              data-shrink={false}
+              htmlFor="EmailPass"
+              id="EmailPass-label"
+            >
+              Password
+            </label>
+            <div
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+              onClick={[Function]}
+            >
+              <input
+                aria-invalid={false}
+                autoComplete="current-password"
+                className="MuiInputBase-input MuiOutlinedInput-input"
+                disabled={false}
+                id="EmailPass"
+                name="password"
+                onAnimationStart={[Function]}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                type="password"
+                value=""
+              />
+              <fieldset
+                aria-hidden={true}
+                className="PrivateNotchedOutline-root-60 MuiOutlinedInput-notchedOutline"
+                style={
+                  Object {
+                    "paddingLeft": 8,
+                  }
+                }
+              >
+                <legend
+                  className="PrivateNotchedOutline-legend-61"
+                  style={
+                    Object {
+                      "width": 0.01,
+                    }
+                  }
+                >
+                  <span
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "&#8203;",
+                      }
+                    }
+                  />
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "color": "red",
+              "fontSize": 12,
+            }
+          }
+        >
+          
+        </div>
+        <div>
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            id="forgotPass"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Forgot Password?
+            </span>
+          </button>
+        </div>
+        <div
+          id="text"
+        >
+          Not your computer? Use Guest mode to sign in privately.
+        </div>
+        <div>
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            id="learnMore"
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Learn more
+            </span>
+          </button>
+        </div>
+        <div
+          id="log"
+        >
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            id="createAccount"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Create account
+            </span>
+          </button>
+          <div>
+            <button
+              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              disabled={false}
+              id="loginButton"
+              onBlur={[Function]}
+              onClick={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              tabIndex={0}
+              type="button"
+            >
+              <span
+                className="MuiButton-label"
+              >
+                Login
+              </span>
+            </button>
+          </div>
+          <div />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

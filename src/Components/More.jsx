@@ -237,7 +237,7 @@ class More extends Component {
 
     render() {
 
-        console.log("props In log", this.props.NoteId);
+        // console.log("props In log", this.props.NoteId);
 
 
         // var label = this.state.labelArray.map(item => {

@@ -61,10 +61,10 @@ class shoppingCart extends Component {
         userService.getShop().then(async(res) => {
             console.log("Response in get shopping details", res);
 
-          await  this.setState({ price: res.data.data.price })
+          await  this.setState({ price: res.data.data[0].price })
             console.log("Description is", res.data.data.product);
-            this.setState({ description: res.data.data.product.description })
-            this.setState({ status: res.data.data.status })
+            this.setState({ description: res.data.data[0].product.description })
+            this.setState({ status: res.data.data[0].status })
 
             if(res.data.data.isOrderPlaced===false){
                 this.setState({ color: true })
@@ -148,7 +148,7 @@ class shoppingCart extends Component {
         return (
            
             <MuiThemeProvider theme={theme}>
-                {localStorage.getItem('cartID') ? 
+                {/* {localStorage.getItem('cartID') ?  */}
                 <div className="mainShop">
                     <div id="mainShop1">
                         <Button style={{ backgroundColor: "#FFBB00", width: "fit-content" }}>FundooNotes</Button>
@@ -282,8 +282,8 @@ class shoppingCart extends Component {
 
                     />
                 </div>
-                :
-                    <h1 id="emptyCart">Your Cart is Empty</h1> }
+                {/* :
+                    <h1 id="emptyCart">Your Cart is Empty</h1> } */}
             </MuiThemeProvider>
 
 

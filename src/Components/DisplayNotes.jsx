@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './DisplayNotes.css'
 import Notes from './Notes'
 import userService from '../services/userService'
@@ -117,8 +117,11 @@ class DisplayNotes extends Component {
 
     render() {
 
-        console.log("Drawer Status in display notes", this.props.drawerValue);
-        console.log("Grid Status in display notes", this.props.gridValue);
+        console.log("NOTES ARRAY",this.props.notes);
+        
+
+        // console.log("Drawer Status in display notes", this.props.drawerValue);
+        // console.log("Grid Status in display notes", this.props.gridValue);
 
 
         let movement = this.props.drawerValue === true ? "movementOff" : "movementOn"
@@ -128,39 +131,48 @@ class DisplayNotes extends Component {
 
 
 
-        var mapCards = this.props.notes.map(item => {
+        var mapCards = this.props.notes.map((item,index) => {
             return (
+                <div 
+                id="oneCard"
+                key={index}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => this.props.dropCard(e, index)}>
+                    <Notes 
+                        note={item}
+                        props={this.props}
+                        Title={item.title}
+                        Description={item.description}
+                        NoteId={item.id} Color={item.color}
+                        Reminder={item.reminder}
+                        Refresh={this.handle}
+                        handleDragStart={this.props.handleDragStart}
+                    />
+                </div>
 
-                <Notes note={item}
-                    props={this.props}
-                    Title={item.title}
-                    Description={item.description}
-                    NoteId={item.id} Color={item.color}
-                    Reminder={item.reminder}
-                    Refresh={this.handle} />
 
             );
 
         })
 
-        if(this.props.pined!==undefined)
-        {
-       
-        var mapCardsPin = this.props.pined.map(item => {
-            return (
+        if (this.props.pined.length !== 0) {
+            console.log('hi');
+            
+            var mapCardsPin = this.props.pined.map(item => {
+                return (
 
-                <Notes note={item}
-                    props={this.props}
-                    Title={item.title}
-                    Description={item.description}
-                    NoteId={item.id} Color={item.color}
-                    Reminder={item.reminder}
-                    Refresh={this.handle} />
+                    <Notes note={item}
+                        props={this.props}
+                        Title={item.title}
+                        Description={item.description}
+                        NoteId={item.id} Color={item.color}
+                        Reminder={item.reminder}
+                        Refresh={this.handle} />
 
-            );
+                );
 
-        })
-    }
+            })
+        }
 
 
         return (
@@ -168,11 +180,11 @@ class DisplayNotes extends Component {
 
                 {this.props.gridValue ?
                     <div className={movement}>
-                        {((this.props.pined!==undefined) && (this.props.pined.length)) ?
+                        {this.props.pined.length !== 0 ?
                             <div className="cardsView2">
                                 <h3 id="pins">Pinned</h3>
                                 <Masonry className="cardsView">{mapCardsPin}</Masonry>
-                                <h3 id="pins">Others</h3> 
+                                <h3 id="pins">Others</h3>
                             </div> : null}
 
                         <Masonry className="cardsView">

@@ -194,6 +194,13 @@ class createAccount extends Component {
             errors.confirmPasswordError = "Password length should greater than 6 and less than 12";
           }
 
+
+           if(this.state.password !== this.state.confirmPassword){
+            isError=true;
+            
+            errors.confirmPasswordError = "Password mismatch"; 
+           }
+
         //   if(this.state.flagButton===""){
         //       errors.flagButtonError="Please select basic or advance"
         //   }

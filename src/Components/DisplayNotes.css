@@ -33,6 +33,11 @@
     margin-left: 9.5em;
 }
 
+#oneCard{
+    display: flex;
+    margin: 1%;
+}
+
 
 
 
