@@ -9,15 +9,15 @@ describe('Login component tests', () => {
 
   const wrapper = shallow(<Login />);
 
-  test('snapshot renders', () => {
-    const component = renderer.create(<Login />);
-    let tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
-  });
+  // test('snapshot renders', () => {
+  //   const component = renderer.create(<Login />);
+  //   let tree = component.toJSON();
+  //   expect(tree).toMatchSnapshot();
+  // });
 
-  it('knows that 2 and 2 make 4', () => {
-    expect(2 + 2).toBe(4);
-  })
+  // it('knows that 2 and 2 make 4', () => {
+  //   expect(2 + 2).toBe(4);
+  // })
 
   it('should render correctly in "debug" mode', () => {
     const component = shallow(<Login debug />);
@@ -31,6 +31,23 @@ describe('Login component tests', () => {
     expect(wrapper.state('email')).toEqual('');
     expect(wrapper.state('password')).toEqual('');
   });
+
+  it('login check', () => {
+    //Optionally test to check if password and email are empty strings on 
+    //  setup
+    expect(wrapper.state('email1')).toEqual("neha7@gmail.com");
+    expect(wrapper.state('password1')).toEqual("neha123");
+  });
+
+  it('Login buttn status', () => {
+    // wrapper.find('Button').simulate('click');
+    expect(wrapper.state('flag')).toBe(false);
+  });
+
+
+
+
+
 
 
 

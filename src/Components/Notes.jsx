@@ -232,6 +232,8 @@ class Notes extends Component {
     }
 
     gotoAsk = () => {
+        console.log("Hello..........");
+        
         this.props.props.props.history.push("/dashboard/AskQuestion/" + this.props.NoteId)
     }
 

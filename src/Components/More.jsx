@@ -228,7 +228,8 @@ class More extends Component {
 
     AskQuestion = () => {
 
-
+        console.log("Rajat");
+        
 
         this.props.props.props.props.history.push("/dashboard/AskQuestion/" + this.props.NoteId)
 

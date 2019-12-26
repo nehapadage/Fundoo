@@ -75,6 +75,8 @@ class Login extends Component {
 
             email: "",
             password: "",
+            email1: "neha7@gmail.com",
+            password1: "neha123",
             emailError: "",
             passwordError: "",
             flag: false,
