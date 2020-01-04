@@ -493,10 +493,4 @@ class user {
     
 
  }
-
-
-
-
-
-
-module.exports = new user();
+export default new user()

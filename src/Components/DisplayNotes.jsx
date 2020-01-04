@@ -155,7 +155,7 @@ class DisplayNotes extends Component {
 
         })
 
-        if (this.props.pined.length !== 0) {
+        if (this.props.pined !== undefined) {
             console.log('hi');
             
             var mapCardsPin = this.props.pined.map(item => {
@@ -180,7 +180,7 @@ class DisplayNotes extends Component {
 
                 {this.props.gridValue ?
                     <div className={movement}>
-                        {this.props.pined.length !== 0 ?
+                        {this.props.pined !== undefined ?
                             <div className="cardsView2">
                                 <h3 id="pins">Pinned</h3>
                                 <Masonry className="cardsView">{mapCardsPin}</Masonry>
